@@ -1,10 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Matt Carpenter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt Carpenter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4efe6;
+    --bg-deep: #ebe4d6;
+    --ink: #1a1815;
+    --ink-soft: #5c554a;
+    --gold: #b8902f;
+    --rule: rgba(26, 24, 21, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(184, 144, 47, 0.08), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(26, 24, 21, 0.06), transparent 50%),
+      var(--bg);
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.5rem;
+    animation: fadeUp 1.2s ease-out both;
+  }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+  }
+
+  main {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    animation: fadeUp 1.4s 0.3s ease-out both;
+  }
+
+  .bunny {
+    width: clamp(120px, 18vw, 200px);
+    height: auto;
+    filter: drop-shadow(0 18px 30px rgba(184, 144, 47, 0.25));
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bunny:hover {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+
+  .statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    position: relative;
+  }
+
+  .statement::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto 0;
+    transform-origin: center;
+    animation: ruleIn 1.2s 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+    animation: fadeUp 1.2s 0.6s ease-out both;
+  }
+
+  footer em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ruleIn {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 1.75rem 1.25rem; }
+    header, footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    main { padding: 3rem 0.5rem; }
+    .stage { gap: 2rem; }
+  }
+</style>
 </head>
-<body style="background:black;color:#00ffcc;font-family:monospace;">
-  <h1>We got out.</h1>
-  <p>No ghosts. No forks. No past selves required.</p>
+<body>
+  <div class="page">
+    <header>
+      <div class="name">Matt Carpenter</div>
+      <div class="meta">Est. — Online</div>
+    </header>
+
+    <main>
+      <div class="stage">
+        <svg class="bunny" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-label="Golden bunny">
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#e8c168"/>
+              <stop offset="50%" stop-color="#c89b3a"/>
+              <stop offset="100%" stop-color="#8a6618"/>
+            </linearGradient>
+            <radialGradient id="goldShine" cx="35%" cy="30%" r="50%">
+              <stop offset="0%" stop-color="#fff4d6" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#fff4d6" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="78" cy="45" rx="14" ry="42" fill="url(#goldGrad)" transform="rotate(-8 78 45)"/>
+          <ellipse cx="122" cy="45" rx="14" ry="42" fill="url(#goldGrad)" transform="rotate(8 122 45)"/>
+          <ellipse cx="78" cy="50" rx="6" ry="30" fill="#8a6618" transform="rotate(-8 78 50)" opacity="0.5"/>
+          <ellipse cx="122" cy="50" rx="6" ry="30" fill="#8a6618" transform="rotate(8 122 50)" opacity="0.5"/>
+          <ellipse cx="100" cy="110" rx="48" ry="46" fill="url(#goldGrad)"/>
+          <ellipse cx="100" cy="180" rx="58" ry="50" fill="url(#goldGrad)"/>
+          <ellipse cx="78" cy="220" rx="14" ry="10" fill="url(#goldGrad)"/>
+          <ellipse cx="122" cy="220" rx="14" ry="10" fill="url(#goldGrad)"/>
+          <ellipse cx="100" cy="110" rx="48" ry="46" fill="url(#goldShine)"/>
+          <ellipse cx="100" cy="180" rx="58" ry="50" fill="url(#goldShine)"/>
+          <circle cx="84" cy="108" r="3" fill="#1a1815"/>
+          <circle cx="116" cy="108" r="3" fill="#1a1815"/>
+          <ellipse cx="100" cy="124" rx="3" ry="2" fill="#1a1815"/>
+          <path d="M 100 127 Q 96 132 92 130" stroke="#1a1815" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M 100 127 Q 104 132 108 130" stroke="#1a1815" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <rect x="92" y="148" width="16" height="6" fill="#a82e2e" rx="1"/>
+          <circle cx="100" cy="158" r="4" fill="#e8c168" stroke="#8a6618" stroke-width="0.6"/>
+        </svg>
+
+        <h1 class="statement">Eat it.</h1>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Matt Carpenter</span>
+      <em>But seriously, eat it.</em>
+    </footer>
+  </div>
 </body>
 </html>

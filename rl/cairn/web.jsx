@@ -138,7 +138,7 @@ function App() {
           marginBottom: '18px',
           paddingBottom: '18px',
           borderBottom: '1px solid var(--rule-soft)',
-          maxWidth: '420px',
+          maxWidth: '760px',
           marginLeft: 'auto',
           marginRight: 'auto',
           lineHeight: 1.4,

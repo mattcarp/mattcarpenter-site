@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yep, you got me.</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4efe6;
+    --ink: #1a1815;
+    --ink-soft: #5c554a;
+    --gold: #b8902f;
+    --rule: rgba(26, 24, 21, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(184, 144, 47, 0.08), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(26, 24, 21, 0.06), transparent 50%),
+      var(--bg);
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.5rem;
+  }
+
+  .crumbs {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+  }
+
+  .crumbs a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .crumbs a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
+  }
+
+  .crumbs span.sep {
+    margin: 0 0.6em;
+    opacity: 0.5;
+  }
+
+  main {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    animation: fadeUp 1.4s 0.2s ease-out both;
+  }
+
+  .statement::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto 0;
+    transform-origin: center;
+    animation: ruleIn 1.2s 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+  }
+
+  footer .route {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ruleIn {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 1.75rem 1.25rem; }
+    header, footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    main { padding: 3rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="crumbs">
+        <a href="/">Matt Carpenter</a><span class="sep">/</span>rl<span class="sep">/</span>auric
+      </div>
+    </header>
+
+    <main>
+      <h1 class="statement">Yep, you got me.</h1>
+    </main>
+
+    <footer>
+      <span>© 2026 Matt Carpenter</span>
+      <span class="route">/rl/auric</span>
+    </footer>
+  </div>
+</body>
+</html>

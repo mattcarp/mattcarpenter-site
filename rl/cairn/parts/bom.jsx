@@ -1,4 +1,4 @@
-// Bill of materials — both Cairn (standard) and Cairn Pro.
+// Bill of materials — both Cairn (standard) and Cairn Smart.
 // Real candidate parts; price estimates are 1k-unit ballpark for budgeting.
 
 function CairnBOM() {
@@ -9,14 +9,14 @@ function CairnBOM() {
         ['Photoelectric smoke chamber', 'Amphenol Advanced Sensors SM-PWM-01C', 1, 1, '$3.80', 'Drop-in module, 5V, analog out. UL217 reference design available.'],
         ['Electrochemical CO sensor', 'Figaro TGS5042-A00', 1, 1, '$11.20', '5-yr life. Pair with op-amp transimpedance front-end.'],
         ['Sensor analog front-end', 'TI LMP91000', 1, 1, '$2.40', 'Configurable AFE for electrochemical sensors.'],
-        ['Temp + humidity sensor', '—', 0, 1, '$1.10', 'Sensirion SHT40 · I²C · ±0.2°C. Pro only.'],
+        ['Temp + humidity sensor', '—', 0, 1, '$1.10', 'Sensirion SHT40 · I²C · ±0.2°C. Smart only.'],
       ],
     },
     {
       name: 'Compute & radio',
       rows: [
         ['MCU (standard)', 'Nordic nRF52805 / STM32G0', 1, 0, '$1.40', 'Cortex-M4 / M0+. BLE optional but unused on standard.'],
-        ['MCU + Thread radio (Pro)', 'Nordic nRF54L15', 0, 1, '$3.80', 'Matter-over-Thread certified. 802.15.4 + BLE provisioning.'],
+        ['MCU + Thread radio (Smart)', 'Nordic nRF54L15', 0, 1, '$3.80', 'Matter-over-Thread certified. 802.15.4 + BLE provisioning.'],
         ['Antenna', 'Johanson 2450AT43B100', 0, 1, '$0.30', 'Chip antenna, tuned for 2.4GHz, integrated trace.'],
         ['Crystal 32.768kHz', 'Abracon ABS07', 1, 1, '$0.20', 'RTC for low-power standby.'],
       ],

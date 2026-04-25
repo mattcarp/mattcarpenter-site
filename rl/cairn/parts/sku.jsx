@@ -1,4 +1,4 @@
-// Cairn vs Cairn Pro — same form factor, different brain.
+// Cairn vs Cairn Smart — same form factor, different brain.
 // Two artboards: SKU comparison strip + Matter-over-Thread mesh diagram showing
 // anomaly escalation (fire / CO / out-of-range temperature → alerts to phones, building systems).
 
@@ -26,7 +26,7 @@ function CairnSKU() {
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid var(--rule)', paddingBottom: 14}}>
         <div>
           <div className="display" style={{fontSize: 32, fontWeight: 300, lineHeight: 1}}>Two SKUs · same body</div>
-          <div style={{fontSize: 13, color: 'var(--ink-2)', marginTop: 4}}>Identical form, finishes, and install. The Pro adds a radio and two extra sensors.</div>
+          <div style={{fontSize: 13, color: 'var(--ink-2)', marginTop: 4}}>Identical form, finishes, and install. The Smart adds a radio and two extra sensors.</div>
         </div>
         <div className="mono" style={{fontSize: 10, letterSpacing: '0.14em', color: 'var(--ink-3)', textAlign: 'right'}}>
           CAIRN · LINEUP<br/>SHEET 09 / 10
@@ -43,7 +43,7 @@ function CairnSKU() {
         />
         <SKUCard
           tier="Smart"
-          name="Cairn Pro"
+          name="Cairn Smart"
           tagline="Mesh-aware. Speaks Matter."
           accent="#d4623a"
           dot
@@ -137,7 +137,7 @@ function CairnMesh() {
     }}>
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid var(--rule)', paddingBottom: 14}}>
         <div>
-          <div className="display" style={{fontSize: 32, fontWeight: 300, lineHeight: 1}}>Cairn Pro · anomaly mesh</div>
+          <div className="display" style={{fontSize: 32, fontWeight: 300, lineHeight: 1}}>Cairn Smart · anomaly mesh</div>
           <div style={{fontSize: 13, color: 'var(--ink-2)', marginTop: 4}}>Matter over Thread · units relay alerts to phones, building systems, and each other</div>
         </div>
         <div className="mono" style={{fontSize: 10, letterSpacing: '0.14em', color: 'var(--ink-3)', textAlign: 'right'}}>
@@ -229,7 +229,7 @@ function CairnMesh() {
         <div style={{display: 'flex', flexDirection: 'column', gap: 18}}>
           <div className="mono" style={{fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.14em'}}>ESCALATION · 0 → 12s</div>
 
-          <FlowStep n="00s" tag="DETECT" desc="Cairn Pro 3A detects smoke. Local alarm fires immediately." color="#c43d2a" />
+          <FlowStep n="00s" tag="DETECT" desc="Cairn Smart 3A detects smoke. Local alarm fires immediately." color="#c43d2a" />
           <FlowStep n="00s" tag="MESH"   desc="Multicast to neighbors over Thread. All units in the building chirp within 200ms." color="#d4623a" />
           <FlowStep n="03s" tag="HOME"   desc="Matter event hits the home hub — Apple Home / Google Home / SmartThings — phones buzz." color="#d89030" />
           <FlowStep n="08s" tag="OPS"    desc="Building management system receives an event on the property gateway. Dashboard pin lights up." color="#7a8a4a" />
@@ -251,7 +251,7 @@ function CairnMesh() {
           </div>
 
           <div style={{fontSize: 11, color: 'var(--ink-3)', fontStyle: 'italic', lineHeight: 1.5}}>
-            Standard Cairn still works on the mesh as a passive node — Pro units relay its alarm if a Pro is within range.
+            Standard Cairn still works on the mesh as a passive node — Smart units relay its alarm if a Smart is within range.
           </div>
         </div>
       </div>

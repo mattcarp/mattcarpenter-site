@@ -27,13 +27,25 @@ function Board({ width, height, children }) {
   );
 }
 
-function Section({ id, eyebrow, title, lede, children }) {
+function Section({ id, eyebrow, title, lede, credit, children }) {
   return (
     <section id={id} className="section">
       <div className="section-head">
         <div className="eyebrow">{eyebrow}</div>
         <h2>{title}</h2>
         {lede && <p>{lede}</p>}
+        {credit && (
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '11px',
+            letterSpacing: '0.16em',
+            color: 'var(--ink-3)',
+            textTransform: 'uppercase',
+            marginTop: '14px',
+          }}>
+            {credit}
+          </div>
+        )}
       </div>
       <div className="board-wrap">{children}</div>
     </section>
@@ -50,14 +62,15 @@ function App() {
           <a href="#forms">FORMS</a>
           <a href="#tech">TECH</a>
           <a href="#colors">COLORS</a>
-          <a href="#smart">PRO</a>
+          <a href="#smart">SMART</a>
           <a href="#bom">BOM</a>
         </nav>
       </header>
 
       <Section id="concept" eyebrow="01 — Concept"
         title="A detector that disappears, then lights your way home."
-        lede="A ceiling-mounted smoke and carbon-monoxide detector with a motion-activated downlight. Same shape, two brains: standard and Pro.">
+        lede="A ceiling-mounted smoke and carbon-monoxide detector with a motion-activated downlight. Same shape, two brains: standard and Smart."
+        credit="Concept by RL · Technical specs by MC">
         <Board width={1600} height={1100}><window.CairnCover /></Board>
       </Section>
 
@@ -111,9 +124,9 @@ function App() {
         <Board width={1800} height={1000}><window.CairnInstall /></Board>
       </Section>
 
-      <Section id="smart" eyebrow="09 — Cairn Pro"
+      <Section id="smart" eyebrow="09 — Cairn Smart"
         title="Same body, different brain."
-        lede="The Pro adds temperature, humidity, and a Matter-over-Thread radio. Spotted by a single matte amber dot below the lens.">
+        lede="The Smart adds temperature, humidity, and a Matter-over-Thread radio. Spotted by a single matte amber dot below the lens.">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           <Board width={1800} height={1000}><window.CairnSKU /></Board>
           <Board width={1800} height={1100}><window.CairnMesh /></Board>

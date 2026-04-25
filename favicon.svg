@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8c168"/>
+      <stop offset="60%" stop-color="#c89b3a"/>
+      <stop offset="100%" stop-color="#8a6618"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="#f4efe6"/>
+  <text x="32" y="48"
+        font-family="'Cormorant Garamond', 'Hoefler Text', 'Iowan Old Style', Georgia, serif"
+        font-style="italic"
+        font-weight="500"
+        font-size="44"
+        text-anchor="middle"
+        fill="url(#goldGrad)">mc</text>
+</svg>

@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yep, you got me.</title>
+<title>Yep, you got me. — Matt Carpenter</title>
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -66,29 +69,28 @@
     padding-bottom: 1.5rem;
   }
 
-  .crumbs {
-    font-family: 'Inter', sans-serif;
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .name a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .name a:hover { border-bottom-color: var(--gold); }
+
+  .meta {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.22em;
     color: var(--ink-soft);
-  }
-
-  .crumbs a {
-    color: var(--ink-soft);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.3s, border-color 0.3s;
-  }
-
-  .crumbs a:hover {
-    color: var(--ink);
-    border-bottom-color: var(--gold);
-  }
-
-  .crumbs span.sep {
-    margin: 0 0.6em;
-    opacity: 0.5;
   }
 
   main {
@@ -96,6 +98,14 @@
     place-items: center;
     text-align: center;
     padding: 4rem 1rem;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeUp 1.4s 0.2s ease-out both;
   }
 
   .statement {
@@ -106,7 +116,6 @@
     line-height: 1;
     letter-spacing: -0.02em;
     color: var(--ink);
-    animation: fadeUp 1.4s 0.2s ease-out both;
   }
 
   .statement::after {
@@ -116,8 +125,25 @@
     height: 1px;
     background: var(--gold);
     margin: 1.5rem auto 0;
-    transform-origin: center;
     animation: ruleIn 1.2s 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .home-link {
+    margin-top: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .home-link:hover {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
   }
 
   footer {
@@ -132,11 +158,20 @@
     color: var(--ink-soft);
   }
 
-  footer .route {
+  footer em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .footer-code {
     font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
     text-transform: none;
     letter-spacing: 0;
-    font-size: 0.7rem;
     opacity: 0.6;
   }
 
@@ -164,18 +199,20 @@
 <body>
   <div class="page">
     <header>
-      <div class="crumbs">
-        <a href="/">Matt Carpenter</a><span class="sep">/</span>rl<span class="sep">/</span>auric
-      </div>
+      <div class="name"><a href="/">Matt Carpenter</a></div>
+      <div class="meta">404</div>
     </header>
 
     <main>
-      <h1 class="statement">Yep, you got me.</h1>
+      <div class="stage">
+        <h1 class="statement">Yep, you got me.</h1>
+        <a class="home-link" href="/">← back to the bunny</a>
+      </div>
     </main>
 
     <footer>
       <span>© 2026 Matt Carpenter</span>
-      <span class="route">/rl/auric</span>
+      <em>But seriously, eat it.</em>
     </footer>
   </div>
 </body>

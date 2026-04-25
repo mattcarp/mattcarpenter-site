@@ -127,6 +127,24 @@ function App() {
       </Section>
 
       <footer className="foot">
+        <div style={{
+          fontFamily: "'Fraunces', serif",
+          fontStyle: 'italic',
+          fontWeight: 300,
+          fontSize: '15px',
+          letterSpacing: 0,
+          textTransform: 'none',
+          color: 'var(--ink-2)',
+          marginBottom: '18px',
+          paddingBottom: '18px',
+          borderBottom: '1px solid var(--rule-soft)',
+          maxWidth: '420px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          lineHeight: 1.4,
+        }}>
+          And if you’ve read this far — tell me how the fireworks were last night.
+        </div>
         CAIRN · INDUSTRIAL DESIGN · R.0 · 2026.04
       </footer>
     </>

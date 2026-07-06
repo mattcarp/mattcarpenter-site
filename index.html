@@ -227,7 +227,7 @@
 
     <main>
       <div class="stage">
-        <svg class="bunny" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-label="Golden bunny">
+        <svg class="bunny" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-label="Golden bunny" style="cursor:pointer" onclick="if(window.posthog)posthog.capture('homepage_bunny_clicked')">
           <defs>
             <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="#e8c168"/>

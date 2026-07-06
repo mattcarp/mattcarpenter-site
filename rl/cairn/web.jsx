@@ -53,17 +53,60 @@ function Section({ id, eyebrow, title, lede, credit, children }) {
 }
 
 function App() {
+  React.useEffect(() => {
+    const ph = window.posthog;
+    if (!ph) return;
+
+    const sectionIds = ['concept', 'context', 'forms', 'tech', 'cross', 'colors', 'dial', 'install', 'smart', 'bom'];
+    const viewed = new Set();
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !viewed.has(entry.target.id)) {
+          viewed.add(entry.target.id);
+          ph.capture('cairn_section_viewed', { section: entry.target.id });
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    });
+
+    const footer = document.querySelector('footer.foot');
+    const footerObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          ph.capture('cairn_footer_reached');
+          footerObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    if (footer) footerObserver.observe(footer);
+
+    return () => {
+      sectionObserver.disconnect();
+      footerObserver.disconnect();
+    };
+  }, []);
+
+  const handleNavClick = (section) => {
+    if (window.posthog) window.posthog.capture('cairn_nav_clicked', { section });
+  };
+
   return (
     <>
       <header className="top">
         <div className="brand">Cairn<span style={{ color: 'var(--ink-3)', fontWeight: 300, marginLeft: 10, fontSize: 13, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.1em' }}>SMOKE · CO · LIGHT</span></div>
         <nav>
-          <a href="#concept">CONCEPT</a>
-          <a href="#forms">FORMS</a>
-          <a href="#tech">TECH</a>
-          <a href="#colors">COLORS</a>
-          <a href="#smart">SMART</a>
-          <a href="#bom">BOM</a>
+          <a href="#concept" onClick={() => handleNavClick('concept')}>CONCEPT</a>
+          <a href="#forms" onClick={() => handleNavClick('forms')}>FORMS</a>
+          <a href="#tech" onClick={() => handleNavClick('tech')}>TECH</a>
+          <a href="#colors" onClick={() => handleNavClick('colors')}>COLORS</a>
+          <a href="#smart" onClick={() => handleNavClick('smart')}>SMART</a>
+          <a href="#bom" onClick={() => handleNavClick('bom')}>BOM</a>
         </nav>
       </header>
 

@@ -21,10 +21,16 @@
     --ink: #1a1815;
     --ink-soft: #5c554a;
     --gold: #b8902f;
+    --gold-hot: #d4a53c;
     --rule: rgba(26, 24, 21, 0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--bg);
+  }
 
   html, body {
     min-height: 100%;

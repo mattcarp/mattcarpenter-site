@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matt Carpenter</title>
+<!-- est. before the web had pictures. the domain outlived four browsers,
+     three record labels, and one century. -->
 <meta name="robots" content="noindex,nofollow">
 <!-- Open Graph / link preview metadata -->
 <meta property="og:type" content="website">
@@ -53,10 +55,16 @@
     --ink: #1a1815;
     --ink-soft: #5c554a;
     --gold: #b8902f;
+    --gold-hot: #d4a53c;
     --rule: rgba(26, 24, 21, 0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--bg);
+  }
 
   html, body {
     height: 100%;
@@ -143,11 +151,13 @@
     width: clamp(120px, 18vw, 200px);
     height: auto;
     filter: drop-shadow(0 18px 30px rgba(184, 144, 47, 0.25));
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .bunny:hover {
     transform: translateY(-6px) rotate(-2deg);
+    filter: drop-shadow(0 22px 38px rgba(212, 165, 60, 0.45));
   }
 
   .statement {
@@ -170,6 +180,13 @@
     margin: 1.5rem auto 0;
     transform-origin: center;
     animation: ruleIn 1.2s 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.6s ease;
+  }
+
+  .statement:hover::after {
+    width: 5rem;
+    background: var(--gold-hot);
   }
 
   footer {
@@ -194,6 +211,66 @@
     letter-spacing: 0;
     font-size: 0.95rem;
     color: var(--ink);
+    transition: opacity 1.6s ease;
+  }
+
+  footer em.rosetta-fading {
+    opacity: 0;
+  }
+
+  /* dusk: the page darkens when the lantern is lit */
+  .dusk-veil {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 24, 21, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 1.8s ease;
+  }
+
+  body.dusk .dusk-veil {
+    opacity: 1;
+  }
+
+  /* during dusk, .page must stop creating a stacking context so
+     .stage can rise above the veil while header/footer stay beneath */
+  body.dusk .page {
+    z-index: auto;
+  }
+
+  .lantern-glow {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle,
+      rgba(232, 193, 104, 0.55) 0%,
+      rgba(212, 165, 60, 0.28) 40%,
+      transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.8s ease;
+  }
+
+  body.dusk .lantern-glow {
+    opacity: 1;
+  }
+
+  body.dusk .stage {
+    position: relative;
+    z-index: 4;
+  }
+
+  body.dusk .statement {
+    color: #f4efe6;
+    transition: color 1.8s ease;
+  }
+
+  .statement {
+    transition: color 1.8s ease;
   }
 
   @keyframes fadeUp {
@@ -227,6 +304,9 @@
 
     <main>
       <div class="stage">
+        <div class="lantern-glow" aria-hidden="true"></div>
+        <!-- the rabbit is golden because of a mishearing, 1987:
+             not "beat it" — eat it. some transmissions improve with noise. -->
         <svg class="bunny" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-label="Golden bunny" style="cursor:pointer" onclick="if(window.posthog)posthog.capture('homepage_bunny_clicked')">
           <defs>
             <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -264,8 +344,109 @@
 
     <footer>
       <span>© 2026 Matt Carpenter</span>
-      <em>But seriously, eat it.</em>
+      <em id="rosetta" lang="en">But seriously, eat it.</em>
     </footer>
   </div>
+
+  <div class="dusk-veil" aria-hidden="true"></div>
+
+  <script>
+  (function () {
+    'use strict';
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── transmission log ─────────────────────────────── */
+    try {
+      var gold = '#b8902f', ink = '#1a1815', parchment = '#f4efe6';
+      var banner = 'background:' + ink + ';color:' + gold +
+        ';font-family:monospace;font-size:12px;padding:4px 10px;letter-spacing:2px;';
+      var line = 'color:' + gold + ';font-family:monospace;font-size:11px;';
+      var soft = 'color:#5c554a;font-family:monospace;font-size:11px;font-style:italic;';
+      var log = [
+        ['%cCARRIER ACQUIRED — 1.855 MHz', banner],
+        ['%cΑΝΘΡΩΠΟΝ ΖΗΤΩ — searching for one honest signal      [~350 BC]', line],
+        ['%cC.E.S. — "noise is information you didn\'t choose"    [1948]', line],
+        ['%c"...still on the line."                               [1968]', line],
+        ['%csuch a lonely word                                    [1978]', line],
+        ['%c> signal locked. you found the console. that says something about you.', soft],
+        ['%c> the rabbit knows more. try clicking it. five times.', soft]
+      ];
+      log.forEach(function (entry, i) {
+        setTimeout(function () { console.log(entry[0], entry[1]); }, 1200 + i * 400);
+      });
+    } catch (e) { /* silence is also a signal */ }
+
+    /* ── rosetta footer ───────────────────────────────── */
+    try {
+      var em = document.getElementById('rosetta');
+      if (em && !reduceMotion) {
+        var phrases = [
+          { t: 'But seriously, eat it.', l: 'en' },
+          { t: 'Imma bis-serjetà, kulha.', l: 'mt' },
+          { t: 'Ma sul serio, mangialo.', l: 'it' },
+          { t: 'Φάε το.', l: 'el' },
+          { t: 'Sed vere, ede.', l: 'la' },
+          { t: '\u2811\u2801\u281E \u280A\u281E', l: 'en' }
+        ];
+        var idx = 0;
+        setInterval(function () {
+          em.classList.add('rosetta-fading');
+          setTimeout(function () {
+            idx = (idx + 1) % phrases.length;
+            em.textContent = phrases[idx].t;
+            em.setAttribute('lang', phrases[idx].l);
+            em.classList.remove('rosetta-fading');
+          }, 1600);
+        }, 9000);
+      }
+    } catch (e) { /* the stone keeps its counsel */ }
+
+    /* ── the lantern ──────────────────────────────────── */
+    try {
+      var bunny = document.querySelector('.bunny');
+      var statement = document.querySelector('.statement');
+      if (bunny && statement) {
+        var clicks = 0, resetTimer = null, lit = false;
+        bunny.addEventListener('click', function () {
+          if (lit) return;
+          clicks += 1;
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () { clicks = 0; }, 10000);
+          if (clicks < 5) return;
+          clicks = 0;
+          lit = true;
+          if (window.posthog) posthog.capture('lantern_lit');
+          var original = statement.textContent;
+          if (reduceMotion) {
+            statement.textContent = 'ἄνθρωπον ζητῶ';
+            setTimeout(function () {
+              statement.textContent = original;
+              lit = false;
+            }, 4000);
+            return;
+          }
+          document.body.classList.add('dusk');
+          setTimeout(function () { statement.textContent = 'ἄνθρωπον ζητῶ'; }, 900);
+          setTimeout(function () {
+            document.body.classList.remove('dusk');
+            setTimeout(function () {
+              statement.textContent = original;
+              lit = false;
+            }, 1800);
+          }, 5500);
+        });
+      }
+    } catch (e) { /* he never found one either */ }
+  }());
+  </script>
+
+  <!--
+    Diogenes lit a lamp in daylight.          ~350 BC
+    Shannon proved the lamp could work.        1948
+    Campbell heard him singing in the wire.    1968
+    Joel said the word was lonely.             1978
+    The line is still open.                    2026-
+  -->
 </body>
 </html>

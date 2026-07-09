@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belcanto — Matt Carpenter</title>
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Matt Carpenter">
+<meta property="og:title" content="Belcanto">
+<meta property="og:description" content="A vocal coach with an honest ear.">
+<meta property="og:url" content="https://mattcarpenter.com/belcanto/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4efe6;
+    --bg-deep: #ebe4d6;
+    --ink: #1a1815;
+    --ink-soft: #5c554a;
+    --gold: #b8902f;
+    --rule: rgba(26, 24, 21, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(184, 144, 47, 0.08), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(26, 24, 21, 0.06), transparent 50%),
+      var(--bg);
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.5rem;
+    animation: fadeUp 1.2s ease-out both;
+  }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    letter-spacing: 0.02em;
+  }
+
+  .name a { color: inherit; text-decoration: none; }
+
+  .meta {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+  }
+
+  main { animation: fadeUp 1.4s 0.3s ease-out both; }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(3rem, 9vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 3.5rem 0 0;
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+    color: var(--ink-soft);
+    margin-top: 0.75rem;
+  }
+
+  .goldrule {
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+    margin: 2.5rem 0;
+    transform-origin: left;
+    animation: ruleIn 1.2s 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+
+  p.question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 2.5rem 0;
+  }
+
+  .pipeline {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background: rgba(235, 228, 214, 0.5);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .pipeline b { color: var(--ink); font-weight: 500; }
+  .pipeline span.arrow { color: var(--gold); padding: 0 0.5rem; }
+
+  .status {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+    margin-top: 3rem;
+  }
+
+  .status em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-soft);
+    animation: fadeUp 1.2s 0.6s ease-out both;
+  }
+
+  footer a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ruleIn {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 1.75rem 1.25rem 3rem; }
+    header, footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="name"><a href="/">Matt Carpenter</a></div>
+      <div class="meta">Workshop</div>
+    </header>
+
+    <main>
+      <h1>Belcanto</h1>
+      <div class="tagline">A vocal coach with an honest ear.</div>
+
+      <div class="goldrule"></div>
+
+      <p>Sing against any song. Belcanto separates the original vocal from
+      the track, listens to your take, and diffs the two performances —
+      pitch contour, phrasing, onset timing, vibrato — then says something
+      true about the difference. Warm, specific, and honest. Not a
+      pitch-bar game; an actual ear.</p>
+
+      <p class="question">What does it mean to be a good singer?</p>
+
+      <p>Correctness is measurable. Expression is deliberate deviation from
+      correctness — the scoop, the back-phrase, the note held a breath too
+      long on purpose. Most tools score the first and punish the second.
+      Belcanto is an attempt to model both, and to know the difference.</p>
+
+      <div class="pipeline">
+        <b>separate</b><span class="arrow">→</span><b>track</b><span class="arrow">→</span><b>align</b><span class="arrow">→</span><b>diff</b><span class="arrow">→</span><b>coach</b>
+      </div>
+
+      <p>Under the hood: source separation to isolate the reference vocal,
+      neural pitch tracking on both performances, dynamic time warping to
+      line them up, and a language model to turn the raw numbers into the
+      kind of note a good coach would give.</p>
+
+      <p class="status">Status — <em>early workshop. The measurement engine is being built first; the opinions come later.</em></p>
+    </main>
+
+    <footer>
+      <span>© 2026 Matt Carpenter</span>
+      <span><a href="/">Home</a></span>
+    </footer>
+  </div>
+</body>
+</html>

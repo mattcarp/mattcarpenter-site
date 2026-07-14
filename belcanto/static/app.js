@@ -407,6 +407,15 @@ async function hydrateReportMedia() {
 }
 
 function renderPhraseDetails(phrase) {
+  if (phrase.coaching && typeof phrase.coaching === 'object') {
+    const coaching = phrase.coaching
+    const measurement = primaryMeasurement(coaching.evidence)
+    return `<p class="phrase-detail">observation: ${escapeHtml(coaching.observation || 'No observation.')}</p>
+      <p class="phrase-detail">uncertainty: ${escapeHtml(coaching.uncertainty || 'Not stated.')}</p>
+      <p class="phrase-detail">choice: ${escapeHtml(coaching.choice || 'Not stated.')}</p>
+      <p class="phrase-detail">next action: ${escapeHtml(coaching.next_take_action || 'No action.')}</p>
+      <p class="phrase-detail">measurement: ${escapeHtml(measurement)}</p>`
+  }
   const pitch = phrase.pitch || {}
   const timing = phrase.timing || {}
   const direction = String(pitch.direction || pitchDirection(phrase.mean_cents))
@@ -419,6 +428,12 @@ function renderPhraseDetails(phrase) {
     Number(timing.duration_delta_ms || 0),
   )
   return `<p class="phrase-detail">timing ${timingObservation}; next take: ${escapeHtml(action)}</p>`
+}
+
+function primaryMeasurement(evidence) {
+  if (!Array.isArray(evidence) || !evidence.length || typeof evidence[0] !== 'object') return 'not available'
+  const item = evidence[0]
+  return item.unit == null ? `${item.path} = ${item.value}` : `${item.path} = ${item.value} ${item.unit}`
 }
 
 function pitchDirection(meanCents) {

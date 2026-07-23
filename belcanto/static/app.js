@@ -1,22 +1,3 @@
-const API_ORIGIN = document.querySelector('meta[name="belcanto-api"]')?.content?.replace(/\/$/, '') || ''
-const TOKEN_KEY = 'belcanto-visitor-v1'
-
-async function apiFetch(path, options = {}) {
-  const headers = new Headers(options.headers || {})
-  const token = localStorage.getItem(TOKEN_KEY)
-  if (token) headers.set('Authorization', `Bearer ${token}`)
-  const response = await fetch(`${API_ORIGIN}${path}`, { ...options, headers })
-  const refreshed = response.headers.get('X-Belcanto-Visitor')
-  if (refreshed) localStorage.setItem(TOKEN_KEY, refreshed)
-  return response
-}
-
-async function authenticatedMediaUrl(path) {
-  const response = await apiFetch(path)
-  if (!response.ok) throw new Error('audio-fetch-failed')
-  return URL.createObjectURL(await response.blob())
-}
-
 const $ = selector => document.querySelector(selector)
 const form = $('#analysis-form')
 const songInput = $('#song')
@@ -38,6 +19,9 @@ const takeName = $('#take-name')
 const referenceAudio = $('#reference-audio')
 const countInDisplay = $('#count-in-display')
 const countInControls = Array.from(document.querySelectorAll('input[name="count-in-beats"]'))
+const phraseStartInput = $('#phrase-start')
+const phraseEndInput = $('#phrase-end')
+const phraseSelectionStatus = $('#phrase-selection-status')
 
 let songFile = null
 let takeFile = null
@@ -48,11 +32,19 @@ let recordingStartedAt = 0
 let meterFrame = null
 let replayContext = null
 let replaySources = []
+let phraseSelection = { startSeconds: 0, endSeconds: 10, confirmed: false }
+
+phraseStartInput.addEventListener('input', updatePhraseSelection)
+phraseEndInput.addEventListener('input', updatePhraseSelection)
 
 songInput.addEventListener('change', async () => {
   songFile = songInput.files[0] || null
   $('#song-name').textContent = songFile?.name || 'WAV, MP3, M4A, FLAC or AIFF'
   await prepareLocalAudio('reference', songFile)
+  phraseSelection = { startSeconds: 0, endSeconds: Math.min(10, 15), confirmed: false }
+  phraseStartInput.value = '0'
+  phraseEndInput.value = '10'
+  updatePhraseSelection()
   updateReadiness()
 })
 
@@ -79,9 +71,11 @@ form.addEventListener('submit', async event => {
   const body = new FormData()
   body.append('song', songFile, songFile.name)
   body.append('take', takeFile, takeFile.name)
+  body.append('phrase_start_s', String(phraseSelection.startSeconds))
+  body.append('phrase_end_s', String(phraseSelection.endSeconds))
 
   try {
-    const response = await apiFetch('/api/jobs', { method: 'POST', body })
+    const response = await fetch('/api/jobs', { method: 'POST', body })
     const job = await response.json()
     if (!response.ok) throw new Error(job.detail || 'The upload failed.')
     showPending(job)
@@ -96,6 +90,21 @@ form.addEventListener('submit', async event => {
   }
 })
 
+function updatePhraseSelection() {
+  const start = Number(phraseStartInput.value)
+  const end = Number(phraseEndInput.value)
+  const duration = end - start
+  phraseSelection = { startSeconds: start, endSeconds: end, confirmed: duration >= 5 && duration <= 15 && start >= 0 }
+  phraseSelectionStatus.textContent = phraseSelection.confirmed
+    ? `Selected ${duration.toFixed(1)} seconds. Ready to record.`
+    : duration < 5 ? 'Choose at least 5 seconds.' : duration > 15 ? 'Keep the lesson to 15 seconds or less.' : 'Choose a valid phrase range.'
+  phraseSelectionStatus.classList.toggle('error', !phraseSelection.confirmed)
+  updateReadiness()
+}
+
+function selectedPhraseContains(time) {
+  return time >= phraseSelection.startSeconds && time <= phraseSelection.endSeconds
+}
 async function startRecording() {
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     formStatus.textContent = 'This browser cannot record audio here. Choose a vocal file instead.'
@@ -180,7 +189,10 @@ async function runCountIn() {
 async function startReferencePlaybackForRecording() {
   if (!songFile || !referenceAudio.src) return
   referenceAudio.pause()
-  referenceAudio.currentTime = 0
+  referenceAudio.currentTime = phraseSelection.startSeconds
+  referenceAudio.ontimeupdate = () => {
+    if (!selectedPhraseContains(referenceAudio.currentTime)) referenceAudio.pause()
+  }
   try {
     await waitForMediaReady(referenceAudio)
     await referenceAudio.play()
@@ -325,7 +337,7 @@ function drawLiveMeter(stream) {
 async function poll(id) {
   for (;;) {
     await delay(1400)
-    const response = await apiFetch(`/api/jobs/${id}`)
+    const response = await fetch(`/api/jobs/${id}`)
     if (!response.ok) throw new Error('The analysis could not be found.')
     const job = await response.json()
     if (job.status === 'succeeded') {
@@ -352,6 +364,9 @@ function showPending() {
 
 function renderReport(job) {
   const result = job.result || {}
+  const lesson = result.lesson || { status: 'abstain' }
+  const previousLesson = readRetryLesson()
+  const retryComparison = previousLesson ? compareLessonResults(previousLesson, lesson) : null
   const phrases = result.phrases || []
   reportTitle.textContent = phrases.length ? `${phrases.length} phrase${phrases.length === 1 ? '' : 's'} heard` : 'No clear voiced phrases found'
   formStatus.textContent = 'Analysis complete.'
@@ -373,14 +388,24 @@ function renderReport(job) {
   }).join('')
   const warnings = (result.warnings || []).map(warning => `<p class="warning">${escapeHtml(warning)}</p>`).join('')
 
-  report.innerHTML = `<p class="report-summary">Positive values ran sharp of the reference; negative values ran flat. Belcanto reports the difference before pretending it knows whether the difference was expressive.</p>
+  report.innerHTML = `<section class="lesson-card" aria-labelledby="lesson-title">
+      <p class="kicker">Fix this phrase</p>
+      <h3 id="lesson-title">${escapeHtml(lesson.title || 'One next step')}</h3>
+      <p class="lesson-skill">${escapeHtml(lesson.skill || 'listening practice')}</p>
+      <p>${escapeHtml(lesson.instruction || 'Repeat the phrase and listen for one change.')}</p>
+      ${lesson.observation ? `<p class="lesson-observation"><strong>What SingDeep heard:</strong> ${escapeHtml(lesson.observation)}</p>` : ''}
+      ${lesson.success_metric ? `<p class="lesson-success"><strong>Success looks like:</strong> ${escapeHtml(lesson.success_metric)}</p>` : ''}
+      ${retryComparison ? `<p class="lesson-comparison ${retryComparison.status}"><strong>Retry result:</strong> ${escapeHtml(retryComparison.message)}</p>` : ''}
+      <button id="lesson-retry" class="button primary" type="button">Record the retry</button>
+    </section>
+    <p class="report-summary">This is one measured next step, not a global singing score. Different phrasing can be valid; SingDeep only recommends a correction when the evidence supports it.</p>
     <div class="report-replay" aria-label="Shared-clock A/B replay">
       <button id="ab-replay" class="button primary" type="button" aria-pressed="false">Play shared-clock A/B replay</button>
       <span id="ab-replay-status" class="muted" aria-live="polite">Hear decoded original and take buffers launched on one audio clock.</span>
     </div>
     <div class="report-player">
-      <div><span class="metric-label">Original</span><audio data-report-audio="reference" data-media-path="/api/jobs/${job.id}/media/song" controls preload="metadata"></audio></div>
-      <div><span class="metric-label">Your take</span><audio data-report-audio="take" data-media-path="/api/jobs/${job.id}/media/take" controls preload="metadata"></audio></div>
+      <div><span class="metric-label">Original</span><audio data-report-audio="reference" controls preload="metadata" src="/api/jobs/${job.id}/media/song"></audio></div>
+      <div><span class="metric-label">Your take</span><audio data-report-audio="take" controls preload="metadata" src="/api/jobs/${job.id}/media/take"></audio></div>
     </div>
     <div class="metrics">
       <div class="metric"><span class="metric-label">Mean pitch distance</span><div class="metric-value">${average.toFixed(1)}¢</div></div>
@@ -395,15 +420,37 @@ function renderReport(job) {
   })
   drawPitchChart(phrases)
   current.hidden = false
-  hydrateReportMedia()
   wireReportReplay()
+  const retryButton = $('#lesson-retry')
+  if (retryButton) retryButton.onclick = () => {
+    localStorage.setItem('singdeep-lesson-before', JSON.stringify(lesson))
+    repeatTake()
+    formStatus.textContent = 'Record the same phrase again using the exercise above.'
+  }
 }
 
-async function hydrateReportMedia() {
-  const players = Array.from(report.querySelectorAll('[data-media-path]'))
-  await Promise.all(players.map(async player => {
-    player.src = await authenticatedMediaUrl(player.dataset.mediaPath)
-  }))
+function readRetryLesson() {
+  if (typeof localStorage === 'undefined') return null
+  try {
+    const value = JSON.parse(localStorage.getItem('singdeep-lesson-before') || 'null')
+    return value && typeof value === 'object' ? value : null
+  } catch {
+    return null
+  }
+}
+
+function compareLessonResults(before, after) {
+  if (!before.reason_code || before.reason_code !== after.reason_code) {
+    return { status: 'changed_focus', message: 'The main bottleneck changed. Keep the new exercise; do not combine both corrections yet.' }
+  }
+  const beforeValue = Number(before.evidence?.[0]?.value)
+  const afterValue = Number(after.evidence?.[0]?.value)
+  if (!Number.isFinite(beforeValue) || !Number.isFinite(afterValue)) {
+    return { status: 'insufficient_evidence', message: 'The retry did not produce enough comparable evidence.' }
+  }
+  return Math.abs(afterValue) < Math.abs(beforeValue)
+    ? { status: 'improved', message: 'The targeted measure moved closer to the reference. Repeat once more, then move on.' }
+    : { status: 'not_improved', message: 'The targeted measure did not improve yet. Keep the same exercise and try a slower, smaller phrase.' }
 }
 
 function renderPhraseDetails(phrase) {
@@ -523,7 +570,7 @@ async function startSharedClockReplay(referenceSrc, takeSrc, onEnded) {
 }
 
 async function fetchDecodedBuffer(context, src) {
-  const response = await apiFetch(src)
+  const response = await fetch(src)
   if (!response.ok) throw new Error('audio-fetch-failed')
   return context.decodeAudioData(await response.arrayBuffer())
 }
@@ -565,7 +612,7 @@ function drawPitchChart(phrases) {
 
 async function loadSession() {
   try {
-    const response = await apiFetch('/api/session')
+    const response = await fetch('/api/session')
     const session = await response.json()
     quota.textContent = `${session.free_jobs_remaining} of ${session.free_jobs_per_day} free today`
     renderHistory(session.jobs || [])
@@ -586,7 +633,7 @@ function renderHistory(jobs) {
     </div>`).join('')
   historyList.querySelectorAll('[data-job-id]').forEach(item => {
     const open = async () => {
-      const response = await apiFetch(`/api/jobs/${item.dataset.jobId}`)
+      const response = await fetch(`/api/jobs/${item.dataset.jobId}`)
       const job = await response.json()
       if (job.status === 'succeeded') renderReport(job)
       else if (job.status === 'failed') showError(job.error)
@@ -603,7 +650,7 @@ function renderHistory(jobs) {
   })
   historyList.querySelectorAll('[data-delete]').forEach(button => button.addEventListener('click', async () => {
     button.disabled = true
-    const response = await apiFetch(`/api/jobs/${button.dataset.delete}`, { method: 'DELETE' })
+    const response = await fetch(`/api/jobs/${button.dataset.delete}`, { method: 'DELETE' })
     if (response.ok) await loadSession()
   }))
 }
@@ -615,12 +662,13 @@ function showError(message) {
 }
 
 function updateReadiness() {
-  submit.disabled = !(songFile && takeFile)
+  submit.disabled = !(songFile && phraseSelection.confirmed && takeFile)
+  recordButton.disabled = !songFile || !phraseSelection.confirmed
   repeatTakeButton.hidden = !takeFile
 }
 
 function setBusy(busy) {
-  submit.disabled = busy || !(songFile && takeFile)
+  submit.disabled = busy || !(songFile && phraseSelection.confirmed && takeFile)
   songInput.disabled = busy
   takeInput.disabled = busy
   recordButton.disabled = busy

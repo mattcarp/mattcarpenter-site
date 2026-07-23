@@ -1,18 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta name="belcanto-api" content="https://belcanto-api.91-99-2-222.sslip.io">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Belcanto listens to your vocal take and gives precise, phrase-level feedback without flattening expression into a score.">
+  <meta name="description" content="SingDeep gives you one evidence-based singing exercise, then measures whether the retry improved.">
   <meta name="theme-color" content="#0d0e0c">
-  <meta name="belcanto-api" content="https://belcanto-api.91-99-2-222.sslip.io">
-  <title>Belcanto — a vocal coach with an honest ear</title>
+  <title>SingDeep — fix one phrase at a time</title>
   <link rel="stylesheet" href="static/styles.css">
   <script src="static/app.js" defer></script>
 </head>
 <body>
   <nav class="nav" aria-label="Main navigation">
-    <a class="wordmark" href="#top">Belcanto</a>
+    <a class="wordmark" href="#top">SingDeep</a>
     <div class="nav-meta">
       <span id="quota">Checking free analyses…</span>
       <a href="#studio">Open studio</a>
@@ -21,11 +21,11 @@
 
   <main id="top">
     <header class="hero">
-      <p class="kicker">Private, phrase-level vocal analysis</p>
-      <h1>Sing the song.<br><em>Understand the performance.</em></h1>
-      <p class="lede">Belcanto listens beyond a pitch score. It compares your timing and contour with the original, then shows where you matched it, where you moved away, and whether the move looked controlled.</p>
+      <p class="kicker">Adaptive singing practice</p>
+      <h1>Fix one phrase.<br><em>Hear yourself improve.</em></h1>
+      <p class="lede">SingDeep finds one teachable problem, gives you one concrete exercise, then measures the retry. The original singer is an example—not the definition of correct.</p>
       <div class="hero-actions">
-        <a class="button primary" href="#studio">Try a take</a>
+        <a class="button primary" href="#studio">Fix a phrase</a>
         <a class="text-link" href="#how-it-works">How the ear works</a>
       </div>
     </header>
@@ -37,8 +37,8 @@
     <section id="studio" class="studio" aria-labelledby="studio-title">
       <div class="section-intro">
         <p class="kicker">The studio</p>
-        <h2 id="studio-title">One song. One take. No account.</h2>
-        <p>Load a reference, then record here or choose a vocal take you already have. Headphones are strongly recommended.</p>
+        <h2 id="studio-title">One short phrase. One exercise. One retry.</h2>
+        <p>Choose a 5–15 second reference phrase, then record or upload your voice. Headphones are strongly recommended.</p>
       </div>
 
       <form id="analysis-form">
@@ -47,8 +47,8 @@
             <div class="track-number">01</div>
             <div>
               <p class="track-label">Reference</p>
-              <h3>Choose the original song</h3>
-              <p>Belcanto will isolate its lead vocal before comparing your performance.</p>
+              <h3>Choose a short reference phrase</h3>
+              <p>Use a 5–15 second clip. SingDeep can isolate the singer, but treats that performance as an example rather than absolute ground truth.</p>
             </div>
           </div>
           <label class="file-picker" for="song">
@@ -63,6 +63,11 @@
               <span id="reference-time">0:00 / 0:00</span>
               <input id="reference-seek" type="range" min="0" max="1000" value="0" aria-label="Reference playback position">
             </div>
+          </div>
+          <div class="phrase-selection" id="phrase-selection">
+            <label>Start (seconds)<input id="phrase-start" type="number" min="0" step="0.1" value="0"></label>
+            <label>End (seconds)<input id="phrase-end" type="number" min="5" step="0.1" value="10"></label>
+            <p id="phrase-selection-status" class="status" aria-live="polite">Choose a reference to confirm this 10-second phrase.</p>
           </div>
           <audio id="reference-audio" preload="metadata"></audio>
         </article>
@@ -121,7 +126,7 @@
             <strong>Ready when both tracks are in place.</strong>
             <p>No account, name, email, or card. Recent work stays attached to this browser.</p>
           </div>
-          <button id="submit" class="button primary" type="submit" disabled>Analyze this performance</button>
+          <button id="submit" class="button primary" type="submit" disabled>Find my one next exercise</button>
         </div>
         <p id="form-status" class="status" role="status" aria-live="polite"></p>
       </form>
@@ -144,12 +149,12 @@
     <section id="how-it-works" class="method" aria-labelledby="method-title">
       <div class="section-intro">
         <p class="kicker">What it hears</p>
-        <h2 id="method-title">It listens. It compares. You decide.</h2>
+        <h2 id="method-title">Measure. Practise. Retry.</h2>
       </div>
       <div class="method-grid">
-        <article><span>01</span><h3>Pull out the voice</h3><p>Belcanto separates the lead vocal from the song.</p></article>
-        <article><span>02</span><h3>Compare the take</h3><p>It checks your pitch and timing, phrase by phrase.</p></article>
-        <article><span>03</span><h3>Leave room for taste</h3><p>Different is not always wrong. Belcanto tells you what changed and lets you decide.</p></article>
+        <article><span>01</span><h3>Find the bottleneck</h3><p>SingDeep measures pitch centre, transitions and phrase timing, then chooses one teachable problem.</p></article>
+        <article><span>02</span><h3>Do one exercise</h3><p>You get a concrete vowel, tempo or timing exercise—not a wall of metrics.</p></article>
+        <article><span>03</span><h3>Measure the retry</h3><p>The next take tests whether that intervention helped. Improvement is the score.</p></article>
       </div>
     </section>
 
@@ -163,8 +168,8 @@
   </main>
 
   <footer>
-    <span>Belcanto</span>
-    <span>A vocal coach with an honest ear.</span>
+    <span>SingDeep</span>
+    <span>Fix one phrase at a time.</span>
     <span>Private preview · 2026</span>
   </footer>
 </body>

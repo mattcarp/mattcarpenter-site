@@ -181,6 +181,10 @@ h3 { margin-bottom: 8px; font-size: 22px; line-height: 1.15; letter-spacing: -.0
 .stop-button { width: 100%; background: var(--record); color: #160604; border-color: transparent; font-weight: 750; }
 
 .wave-shell { grid-column: 1 / -1; margin-top: -12px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: #10110e; }
+.phrase-selection { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; }
+.phrase-selection label { display: grid; gap: 7px; color: var(--muted); font-size: 12px; }
+.phrase-selection input { min-height: 44px; border: 1px solid var(--border-bright); border-radius: 9px; background: var(--surface); color: var(--foreground); padding: 0 12px; font: inherit; }
+.phrase-selection .status { grid-column: 1 / -1; margin: 0; text-align: left; }
 .wave-shell canvas { display: block; width: 100%; height: 112px; }
 .transport { display: grid; grid-template-columns: 42px 100px 1fr auto; align-items: center; gap: 12px; margin-top: 8px; color: var(--muted); font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .icon-button, .quiet-button { border: 0; background: transparent; color: var(--foreground); cursor: pointer; }
@@ -208,6 +212,13 @@ input[type='range'] { width: 100%; accent-color: var(--accent); }
 .pipeline span.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .pipeline span.done { color: var(--foreground); }
 .report-summary { max-width: 760px; color: var(--muted); line-height: 1.6; margin: 30px 0; }
+.lesson-card { max-width: 780px; margin: 30px 0; padding: 30px; border: 1px solid var(--accent); border-radius: 18px; background: linear-gradient(135deg, var(--surface), var(--accent-soft)); }
+.lesson-card h3 { margin: 8px 0 6px; font-size: clamp(26px, 4vw, 42px); letter-spacing: -.035em; }
+.lesson-card > p { max-width: 650px; line-height: 1.6; }
+.lesson-skill { color: var(--accent); font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .12em; }
+.lesson-observation, .lesson-success, .lesson-comparison { color: var(--muted); margin-top: 18px; }
+.lesson-comparison.improved { color: var(--accent); }
+.lesson-card .button { margin-top: 22px; }
 .report-replay { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 22px 0; }
 .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .metric { min-height: 120px; padding: 22px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }

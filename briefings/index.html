@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefings — Matt Carpenter</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Daily machine-room log. Mostly for me.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4efe6;
+    --ink: #1a1815;
+    --ink-soft: #5c554a;
+    --gold: #b8902f;
+    --rule: #d8cfbc;
+    --fail: #9a3b2e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    padding: 4rem 1.5rem 6rem;
+  }
+  main { max-width: 42rem; margin: 0 auto; }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 2.2rem;
+    letter-spacing: 0.01em;
+  }
+  p.sub {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin: 0.5rem 0 3rem;
+  }
+  article.briefing {
+    border-top: 1px solid var(--rule);
+    padding: 1.5rem 0;
+  }
+  article.briefing time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  article.briefing ul { list-style: none; }
+  article.briefing li {
+    font-size: 0.9rem;
+    padding: 0.15rem 0;
+    color: var(--ink);
+  }
+  article.briefing li.fail { color: var(--fail); }
+  footer {
+    margin-top: 4rem;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Briefings</h1>
+  <p class="sub">The machine-room log. One entry a day, newest first. Mostly for me.</p>
+  <!-- ENTRIES -->
+<article class="briefing">
+  <time datetime="2026-07-25">2026-07-25</time>
+  <ul>
+<li class="ok">All quiet on homecompanion-head. 8 jobs ran, 0 failures.</li>
+<li class="ok">Weekly Research Digest: 📰 Weekly Research Digest — July 26, 2026</li>
+<li class="ok">Daily Hank Briefing (merged): Hello Fiona, it’s so lovely to spend a little time with you today.</li>
+<li class="ok">Cron Email Forwarder: forwarded digest with 1 job output(s) to matt@mattcarpenter.com</li>
+  </ul>
+</article>
+
+</main>
+<footer><a href="/">mattcarpenter.com</a></footer>
+</body>
+</html>

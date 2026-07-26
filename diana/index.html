@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diana — Matt Carpenter</title>
+<title>Hola, Princesa &mdash; Matt Carpenter</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="A quiet corner of mattcarpenter.com.">
+<meta name="description" content="Un rinc&oacute;n tranquilo de mattcarpenter.com.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,156 +13,143 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4efe6;
-    --bg-deep: #ebe4d6;
-    --ink: #1a1815;
-    --ink-soft: #5c554a;
-    --gold: #b8902f;
-    --gold-hot: #d4a53c;
-    --rule: rgba(26, 24, 21, 0.12);
+    --bg: #f4efe6; --bg-deep: #ebe4d6; --ink: #1a1815; --ink-soft: #5c554a;
+    --gold: #b8902f; --gold-hot: #d4a53c; --rule: rgba(26, 24, 21, 0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: var(--gold); color: var(--bg); }
   html, body {
-    min-height: 100%;
-    background: var(--bg);
-    color: var(--ink);
+    min-height: 100%; background: var(--bg); color: var(--ink);
     font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   }
   body {
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(184, 144, 47, 0.08), transparent 60%),
-      radial-gradient(ellipse at 50% 100%, rgba(26, 24, 21, 0.06), transparent 50%),
+      radial-gradient(ellipse at 50% 0%, rgba(184,144,47,0.08), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(26,24,21,0.06), transparent 50%),
       var(--bg);
-    background-attachment: fixed;
-    position: relative;
-    overflow-x: hidden;
+    background-attachment: fixed; position: relative; overflow-x: hidden;
   }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.7;
-    mix-blend-mode: multiply;
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none; z-index: 1; opacity: 0.7; mix-blend-mode: multiply;
   }
-  .page {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding: 2.5rem 2rem;
-    position: relative;
-    z-index: 2;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 1px solid var(--rule);
-    padding-bottom: 1.5rem;
-    animation: fadeUp 1.2s ease-out both;
-  }
-  .name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
-  .meta {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--ink-soft);
-  }
-  main { display: grid; place-items: center; text-align: center; padding: 4rem 1rem; }
-  .stage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.75rem;
-    max-width: 40rem;
-    animation: fadeUp 1.4s 0.3s ease-out both;
-  }
-  .kicker {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.24em;
-    color: var(--gold);
-  }
-  .statement {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(3rem, 9vw, 6rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .statement::after {
-    content: '';
-    display: block;
-    width: 3rem;
-    height: 1px;
-    background: var(--gold);
-    margin: 1.5rem auto 0;
-    animation: ruleIn 1.2s 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s ease;
-  }
+  .page { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: 2.5rem 2rem; position: relative; z-index: 2; }
+  header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; animation: fadeUp 1.2s ease-out both; }
+  .name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(1.4rem, 2.4vw, 1.9rem); letter-spacing: 0.02em; line-height: 1; }
+  .lang { font-size: 0.72rem; letter-spacing: 0.14em; color: var(--ink-soft); white-space: nowrap; }
+  .lang a { color: var(--ink-soft); cursor: pointer; text-decoration: none; transition: color 0.3s ease; }
+  .lang a:hover { color: var(--ink); }
+  .lang a.active { color: var(--gold); }
+  .lang .sep { margin: 0 0.55rem; opacity: 0.5; }
+  main { display: grid; place-items: center; padding: 3.5rem 1rem; }
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; max-width: 34rem; animation: fadeUp 1.4s 0.3s ease-out both; }
+  .kicker { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.24em; color: var(--gold); text-align: center; }
+  .statement { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.02; letter-spacing: -0.02em; text-align: center; }
+  .statement::after { content: ''; display: block; width: 3rem; height: 1px; background: var(--gold); margin: 1.25rem auto 0; animation: ruleIn 1.2s 1.2s cubic-bezier(0.22,1,0.36,1) both; transition: width 0.6s cubic-bezier(0.22,1,0.36,1), background 0.6s ease; }
   .stage:hover .statement::after { width: 5rem; background: var(--gold-hot); }
-  .lede {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: clamp(1.25rem, 2.6vw, 1.6rem);
-    line-height: 1.4;
-    color: var(--ink);
-  }
-  .fine { font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); max-width: 30rem; }
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-top: 1px solid var(--rule);
-    padding-top: 1.5rem;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--ink-soft);
-    animation: fadeUp 1.2s 0.6s ease-out both;
-  }
+  .lede { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: clamp(1.15rem, 2.6vw, 1.45rem); line-height: 1.45; color: var(--ink-soft); text-align: center; }
+  .prose { text-align: left; font-weight: 300; line-height: 1.75; color: var(--ink); font-size: 1rem; width: 100%; }
+  .prose p { margin: 0 0 1rem; }
+  .prose strong { font-weight: 500; }
+  .prose em.tip { font-style: italic; color: var(--ink-soft); }
+  .prose a.inline { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .prose a.inline:hover { border-color: var(--gold-hot); }
+  .prose ul { list-style: none; margin: 0.25rem 0 1.25rem; }
+  .prose li { padding: 0.55rem 0 0.55rem 1.1rem; border-top: 1px dotted var(--rule); position: relative; }
+  .prose li::before { content: '\2014'; position: absolute; left: 0; color: var(--gold); }
+  .cta-wrap { text-align: center; margin: 1.75rem 0 0; }
+  .cta { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.02em; color: var(--bg); background: var(--gold); padding: 0.75rem 1.4rem; border-radius: 2px; text-decoration: none; transition: background 0.4s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+  .cta:hover { background: var(--gold-hot); transform: translateY(-2px); }
+  .signoff { margin-top: 2.5rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.25rem; color: var(--ink); text-align: center; }
+  .ps { margin-top: 0.75rem; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; text-align: center; }
+  footer { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 1.5rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-soft); animation: fadeUp 1.2s 0.6s ease-out both; }
   footer a { color: var(--ink-soft); text-decoration: none; }
   footer a:hover { color: var(--gold); }
+  body[data-lang="es"] .lang-en { display: none; }
+  body[data-lang="en"] .lang-es { display: none; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes ruleIn { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
-  @media (max-width: 600px) {
-    .page { padding: 1.75rem 1.25rem; }
-    header, footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    main { padding: 3rem 0.5rem; }
-  }
+  @media (max-width: 600px) { .page { padding: 1.75rem 1.25rem; } header, footer { flex-direction: column; gap: 0.75rem; align-items: flex-start; } main { padding: 2.5rem 0.25rem; } }
 </style>
 </head>
-<body>
+<body data-lang="es">
   <div class="page">
     <header>
       <div class="name">Matt Carpenter</div>
-      <div class="meta">For Diana</div>
+      <div class="lang">
+        <a data-lang="en">English</a><span class="sep">|</span><a data-lang="es">Espa&ntilde;ol</a>
+      </div>
     </header>
     <main>
-      <div class="stage">
-        <div class="kicker">mattcarpenter.com / diana</div>
-        <h1 class="statement">Hello, Diana.</h1>
-        <p class="lede">Yep &mdash; you reached the right place, and it works.</p>
-        <p class="fine">This is a placeholder while Matt puts the real thing together. If you can read this, the plumbing is sound and the good stuff is on its way.</p>
+
+      <!-- ESPAÑOL -->
+      <div class="stage lang-es">
+        <div class="kicker">Una nota de Matt</div>
+        <h1 class="statement">Hola, Princesa.</h1>
+        <p class="lede">Princesa Diana ten&iacute;a que tener su propia p&aacute;gina, &iquest;no?</p>
+        <div class="prose">
+          <p>Dijiste que quer&iacute;as aprender sobre inteligencia artificial. Resulta que Malta cre&oacute; el mejor punto de partida del mundo &mdash; y es completamente gratis.</p>
+          <p>Se llama <strong>AI for Everyone</strong> (<em>AI g&#295;al Kul&#295;add</em>): un curso nacional del gobierno malt&eacute;s, hecho con OpenAI y Microsoft. Malta es el primer pa&iacute;s del mundo en ofrecerlo. Es cortito &mdash; unas dos horas, a tu ritmo, en ingl&eacute;s o malt&eacute;s, sin nada t&eacute;cnico. Entras con tu eID y listo.</p>
+          <p>Al terminar recibes:</p>
+          <ul>
+            <li>Un certificado oficial.</li>
+            <li>Un a&ntilde;o gratis de <strong>ChatGPT Plus</strong> o <strong>Microsoft 365 Copilot</strong> &mdash; las versiones de pago, unos &euro;200 al a&ntilde;o. Esa es la mejor parte: no solo aprendes, te llevas un a&ntilde;o de la versi&oacute;n buena. <em class="tip">(Consejo nerd: elige el ChatGPT Plus, no el Copilot &mdash; vas a querer el modelo de verdad, no el asistente de Office.)</em></li>
+          </ul>
+          <p>Lo puede hacer cualquier ciudadano o residente de Malta con eID, sin l&iacute;mite de edad &mdash; hasta sali&oacute; una nota sobre alguien de 98 a&ntilde;os que lo termin&oacute;.</p>
+          <div class="cta-wrap"><a class="cta" href="https://ai4all.gov.mt">Empieza en ai4all.gov.mt &rarr;</a></div>
+          <p class="signoff">&mdash; Matt</p>
+          <p class="ps">P.D. &mdash; S&iacute;, te hice una p&aacute;gina en vez de mandarte un mensaje. Me pareci&oacute; m&aacute;s bonito. L&eacute;ela cuando quieras.</p>
+        </div>
       </div>
+
+      <!-- ENGLISH -->
+      <div class="stage lang-en">
+        <div class="kicker">A note from Matt</div>
+        <h1 class="statement">Hola, Princesa.</h1>
+        <p class="lede">Princess Diana had to have her own page, didn&rsquo;t she?</p>
+        <div class="prose">
+          <p>You said you wanted to get into AI. As it turns out, Malta built the best on-ramp in the world &mdash; and it&rsquo;s completely free.</p>
+          <p>It&rsquo;s called <strong>AI for Everyone</strong> (<em>AI g&#295;al Kul&#295;add</em>): a national course from the Maltese government, made with OpenAI and Microsoft. Malta is the first country in the world to offer it. It&rsquo;s short &mdash; about two hours, self-paced, in English or Maltese, nothing technical. You log in with your eID and you&rsquo;re off.</p>
+          <p>When you finish, you get:</p>
+          <ul>
+            <li>An official certificate.</li>
+            <li>A free year of <strong>ChatGPT Plus</strong> or <strong>Microsoft 365 Copilot</strong> &mdash; the paid tiers, around &euro;200 for the year. That&rsquo;s the best part: you don&rsquo;t just learn, you walk away with a year of the good version. <em class="tip">(Nerdy tip: take the ChatGPT Plus option, not Copilot &mdash; you want the actual frontier model, not the Office assistant.)</em></li>
+          </ul>
+          <p>Open to any Maltese citizen or resident with an eID, no age limit &mdash; there was even a piece about a 98-year-old who finished it.</p>
+          <div class="cta-wrap"><a class="cta" href="https://ai4all.gov.mt">Start at ai4all.gov.mt &rarr;</a></div>
+          <p class="signoff">&mdash; Matt</p>
+          <p class="ps">P.S. &mdash; Yes, I built you a page instead of texting. It felt nicer. Read it whenever.</p>
+        </div>
+      </div>
+
     </main>
     <footer>
       <span>&copy; 2026 Matt Carpenter</span>
       <a href="/">mattcarpenter.com</a>
     </footer>
   </div>
+  <script>
+  (function () {
+    var body = document.body;
+    function set(l) {
+      body.setAttribute('data-lang', l);
+      document.documentElement.setAttribute('lang', l);
+      var links = document.querySelectorAll('.lang a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].classList.toggle('active', links[i].getAttribute('data-lang') === l);
+      }
+    }
+    var links = document.querySelectorAll('.lang a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        set(this.getAttribute('data-lang'));
+      });
+    }
+    set('es');
+  }());
+  </script>
 </body>
 </html>

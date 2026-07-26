@@ -78,6 +78,9 @@
   .andrea-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.35rem; }
   .andrea[data-alang="mt"] .alang-en { display: none; }
   .andrea[data-alang="en"] .alang-mt { display: none; }
+  .contact { width: 100%; max-width: 34rem; margin: 1.5rem auto; text-align: center; font-size: 0.9rem; font-weight: 300; color: var(--ink-soft); }
+  .contact a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  .contact a:hover { border-color: var(--gold-hot); }
   body[data-lang="es"] .lang-en { display: none; }
   body[data-lang="en"] .lang-es { display: none; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -135,8 +138,12 @@
         </div>
       </div>
 
-      <!-- HEY ANDREA -->
+      <!-- SHARED CONTACT -->
       <div class="divider"><span>&#9670;</span></div>
+      <p class="contact">You can both reach me on WhatsApp &mdash; <a href="https://wa.me/35679420492">+356&nbsp;7942&nbsp;0492</a></p>
+      <div class="divider" style="margin-top:1.5rem;"><span>&#9670;</span></div>
+
+      <!-- HEY ANDREAS -->
       <div class="andrea" data-alang="mt">
         <div class="andrea-head">
           <div class="kicker">Hey Andreas</div>

@@ -67,6 +67,13 @@
   footer { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 1.5rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-soft); animation: fadeUp 1.2s 0.6s ease-out both; }
   footer a { color: var(--ink-soft); text-decoration: none; }
   footer a:hover { color: var(--gold); }
+  .divider { width: 100%; max-width: 34rem; margin: 3.75rem auto 0; display: flex; align-items: center; gap: 1.1rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+  .divider span { color: var(--gold); font-size: 0.8rem; line-height: 1; }
+  .andrea { width: 100%; max-width: 34rem; margin: 2rem auto 0; animation: fadeUp 1.4s 0.3s ease-out both; }
+  .andrea .kicker { text-align: left; }
+  .andrea .cta-wrap { text-align: left; }
+  .andrea .ps { text-align: left; }
   body[data-lang="es"] .lang-en { display: none; }
   body[data-lang="en"] .lang-es { display: none; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -121,6 +128,18 @@
           <div class="cta-wrap"><a class="cta" href="https://ai4all.gov.mt">Start at ai4all.gov.mt &rarr;</a></div>
           <p class="signoff">&mdash; Matt</p>
           <p class="ps">P.S. &mdash; Yes, I built you a page instead of texting. It felt nicer. Read it whenever.</p>
+        </div>
+      </div>
+
+      <!-- HEY ANDREA -->
+      <div class="divider"><span>&#9670;</span></div>
+      <div class="andrea">
+        <div class="kicker">Hey Andrea</div>
+        <div class="prose">
+          <p>Heard what you&rsquo;re working on &mdash; biomedical sensors, luminescing molecules to catch cancer early. That&rsquo;s the good stuff, the real tech-for-good.</p>
+          <p>Turns out we&rsquo;re chasing the same thing from different angles: helping people through technology. Mine&rsquo;s <strong>SottoSound</strong> &mdash; devices and software that listen where sound is hard, from voice companions for older people to clinical speech assessment. <em class="tip">&ldquo;Beneath the signal.&rdquo;</em></p>
+          <div class="cta-wrap"><a class="cta" href="https://sottosound.com">See SottoSound &rarr;</a></div>
+          <p class="ps">&mdash; Matt</p>
         </div>
       </div>
 

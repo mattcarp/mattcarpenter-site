@@ -74,6 +74,10 @@
   .andrea .kicker { text-align: left; }
   .andrea .cta-wrap { text-align: left; }
   .andrea .ps { text-align: left; }
+  .andrea .prose em:not(.tip) { font-style: italic; color: var(--ink); }
+  .andrea-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.35rem; }
+  .andrea[data-alang="mt"] .alang-en { display: none; }
+  .andrea[data-alang="en"] .alang-mt { display: none; }
   body[data-lang="es"] .lang-en { display: none; }
   body[data-lang="en"] .lang-es { display: none; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -133,12 +137,27 @@
 
       <!-- HEY ANDREA -->
       <div class="divider"><span>&#9670;</span></div>
-      <div class="andrea">
-        <div class="kicker">Hey Andrea</div>
-        <div class="prose">
+      <div class="andrea" data-alang="mt">
+        <div class="andrea-head">
+          <div class="kicker">Hey Andrea</div>
+          <div class="lang alang"><a data-alang="mt">Malti</a><span class="sep">|</span><a data-alang="en">English</a></div>
+        </div>
+
+        <!-- MALTI -->
+        <div class="prose alang-mt">
+          <p>Smajt b&rsquo;dak li qed ta&#295;dem fuqu &mdash; sensuri bijomedi&#267;i, molekuli li jiddu biex jinstab il-kan&#267;er kmieni. Dak hu x-xog&#295;ol sabi&#295;, it-teknolo&#291;ija li tassew tag&#295;mel il-&#289;id.</p>
+          <p>Jidher li t-tnejn qed infittxu l-istess &#295;a&#291;a minn angoli differenti: <em>ng&#295;inu lin-nies permezz tat-teknolo&#291;ija</em>. Il-pro&#291;ett tieg&#295;i jismu <strong>SottoSound</strong> &mdash; apparat u software li jisimg&#295;u fejn il-&#295;oss huwa diffi&#267;li, minn s&#295;ab bil-vu&#267;i g&#295;all-anzjani sa evalwazzjoni klinika tad-diskors. <em class="tip">&ldquo;Ta&#295;t is-sinjal.&rdquo;</em></p>
+          <div class="cta-wrap"><a class="cta" href="https://sottosound.com">Ara SottoSound &rarr;</a></div>
+          <p class="ps">&#295;a&#291;a o&#295;ra &mdash; il-Maker Faire Malta ssir mit-2 sal-4 ta&rsquo; Ottubru fl-Esplora. Forsi post ideali g&#295;alik.</p>
+          <p class="ps">&mdash; Matt</p>
+        </div>
+
+        <!-- ENGLISH -->
+        <div class="prose alang-en">
           <p>Heard what you&rsquo;re working on &mdash; biomedical sensors, luminescing molecules to catch cancer early. That&rsquo;s the good stuff, the real tech-for-good.</p>
-          <p>Turns out we&rsquo;re chasing the same thing from different angles: helping people through technology. Mine&rsquo;s <strong>SottoSound</strong> &mdash; devices and software that listen where sound is hard, from voice companions for older people to clinical speech assessment. <em class="tip">&ldquo;Beneath the signal.&rdquo;</em></p>
+          <p>Turns out we&rsquo;re chasing the same thing from different angles: <em>helping people through technology</em>. Mine&rsquo;s <strong>SottoSound</strong> &mdash; devices and software that listen where sound is hard, from voice companions for older people to clinical speech assessment. <em class="tip">&ldquo;Beneath the signal.&rdquo;</em></p>
           <div class="cta-wrap"><a class="cta" href="https://sottosound.com">See SottoSound &rarr;</a></div>
+          <p class="ps">One more thing &mdash; Maker Faire Malta is 2&ndash;4 October at Esplora. Might be your kind of crowd.</p>
           <p class="ps">&mdash; Matt</p>
         </div>
       </div>
@@ -151,23 +170,36 @@
   </div>
   <script>
   (function () {
+    // Diana note — header English|Espanol toggle
     var body = document.body;
-    function set(l) {
+    function setDiana(l) {
       body.setAttribute('data-lang', l);
       document.documentElement.setAttribute('lang', l);
-      var links = document.querySelectorAll('.lang a');
+      var links = document.querySelectorAll('header .lang a');
       for (var i = 0; i < links.length; i++) {
         links[i].classList.toggle('active', links[i].getAttribute('data-lang') === l);
       }
     }
-    var links = document.querySelectorAll('.lang a');
-    for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener('click', function (e) {
-        e.preventDefault();
-        set(this.getAttribute('data-lang'));
-      });
+    var dlinks = document.querySelectorAll('header .lang a');
+    for (var i = 0; i < dlinks.length; i++) {
+      dlinks[i].addEventListener('click', function (e) { e.preventDefault(); setDiana(this.getAttribute('data-lang')); });
     }
-    set('es');
+    setDiana('es');
+
+    // Andrea note — local Malti|English toggle
+    var andrea = document.querySelector('.andrea');
+    function setAndrea(l) {
+      andrea.setAttribute('data-alang', l);
+      var links = document.querySelectorAll('.alang a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].classList.toggle('active', links[i].getAttribute('data-alang') === l);
+      }
+    }
+    var alinks = document.querySelectorAll('.alang a');
+    for (var j = 0; j < alinks.length; j++) {
+      alinks[j].addEventListener('click', function (e) { e.preventDefault(); setAndrea(this.getAttribute('data-alang')); });
+    }
+    setAndrea('mt');
   }());
   </script>
 </body>

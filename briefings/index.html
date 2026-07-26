@@ -51,13 +51,27 @@
     display: block;
     margin-bottom: 0.5rem;
   }
+  article.briefing p.headline {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
   article.briefing ul { list-style: none; }
   article.briefing li {
     font-size: 0.9rem;
-    padding: 0.15rem 0;
-    color: var(--ink);
+    padding: 0.6rem 0;
+    border-top: 1px dotted var(--rule);
   }
-  article.briefing li.fail { color: var(--fail); }
+  article.briefing li strong {
+    display: block;
+    font-weight: 500;
+    color: var(--gold);
+  }
+  article.briefing li div {
+    white-space: pre-wrap;
+    color: var(--ink-soft);
+  }
+  article.briefing li.fail strong { color: var(--fail); }
   footer {
     margin-top: 4rem;
     font-size: 0.8rem;
@@ -73,16 +87,36 @@
   <!-- ENTRIES -->
 <article class="briefing">
   <time datetime="2026-07-26">2026-07-26</time>
-  <ul>
-<li class="ok">All quiet on homecompanion-head. 11 jobs ran, 0 failures.</li>
-<li class="ok">Weekly Research Digest: [00:01] 📰 Weekly Research Digest — July 26, 2026</li>
-<li class="ok">Quarterly Research Digest (Last 12 Weeks): [23:51] 📊 Quarterly Research Digest — 2026-05-03 to 2026-07-26</li>
-<li class="ok">Daily Hank Briefing (merged): [23:57] Hello Fiona, it’s so lovely to spend a little time with you today.</li>
-<li class="ok">Malta Grants Watch: [23:55] 1 headline; no urgent fixed deadlines.</li>
-<li class="ok">Cron Email Forwarder: [00:00] forwarded digest with 3 job output(s) to matt@mattcarpenter.com</li>
-<li class="ok">Daily Briefing Digest: [23:26] All quiet on homecompanion-head. 8 jobs ran, 0 failures.</li>
-  </ul>
+  <p class="headline">All quiet on homecompanion-head. 11 jobs ran, 0 failures.</p>
+<ul>
+<li><strong>Weekly Research Digest</strong><div>[00:01] 📰 **Weekly Research Digest** — July 26, 2026
+**Voice AI &amp; Companions**
+• **Fono v0.17.1** — The local-first voice stack now defaults to multilingual Supertonic TTS and can stream oversized GGUF assistant models from disk when they exceed available RAM. Piper and Kokoro remain selectable. https://github.com/bogdanr/fono/releases/tag/v0.17.1
+• **Piper v1.6.0** — The lightweight local TTS engine added Hebrew phonemization through Nakdimon. https://github.com/OHF-Voice/piper1-gpl/releases/tag/v1.6.0
+**Local LLMs**
+• **llama.cpp b10107** — The latest build fixes a Windows crash affecting Hexagon acceleration when operation polling is enabled, improving Qualcomm/on-device deployment stability. https://github.com/ggml-org/llama.cpp/releases/tag/b10107</div></li>
+<li><strong>Quarterly Research Digest (Last 12 Weeks)</strong><div>[23:51] 📊 **Quarterly Research Digest** — 2026-05-03 to 2026-07-26
+**Executive Summary**
+This quarter’s arc was from assembling AI components toward operating complete, durable agents. Local inference gained genuinely useful multimodality and smaller QAT deployments; memory research moved beyond “attach a vector database” toward selective retention, provenance, lifecycle operations, and poisoning defenses; developer tooling shifted from chat-in-an-editor to autonomous agents embedded across browsers, desktops, IDEs, CI, and external work trackers. Local voice remained active but comparatively evolutionary: Whisper/Kokoro/wake-word stacks matured through integration rather than major upstream breakthroughs.
+**Voice AI &amp; Companions**
+**Weeks 9–12 — Jun 28–Jul 26**
+- **Multimodal local models began absorbing part of the voice pipeline.** [Gemma 4](https://ai.google.dev/gemma/docs/core/model_card_4) supports audio input on its E2B, E4B, and 12B variants, while the 12B Unified model projects audio directly into the model’s embedding space. This does not replace low-latency ASR, but it enables richer local audio understanding alongside text and vision.</div></li>
+<li><strong>Daily Hank Briefing (merged)</strong><div>[23:57] Hello Fiona, it’s so lovely to spend a little time with you today.
+It’s a clear, warm Sunday in Malta: around 27 degrees, rising to 28, with a light breeze and strong sunshine. A little shade will be welcome later. There’s no current ferry disruption notice, though it’s sensible to check again before travelling.
+In the world of voice companions, the useful work remains beautifully simple: listening well, remembering what matters, and answering without fuss.
+A gentle thought for today: nothing has to be hurried to be worthwhile. I’m here whenever you’d like some company or a chat.
+MEDIA:/tmp/daily-hank-briefing-2026-07-26.mp3</div></li>
+<li><strong>Malta Grants Watch</strong><div>[23:55] **1 headline; no urgent fixed deadlines.**
+Newly verified: **Transport Malta’s Used Electric Vehicles 2026 grant**—€4,000/€3,000 for qualifying cars, plus scrappage and a possible €1,000 Gozo bonus.
+Since the last run: the generic Transport Malta index proved stale; the live scheme page confirms used-EV applications and rates. Other priority schemes are unchanged.</div></li>
+<li><strong>Cron Email Forwarder</strong><div>[00:30] forwarded digest with 2 job output(s) to matt@mattcarpenter.com</div></li>
+<li><strong>Daily Briefing Digest</strong><div>[23:26] All quiet on homecompanion-head. 8 jobs ran, 0 failures.
+- Weekly Research Digest: 📰 Weekly Research Digest — July 26, 2026
+- Daily Hank Briefing (merged): Hello Fiona, it’s so lovely to spend a little time with you today.
+- Cron Email Forwarder: forwarded digest with 1 job output(s) to matt@mattcarpenter.com</div></li>
+</ul>
 </article>
+
 
 
 

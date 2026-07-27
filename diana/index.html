@@ -77,7 +77,13 @@
   .andrea .prose em:not(.tip) { font-style: italic; color: var(--ink); }
   .andrea { scroll-margin-top: 2.5rem; }
   .andrea p[id] { scroll-margin-top: 2.5rem; padding-left: 0.7rem; margin-left: -0.7rem; border-left: 1px solid transparent; }
-  .andrea p[id].flash { animation: flash 2.2s cubic-bezier(0.22,1,0.36,1) both; }
+  .andrea .note[id] { scroll-margin-top: 2.5rem; }
+  .andrea p[id].flash, .andrea .note[id].flash { animation: flash 2.2s cubic-bezier(0.22,1,0.36,1) both; }
+  .andrea .note { margin-top: 2.25rem; padding-top: 1.4rem; border-top: 1px dotted var(--rule); font-size: 0.86rem; line-height: 1.7; color: var(--ink-soft); }
+  .andrea .note .kicker { font-size: 0.66rem; letter-spacing: 0.2em; margin-bottom: 0.7rem; }
+  .andrea .note p { margin: 0 0 0.7rem; }
+  .andrea .note p:last-child { margin-bottom: 0; }
+  .andrea .note .sus { font-style: italic; color: var(--ink); border-bottom: 1px dotted var(--gold); }
   .andrea-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.35rem; }
   .andrea[data-alang="mt"] .alang-en { display: none; }
   .andrea[data-alang="en"] .alang-mt { display: none; }
@@ -164,6 +170,14 @@
           <div class="cta-wrap"><a class="cta" href="https://sottosound.com">Ara SottoSound &rarr;</a></div>
           <p class="ps">&#294;a&#289;a o&#295;ra &mdash; il-Maker Faire Malta ssir mit-2 sal-4 ta&rsquo; Ottubru fl-Esplora. Forsi post ideali g&#295;alik.</p>
           <p class="ps">&mdash; mac</p>
+
+          <div class="note" id="malti">
+            <div class="kicker">Nota dwar il-Malti</div>
+            <p>Ng&#295;idha &#267;ara: jien ma nitkellemx bil-Malti. Ktibt din it-taqsima bl-Ingli&#380; u nqalbet g&#295;all-Malti bl-g&#295;ajnuna ta&rsquo; magna u b&rsquo;&#295;afna attenzjoni &mdash; imma dak mhux l-istess &#295;a&#289;a b&#295;al meta tkun taf il-lingwa. (Din il-parti wkoll, probabbilment.)</p>
+            <p>Tliet fra&#380;ijiet huma l-ewwel suspettati tieg&#295;i. <span class="sus">is-sinjal ikun nadif b&rsquo;mod ta&rsquo; barra minn hawn</span> &mdash; idjoma mwa&#295;&#295;la flimkien minn b&#267;ejje&#267;. <span class="sus">il-katina tal-kes&#295;a</span> g&#295;al <em>cold chain</em> &mdash; na&#295;seb li int tg&#295;idha bl-Ingli&#380; xorta wa&#295;da. U <span class="sus">nag&#295;milha ta&rsquo; li fhimt kollox</span> &mdash; probabbilment ftit ri&#289;ida.</p>
+            <p>G&#295;idli kif jing&#295;ad tassew u nbidluh fuq il-pa&#289;na. Korrezzjoni ta&rsquo; kelliem nattiv tiswa aktar mill-aqwa stima tieg&#295;i. Ippreferixxi nkun korrett milli nkun sabi&#295;.</p>
+            <p>Dan hu l-patt: int issewwi l-Malti tieg&#295;i, u jien inkompli naqra dwar il-fotoni.</p>
+          </div>
         </div>
 
         <!-- ENGLISH -->
@@ -175,6 +189,14 @@
           <div class="cta-wrap"><a class="cta" href="https://sottosound.com">See SottoSound &rarr;</a></div>
           <p class="ps">One more thing &mdash; Maker Faire Malta is 2&ndash;4 October at Esplora. Might be your kind of crowd.</p>
           <p class="ps">&mdash; mac</p>
+
+          <div class="note" id="translation">
+            <div class="kicker">A note on the Malti</div>
+            <p>Straight with you, since you winced and you were right to: I don&rsquo;t speak Maltese. I wrote this section in English and had it rendered into Malti with machine help and a good deal of care, which is not the same thing as knowing the language. (That paragraph included, probably.)</p>
+            <p>Three phrases are my prime suspects. <span class="sus">is-sinjal ikun nadif b&rsquo;mod ta&rsquo; barra minn hawn</span> &mdash; an idiom welded together out of spare parts. <span class="sus">il-katina tal-kes&#295;a</span> for <em>cold chain</em> &mdash; a calque, and I suspect you&rsquo;d just say it in English anyway. And <span class="sus">nag&#295;milha ta&rsquo; li fhimt kollox</span> &mdash; probably a shade stiff.</p>
+            <p>Tell me what a Maltese speaker would actually say and I&rsquo;ll change it on the page. A native correction beats my best guess. I&rsquo;d rather be right than flattering.</p>
+            <p>That&rsquo;s the trade: you fix my Malti, I keep reading about photons.</p>
+          </div>
         </div>
       </div>
 
@@ -225,7 +247,9 @@
     var TARGETS = {
       ziju: { alang: 'mt', sel: '#ziju' },
       uncle: { alang: 'en', sel: '#uncle' },
-      andreas: { alang: null, sel: '.andrea' }
+      andreas: { alang: null, sel: '.andrea' },
+      malti: { alang: 'mt', sel: '#malti' },
+      translation: { alang: 'en', sel: '#translation' }
     };
     function openHash(instant) {
       var key = (window.location.hash || '').replace('#', '').toLowerCase();

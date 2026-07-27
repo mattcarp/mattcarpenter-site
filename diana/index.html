@@ -75,6 +75,9 @@
   .andrea .cta-wrap { text-align: left; margin: 1.75rem 0 1.4rem; }
   .andrea .ps { text-align: left; }
   .andrea .prose em:not(.tip) { font-style: italic; color: var(--ink); }
+  .andrea { scroll-margin-top: 2.5rem; }
+  .andrea p[id] { scroll-margin-top: 2.5rem; padding-left: 0.7rem; margin-left: -0.7rem; border-left: 1px solid transparent; }
+  .andrea p[id].flash { animation: flash 2.2s cubic-bezier(0.22,1,0.36,1) both; }
   .andrea-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.35rem; }
   .andrea[data-alang="mt"] .alang-en { display: none; }
   .andrea[data-alang="en"] .alang-mt { display: none; }
@@ -85,6 +88,8 @@
   body[data-lang="en"] .lang-es { display: none; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes ruleIn { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+  @keyframes flash { 0%, 12% { background: rgba(184,144,47,0.15); border-left-color: var(--gold); } 100% { background: transparent; border-left-color: transparent; } }
+  @media (prefers-reduced-motion: reduce) { .andrea p[id].flash { animation: none; } }
   @media (max-width: 600px) { .page { padding: 1.75rem 1.25rem; } header, footer { flex-direction: column; gap: 0.75rem; align-items: flex-start; } main { padding: 2.5rem 0.25rem; } }
 </style>
 </head>
@@ -154,7 +159,7 @@
         <div class="prose alang-mt">
           <p>Mort naqra fuq dak li rrakkuntajtli, g&#295;ax ma ridtx nag&#295;milha ta&rsquo; li fhimt kollox. Mela: sensur bijolo&#289;iku hu mag&#295;mul minn &#380;ew&#289; partijiet &mdash; wa&#295;da li ta&#295;taf il-molekula li tfittex, u o&#295;ra li tibdel dak il-qbid f&rsquo;sinjal. Int fuq it-tieni parti, u dik hi l-eleganti. Dawl, mhux elettroni.</p>
           <p>Dak li g&#295;adni ma nafx hu fuq liema tarf qieg&#295;ed. <em>Bijolumines&#267;enti</em> &mdash; lu&#267;iferasi li tag&#295;mel id-dawl tag&#295;ha stess, bla dawl minn barra, u g&#295;alhekk kwa&#380;i bla storbju fl-isfond? Jew <em>fluoressenti</em>, fejn tixg&#295;el dawl minn barra u t&#295;allas g&#295;alih bl-awtofluoressenza? Jekk hi l-ewwel, is-sinjal ikun nadif b&rsquo;mod ta&rsquo; barra minn hawn &mdash; imma jkollok tipprovdi s-substrat, u d-dawl blu bil-kemm jo&#295;ro&#289; mit-tessut. Liema kompromess g&#295;a&#380;el il-laboratorju tag&#295;kom?</p>
-          <p>U semmejt li z-ziju tieg&#295;ek hu onkologu. Dik hi l-parti li g&#295;adni na&#295;seb fuqha. Staqsih g&#295;alija: x&rsquo;inhu tassew li ma j&#295;allix test tajjeb jasal g&#295;and pazjent? Jien ng&#295;id li mhix is-sensittivit&agrave; &mdash; hu l-prezz g&#295;al kull test, il-katina tal-kes&#295;a, u min hu m&#295;arre&#289; biex jaqra r-ri&#380;ultat.</p>
+          <p id="ziju">U semmejt li z-ziju tieg&#295;ek hu onkologu. Dik hi l-parti li g&#295;adni na&#295;seb fuqha. Staqsih g&#295;alija: x&rsquo;inhu tassew li ma j&#295;allix test tajjeb jasal g&#295;and pazjent? Jien ng&#295;id li mhix is-sensittivit&agrave; &mdash; hu l-prezz g&#295;al kull test, il-katina tal-kes&#295;a, u min hu m&#295;arre&#289; biex jaqra r-ri&#380;ultat.</p>
           <p>Jidher li t-tnejn qed infittxu l-istess &#295;a&#289;a minn angoli differenti: <em>ng&#295;inu lin-nies permezz tat-teknolo&#289;ija</em>. Il-pro&#289;ett tieg&#295;i jismu <strong>SottoSound</strong> &mdash; apparat u software li jisimg&#295;u fejn il-&#295;oss huwa diffi&#267;li, minn s&#295;ab bil-vu&#267;i g&#295;all-anzjani sa evalwazzjoni klinika tad-diskors. <em class="tip">&ldquo;Ta&#295;t is-sinjal.&rdquo;</em></p>
           <div class="cta-wrap"><a class="cta" href="https://sottosound.com">Ara SottoSound &rarr;</a></div>
           <p class="ps">&#294;a&#289;a o&#295;ra &mdash; il-Maker Faire Malta ssir mit-2 sal-4 ta&rsquo; Ottubru fl-Esplora. Forsi post ideali g&#295;alik.</p>
@@ -165,7 +170,7 @@
         <div class="prose alang-en">
           <p>I went and read up on what you were telling me, because nodding politely felt cheap. So: a biosensor is two parts bolted together &mdash; something that grabs the molecule you care about, and something that turns <em>grabbed it</em> into a signal. Yours is the second part, and it&rsquo;s the elegant one. Light instead of electrons.</p>
           <p>What I can&rsquo;t work out is which end you&rsquo;re on. <em>Bioluminescent</em> &mdash; a luciferase making its own photons, no excitation light, so almost no background to fight? Or <em>fluorescent</em>, where you shine light in and pay for it in autofluorescence? If it&rsquo;s the first, the signal-to-noise is absurd &mdash; but you&rsquo;re supplying substrate, and blue photons barely escape tissue. Which trade-off did your lab decide to eat?</p>
-          <p>And you mentioned your uncle&rsquo;s an oncologist. That&rsquo;s the part I keep turning over. Ask him this for me: what actually stops a good assay from reaching a patient? My bet is it&rsquo;s never the sensitivity. It&rsquo;s cost per test, cold chain, and who&rsquo;s trained to read the result.</p>
+          <p id="uncle">And you mentioned your uncle&rsquo;s an oncologist. That&rsquo;s the part I keep turning over. Ask him this for me: what actually stops a good assay from reaching a patient? My bet is it&rsquo;s never the sensitivity. It&rsquo;s cost per test, cold chain, and who&rsquo;s trained to read the result.</p>
           <p>Feels like we&rsquo;re chasing the same thing from different angles: <em>helping people through technology</em>. Mine&rsquo;s <strong>SottoSound</strong> &mdash; devices and software that listen where sound is hard, from voice companions for older people to clinical speech assessment. <em class="tip">&ldquo;Beneath the signal.&rdquo;</em></p>
           <div class="cta-wrap"><a class="cta" href="https://sottosound.com">See SottoSound &rarr;</a></div>
           <p class="ps">One more thing &mdash; Maker Faire Malta is 2&ndash;4 October at Esplora. Might be your kind of crowd.</p>
@@ -211,6 +216,35 @@
       alinks[j].addEventListener('click', function (e) { e.preventDefault(); setAndrea(this.getAttribute('data-alang')); });
     }
     setAndrea('mt');
+
+    // Deep links. The two language blocks are separate nodes and the inactive
+    // one is display:none, so the hash must pick the language BEFORE scrolling.
+    //   #ziju    -> uncle paragraph, Malti
+    //   #uncle   -> uncle paragraph, English
+    //   #andreas -> top of the section, language left as-is
+    var TARGETS = {
+      ziju: { alang: 'mt', sel: '#ziju' },
+      uncle: { alang: 'en', sel: '#uncle' },
+      andreas: { alang: null, sel: '.andrea' }
+    };
+    function openHash(instant) {
+      var key = (window.location.hash || '').replace('#', '').toLowerCase();
+      var t = TARGETS[key];
+      if (!t) return;
+      if (t.alang) setAndrea(t.alang);
+      var el = document.querySelector(t.sel);
+      if (!el) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: (instant || reduce) ? 'auto' : 'smooth', block: 'start' });
+      if (el.id) {
+        el.classList.remove('flash');
+        void el.offsetWidth; // force reflow so the animation replays on repeat clicks
+        el.classList.add('flash');
+      }
+    }
+    // On first load, let the entry animations settle before scrolling.
+    if (window.location.hash) { window.setTimeout(function () { openHash(false); }, 350); }
+    window.addEventListener('hashchange', function () { openHash(false); });
   }());
   </script>
 </body>

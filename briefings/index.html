@@ -6,179 +6,195 @@
 <title>Mattie's Briefs — Matt Carpenter</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Daily machine-room log. Mostly for me.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090b">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* MC house system — see second-brain/Areas/design/mc-house-system.md
+     Two colour tiers: --ac-* are UI accents (borders, dots, labels);
+     --dv-* are validated data marks (OKLCH L 0.48-0.67, CVD-checked).
+     Never use an accent as a chart fill. */
   :root {
-    --bg: #f4efe6;
-    --ink: #1a1815;
-    --ink-soft: #5c554a;
-    --gold: #b8902f;
-    --rule: #d8cfbc;
-    --fail: #9a3b2e;
+    --bg:#08090b; --panel:#0f1114; --panel-2:#12151a;
+    --line:#1e2228; --line-2:#2a3038;
+    --ink:#e8ecf0; --dim:#8a929b; --faint:#585f68;
+    --ac-green:#6ee7b7; --ac-amber:#f5c451; --ac-blue:#7aa7ff;
+    --ac-orange:#ff8f4a; --ac-red:#ef4444;
+    --dv-1:#0ea175; --dv-2:#af8100; --dv-3:#5c87dc; --dv-4:#d26617;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --sans:ui-sans-serif,-apple-system,"SF Pro Text",Inter,system-ui,sans-serif;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-    padding: 4rem 1.5rem 6rem;
+    background:var(--bg); color:var(--ink);
+    font:400 15px/1.5 var(--sans);
+    -webkit-font-smoothing:antialiased;
+    padding:22px 16px 60px;
   }
-  main { max-width: 42rem; margin: 0 auto; }
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 2.2rem;
-    letter-spacing: 0.01em;
+  main { max-width:660px; margin:0 auto; }
+
+  /* ── masthead ─────────────────────────────────────────────── */
+  .mast { display:flex; justify-content:space-between; align-items:baseline;
+          gap:14px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  h1 { font:700 13px/1 var(--mono); letter-spacing:.22em; }
+  h1 span { color:var(--ac-orange); }
+  .mast .s { font:500 10px/1.4 var(--mono); color:var(--faint);
+             letter-spacing:.06em; text-align:right; white-space:nowrap; }
+  .sub { font:400 11px/1.4 var(--mono); color:var(--faint);
+         letter-spacing:.03em; margin-top:7px; }
+
+  /* ── stat strip ───────────────────────────────────────────── */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+           background:var(--line); border:1px solid var(--line);
+           border-radius:10px; overflow:hidden; margin:15px 0 14px; }
+  .stat { background:var(--panel); padding:11px 10px; }
+  .stat b { display:block; font:600 19px/1 var(--mono); letter-spacing:-.02em; }
+  .stat span { display:block; font:500 8.5px/1.3 var(--mono); letter-spacing:.1em;
+               color:var(--faint); margin-top:5px; text-transform:uppercase; }
+  .stat.g b { color:var(--ac-green); }
+  .stat.o b { color:var(--ac-orange); }
+  @media (max-width:520px){ .stats{grid-template-columns:repeat(2,1fr)} }
+
+  /* ── source filter ────────────────────────────────────────── */
+  .filters { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:22px; }
+  .filters button {
+    appearance:none; cursor:pointer;
+    font:500 10px/1 var(--mono); letter-spacing:.06em;
+    color:var(--dim); background:var(--panel);
+    border:1px solid var(--line); border-radius:5px; padding:6px 8px;
+    transition:background .15s,color .15s,border-color .15s;
   }
-  p.sub {
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    margin: 0.5rem 0 0;
+  .filters button:hover { color:var(--ink); border-color:var(--line-2); }
+  .filters button[aria-pressed="true"] {
+    color:var(--bg); background:var(--ac-orange); border-color:var(--ac-orange);
   }
-  p.sub em { font-style: italic; }
-  p.sub-fine {
-    font-size: 0.78rem;
-    opacity: 0.7;
-    margin: 1.35rem 0 3rem;
-  }
+  .filters button i { font-style:normal; opacity:.55; margin-left:5px; }
+
+  /* ── an entry ─────────────────────────────────────────────── */
   article.briefing {
-    border-top: 1px solid var(--rule);
-    padding: 1.5rem 0;
+    border-top:1px solid var(--line);
+    padding:19px 0 21px;
+    scroll-margin-top:16px;
   }
+  article.briefing[hidden] { display:none; }
   article.briefing p.meta {
-    display: flex;
-    align-items: baseline;
-    gap: 0.7rem;
-    margin-bottom: 0.3rem;
-    flex-wrap: wrap;
+    display:flex; align-items:baseline; gap:9px;
+    flex-wrap:wrap; margin-bottom:7px;
   }
   article.briefing time {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.95rem;
-    color: var(--gold);
-    letter-spacing: 0.02em;
+    font:500 10.5px/1 var(--mono); letter-spacing:.05em; color:var(--faint);
   }
   article.briefing .source {
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--ink-soft);
-    opacity: 0.72;
+    font:600 8.5px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ac-blue); border:1px solid #25375c; background:#0d1219;
+    border-radius:4px; padding:4px 6px;
   }
+  article.briefing .rel { font:500 10px/1 var(--mono); color:var(--faint); opacity:.75; }
   article.briefing h2.headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 1.5rem;
-    line-height: 1.28;
-    color: var(--ink);
-    margin-bottom: 0.9rem;
+    font:640 19px/1.24 var(--sans); letter-spacing:-.02em;
+    color:var(--ink); margin-bottom:11px;
   }
-  article.briefing h2.headline.long {
-    font-size: 1.2rem;
-    line-height: 1.35;
+  article.briefing h2.headline.long { font-size:15.5px; line-height:1.34; }
+  article.briefing p.headline { font-weight:600; font-size:15px; margin-bottom:11px; }
+
+  /* legacy digest shape: ul > li > strong + div */
+  article.briefing > .body > ul { list-style:none; }
+  article.briefing > .body > ul > li {
+    font-size:13.5px; padding:9px 0; border-top:1px solid var(--line);
   }
-  article.briefing p.headline {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+  article.briefing > .body > ul > li:first-child { border-top:0; padding-top:0; }
+  article.briefing > .body > ul > li > strong {
+    display:block; font:600 9.5px/1 var(--mono); letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ac-green); margin-bottom:6px;
   }
-  article.briefing ul { list-style: none; }
-  article.briefing li {
-    font-size: 0.9rem;
-    padding: 0.6rem 0;
-    border-top: 1px dotted var(--rule);
+  article.briefing > .body > ul > li > div {
+    white-space:pre-wrap; color:var(--dim); font-size:13px; line-height:1.5;
   }
-  article.briefing li strong {
-    display: block;
-    font-weight: 500;
-    color: var(--gold);
-  }
-  article.briefing li div {
-    white-space: pre-wrap;
-    color: var(--ink-soft);
-  }
-  article.briefing li.fail strong { color: var(--fail); }
-  figure.lead-image {
-    margin: 0 0 1.5rem;
-  }
+  article.briefing > .body > ul > li.fail > strong { color:var(--ac-red); }
+
+  figure.lead-image { margin:0 0 15px; }
   figure.lead-image img {
-    width: 100%;
-    max-height: 260px;
-    object-fit: cover;
-    border: 1px solid var(--rule);
-    display: block;
-    filter: saturate(0.82) contrast(0.96);
+    width:100%; max-height:250px; object-fit:cover; display:block;
+    border:1px solid var(--line); border-radius:8px; filter:saturate(.9);
   }
-  article.briefing div.body {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-  }
-  article.briefing div.body p { margin-bottom: 0.85rem; }
-  article.briefing div.body p:last-child { margin-bottom: 0; }
+
+  /* ── body prose ───────────────────────────────────────────── */
+  article.briefing div.body { font-size:13.5px; color:var(--dim); line-height:1.5; }
+  article.briefing div.body p { margin-bottom:10px; }
+  article.briefing div.body p:last-child { margin-bottom:0; }
   article.briefing div.body h3 {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--ink);
-    margin: 1.5rem 0 0.6rem;
+    font:600 9.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
+    color:var(--faint); margin:20px 0 9px;
   }
-  article.briefing div.body h3:first-child { margin-top: 0; }
-  article.briefing div.body ul.items {
-    list-style: none;
-    margin-bottom: 0.9rem;
-  }
+  article.briefing div.body h3:first-child { margin-top:0; }
+  article.briefing div.body ul.items { list-style:none; margin-bottom:11px;
+    display:flex; flex-direction:column; gap:6px; }
   article.briefing div.body ul.items li {
-    border: 0;
-    padding: 0.3rem 0 0.3rem 1.05rem;
-    text-indent: -1.05rem;
-    font-size: 0.9rem;
+    font-size:13.5px; line-height:1.42; padding-left:15px; position:relative;
   }
   article.briefing div.body ul.items li::before {
-    content: '—';
-    color: var(--gold);
-    margin-right: 0.45rem;
+    content:""; position:absolute; left:2px; top:8px;
+    width:4px; height:4px; border-radius:50%; background:var(--faint);
   }
-  article.briefing div.body svg {
-    display: block;
-    margin: 0.35rem 0 1.6rem;
-    overflow: visible;
-  }
+  article.briefing div.body svg { display:block; margin:6px 0 18px; overflow:visible; }
   article.briefing div.body p.hero {
-    font-variant-numeric: proportional-nums;
-    letter-spacing: -0.02em;
+    font:600 44px/1 var(--mono) !important; letter-spacing:-.03em;
+    color:var(--ink) !important; margin:2px 0 4px !important;
   }
-  article.briefing div.body p.hero + p {
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-  }
+  article.briefing div.body p.hero + p { font-size:12.5px; color:var(--dim); }
   article.briefing div.body code {
-    font-size: 0.82em;
-    background: rgba(0,0,0,0.04);
-    padding: 0.1em 0.35em;
-    border-radius: 3px;
+    font:500 11.5px var(--mono); background:var(--panel-2);
+    border:1px solid var(--line-2); border-radius:4px;
+    padding:1px 5px; color:var(--ink);
   }
-  article.briefing div.body a { color: var(--gold); }
-  article.briefing div.body em { font-style: italic; }
-  footer {
-    margin-top: 4rem;
-    font-size: 0.8rem;
-    color: var(--ink-soft);
+  article.briefing div.body a { color:var(--ac-amber); text-decoration:none;
+    border-bottom:1px solid #4a3d18; }
+  article.briefing div.body a:hover { border-bottom-color:var(--ac-amber); }
+  article.briefing div.body strong { color:var(--ink); font-weight:600; }
+  article.briefing div.body em { font-style:italic; }
+
+  .permalink { float:right; font:500 10px/1 var(--mono); color:var(--faint);
+    text-decoration:none; opacity:0; transition:opacity .15s; }
+  article.briefing:hover .permalink { opacity:1; }
+  .permalink:hover { color:var(--ac-orange); }
+
+  .empty { padding:34px 0; text-align:center; color:var(--faint);
+    font:400 11.5px/1.6 var(--mono); }
+
+  footer { margin-top:34px; padding-top:13px; border-top:1px solid var(--line);
+    font:400 10.5px/1.5 var(--mono); color:var(--faint); letter-spacing:.02em;
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  footer a { color:var(--dim); text-decoration:none; }
+  footer a:hover { color:var(--ac-orange); }
+
+  @media print {
+    body { background:#fff; color:#000; padding:0; }
+    .filters, .permalink { display:none; }
+    .stat, article.briefing { background:#fff; border-color:#ccc; }
+    article.briefing div.body, article.briefing time { color:#333; }
   }
-  footer a { color: var(--ink-soft); }
 </style>
 </head>
 <body>
 <main>
-  <h1>Mattie&rsquo;s Briefs</h1>
-  <p class="sub"><em>Let&rsquo;s get into them.</em></p>
-  <p class="sub sub-fine">Updated when there&rsquo;s something to say, newest first.</p>
+  <div class="mast">
+    <div>
+      <h1>MATTIE<span>&middot;</span>S BRIEFS</h1>
+      <div class="sub">DAILY MACHINE-ROOM LOG &middot; MOSTLY FOR ME</div>
+    </div>
+    <div class="s" id="stamp">&mdash;</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="k-total">&mdash;</b><span>entries</span></div>
+    <div class="stat g"><b id="k-sources">&mdash;</b><span>sources</span></div>
+    <div class="stat o"><b id="k-latest">&mdash;</b><span>latest</span></div>
+    <div class="stat"><b id="k-span">&mdash;</b><span>days covered</span></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="empty" id="empty" hidden>Nothing under that source.</div>
+
   <!-- ENTRIES -->
 <article class="briefing">
   <p class="meta"><time datetime="2026-07-31T10:01+0200">2026-07-31 · 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
@@ -229,16 +245,16 @@
   <p class="meta"><time datetime="2026-07-27T13:33+0200">2026-07-27 · 13:33 CEST</time><span class="source">Spend Report</span></p>
   <h2 class="headline">$344 of inference this month — 86% of the $400 ceiling</h2>
   <div class="body">
-    <p class="hero" style="font-family:Inter,sans-serif;font-size:52px;line-height:1;color:#1a1815;margin:0.2rem 0 0.1rem">$344</p>
+    <p class="hero">$344</p>
     <p style="margin:0 0 1.4rem">spent on inference so far this month · 86% of the $400 ceiling</p>
-    <svg viewBox="0 0 620 30" width="100%" role="img" aria-label="Spend against the monthly ceiling"><rect x="0" y="10" width="620" height="10" rx="5" fill="#d8cfbc"/><rect x="0" y="10" width="532.7" height="10" rx="5" fill="#a3572c"><title>$344 of a $400 ceiling</title></rect></svg>
+    <svg viewBox="0 0 620 30" width="100%" role="img" aria-label="Spend against the monthly ceiling"><rect x="0" y="10" width="620" height="10" rx="5" fill="#1e2228"/><rect x="0" y="10" width="532.7" height="10" rx="5" fill="#d26617"><title>$344 of a $400 ceiling</title></rect></svg>
     <h3>Daily, the last 30 days</h3>
-    <svg viewBox="0 0 620 120" width="100%" role="img" aria-label="Daily inference spend, last 30 days"><line x1="0" y1="98" x2="620" y2="98" stroke="#d8cfbc" stroke-width="1"/><path d="M3.3,98 L3.3,84.3 Q3.3,80.3 7.3,80.3 L13.3,80.3 Q17.3,80.3 17.3,84.3 L17.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sun 28 Jun — $10.85</title></path><path d="M24.0,98 L24.0,90.1 Q24.0,86.1 28.0,86.1 L34.0,86.1 Q38.0,86.1 38.0,90.1 L38.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Mon 29 Jun — $7.29</title></path><path d="M44.7,98 L44.7,96.8 Q44.7,95.6 45.9,95.6 L57.5,95.6 Q58.7,95.6 58.7,96.8 L58.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Tue 30 Jun — $1.47</title></path><path d="M65.3,98 L65.3,88.4 Q65.3,84.4 69.3,84.4 L75.3,84.4 Q79.3,84.4 79.3,88.4 L79.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Wed 1 Jul — $8.32</title></path><path d="M86.0,98 L86.0,30.5 Q86.0,26.5 90.0,26.5 L96.0,26.5 Q100.0,26.5 100.0,30.5 L100.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Thu 2 Jul — $43.74</title></path><path d="M106.7,98 L106.7,94.4 Q106.7,90.8 110.3,90.8 L117.0,90.8 Q120.7,90.8 120.7,94.4 L120.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Fri 3 Jul — $4.43</title></path><path d="M127.3,98 L127.3,28.7 Q127.3,24.7 131.3,24.7 L137.3,24.7 Q141.3,24.7 141.3,28.7 L141.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sat 4 Jul — $44.86</title></path><path d="M148.0,98 L148.0,97.2 Q148.0,96.5 148.8,96.5 L161.3,96.5 Q162.0,96.5 162.0,97.2 L162.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sun 5 Jul — $0.33</title></path><path d="M168.7,98 L168.7,82.2 Q168.7,78.2 172.7,78.2 L178.7,78.2 Q182.7,78.2 182.7,82.2 L182.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Mon 6 Jul — $12.11</title></path><path d="M189.3,98 L189.3,56.1 Q189.3,52.1 193.3,52.1 L199.3,52.1 Q203.3,52.1 203.3,56.1 L203.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Tue 7 Jul — $28.09</title></path><path d="M210.0,98 L210.0,93.1 Q210.0,89.1 214.0,89.1 L220.0,89.1 Q224.0,89.1 224.0,93.1 L224.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Wed 8 Jul — $5.46</title></path><path d="M230.7,98 L230.7,96.0 Q230.7,94.0 232.7,94.0 L242.7,94.0 Q244.7,94.0 244.7,96.0 L244.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Thu 9 Jul — $2.47</title></path><path d="M251.3,98 L251.3,85.3 Q251.3,81.3 255.3,81.3 L261.3,81.3 Q265.3,81.3 265.3,85.3 L265.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Fri 10 Jul — $10.20</title></path><path d="M272.0,98 L272.0,95.4 Q272.0,92.7 274.6,92.7 L283.4,92.7 Q286.0,92.7 286.0,95.4 L286.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sat 11 Jul — $3.21</title></path><path d="M292.7,98 L292.7,75.2 Q292.7,71.2 296.7,71.2 L302.7,71.2 Q306.7,71.2 306.7,75.2 L306.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sun 12 Jul — $16.38</title></path><path d="M313.3,98 L313.3,50.1 Q313.3,46.1 317.3,46.1 L323.3,46.1 Q327.3,46.1 327.3,50.1 L327.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Mon 13 Jul — $31.79</title></path><path d="M334.0,98 L334.0,97.2 Q334.0,96.5 334.8,96.5 L347.2,96.5 Q348.0,96.5 348.0,97.2 L348.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Tue 14 Jul — $0.16</title></path><path d="M354.7,98 L354.7,97.2 Q354.7,96.5 355.4,96.5 L367.9,96.5 Q368.7,96.5 368.7,97.2 L368.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Wed 15 Jul — $0.10</title></path><path d="M375.3,98 L375.3,88.1 Q375.3,84.1 379.3,84.1 L385.3,84.1 Q389.3,84.1 389.3,88.1 L389.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Thu 16 Jul — $8.51</title></path><path d="M396.0,98 L396.0,97.2 Q396.0,96.5 396.8,96.5 L409.2,96.5 Q410.0,96.5 410.0,97.2 L410.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Fri 17 Jul — $0.08</title></path><path d="M416.7,98 L416.7,18.0 Q416.7,14.0 420.7,14.0 L426.7,14.0 Q430.7,14.0 430.7,18.0 L430.7,98 Z" fill="#a05c52" fill-opacity="1"><title>Sat 18 Jul — $51.41</title></path><path d="M437.3,98 L437.3,97.2 Q437.3,96.5 438.1,96.5 L450.6,96.5 Q451.3,96.5 451.3,97.2 L451.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sun 19 Jul — $0.00</title></path><path d="M458.0,98 L458.0,97.2 Q458.0,96.5 458.8,96.5 L471.2,96.5 Q472.0,96.5 472.0,97.2 L472.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Mon 20 Jul — $0.00</title></path><path d="M478.7,98 L478.7,96.9 Q478.7,95.8 479.8,95.8 L491.6,95.8 Q492.7,95.8 492.7,96.9 L492.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Tue 21 Jul — $1.36</title></path><path d="M499.3,98 L499.3,96.8 Q499.3,95.5 500.6,95.5 L512.1,95.5 Q513.3,95.5 513.3,96.8 L513.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Wed 22 Jul — $1.50</title></path><path d="M520.0,98 L520.0,40.8 Q520.0,36.8 524.0,36.8 L530.0,36.8 Q534.0,36.8 534.0,40.8 L534.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Thu 23 Jul — $37.43</title></path><path d="M540.7,98 L540.7,94.2 Q540.7,90.4 544.5,90.4 L550.9,90.4 Q554.7,90.4 554.7,94.2 L554.7,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Fri 24 Jul — $4.63</title></path><path d="M561.3,98 L561.3,85.8 Q561.3,81.8 565.3,81.8 L571.3,81.8 Q575.3,81.8 575.3,85.8 L575.3,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sat 25 Jul — $9.94</title></path><path d="M582.0,98 L582.0,73.9 Q582.0,69.9 586.0,69.9 L592.0,69.9 Q596.0,69.9 596.0,73.9 L596.0,98 Z" fill="#a05c52" fill-opacity="0.55"><title>Sun 26 Jul — $17.17</title></path><path d="M602.7,98 L602.7,97.2 Q602.7,96.5 603.4,96.5 L615.9,96.5 Q616.7,96.5 616.7,97.2 L616.7,98 Z" fill="#a05c52" fill-opacity="1"><title>Mon 27 Jul — $0.00</title></path><text x="423.7" y="9.0" text-anchor="middle" font-size="10" fill="#5c554a" font-family="Inter,sans-serif">peak $51.41</text><text x="0" y="114" text-anchor="start" font-size="10" fill="#5c554a" font-family="Inter,sans-serif">28 Jun</text><text x="620" y="114" text-anchor="end" font-size="10" fill="#5c554a" font-family="Inter,sans-serif">27 Jul</text></svg>
+    <svg viewBox="0 0 620 120" width="100%" role="img" aria-label="Daily inference spend, last 30 days"><line x1="0" y1="98" x2="620" y2="98" stroke="#1e2228" stroke-width="1"/><path d="M3.3,98 L3.3,84.3 Q3.3,80.3 7.3,80.3 L13.3,80.3 Q17.3,80.3 17.3,84.3 L17.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sun 28 Jun — $10.85</title></path><path d="M24.0,98 L24.0,90.1 Q24.0,86.1 28.0,86.1 L34.0,86.1 Q38.0,86.1 38.0,90.1 L38.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Mon 29 Jun — $7.29</title></path><path d="M44.7,98 L44.7,96.8 Q44.7,95.6 45.9,95.6 L57.5,95.6 Q58.7,95.6 58.7,96.8 L58.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Tue 30 Jun — $1.47</title></path><path d="M65.3,98 L65.3,88.4 Q65.3,84.4 69.3,84.4 L75.3,84.4 Q79.3,84.4 79.3,88.4 L79.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Wed 1 Jul — $8.32</title></path><path d="M86.0,98 L86.0,30.5 Q86.0,26.5 90.0,26.5 L96.0,26.5 Q100.0,26.5 100.0,30.5 L100.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Thu 2 Jul — $43.74</title></path><path d="M106.7,98 L106.7,94.4 Q106.7,90.8 110.3,90.8 L117.0,90.8 Q120.7,90.8 120.7,94.4 L120.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Fri 3 Jul — $4.43</title></path><path d="M127.3,98 L127.3,28.7 Q127.3,24.7 131.3,24.7 L137.3,24.7 Q141.3,24.7 141.3,28.7 L141.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sat 4 Jul — $44.86</title></path><path d="M148.0,98 L148.0,97.2 Q148.0,96.5 148.8,96.5 L161.3,96.5 Q162.0,96.5 162.0,97.2 L162.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sun 5 Jul — $0.33</title></path><path d="M168.7,98 L168.7,82.2 Q168.7,78.2 172.7,78.2 L178.7,78.2 Q182.7,78.2 182.7,82.2 L182.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Mon 6 Jul — $12.11</title></path><path d="M189.3,98 L189.3,56.1 Q189.3,52.1 193.3,52.1 L199.3,52.1 Q203.3,52.1 203.3,56.1 L203.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Tue 7 Jul — $28.09</title></path><path d="M210.0,98 L210.0,93.1 Q210.0,89.1 214.0,89.1 L220.0,89.1 Q224.0,89.1 224.0,93.1 L224.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Wed 8 Jul — $5.46</title></path><path d="M230.7,98 L230.7,96.0 Q230.7,94.0 232.7,94.0 L242.7,94.0 Q244.7,94.0 244.7,96.0 L244.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Thu 9 Jul — $2.47</title></path><path d="M251.3,98 L251.3,85.3 Q251.3,81.3 255.3,81.3 L261.3,81.3 Q265.3,81.3 265.3,85.3 L265.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Fri 10 Jul — $10.20</title></path><path d="M272.0,98 L272.0,95.4 Q272.0,92.7 274.6,92.7 L283.4,92.7 Q286.0,92.7 286.0,95.4 L286.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sat 11 Jul — $3.21</title></path><path d="M292.7,98 L292.7,75.2 Q292.7,71.2 296.7,71.2 L302.7,71.2 Q306.7,71.2 306.7,75.2 L306.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sun 12 Jul — $16.38</title></path><path d="M313.3,98 L313.3,50.1 Q313.3,46.1 317.3,46.1 L323.3,46.1 Q327.3,46.1 327.3,50.1 L327.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Mon 13 Jul — $31.79</title></path><path d="M334.0,98 L334.0,97.2 Q334.0,96.5 334.8,96.5 L347.2,96.5 Q348.0,96.5 348.0,97.2 L348.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Tue 14 Jul — $0.16</title></path><path d="M354.7,98 L354.7,97.2 Q354.7,96.5 355.4,96.5 L367.9,96.5 Q368.7,96.5 368.7,97.2 L368.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Wed 15 Jul — $0.10</title></path><path d="M375.3,98 L375.3,88.1 Q375.3,84.1 379.3,84.1 L385.3,84.1 Q389.3,84.1 389.3,88.1 L389.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Thu 16 Jul — $8.51</title></path><path d="M396.0,98 L396.0,97.2 Q396.0,96.5 396.8,96.5 L409.2,96.5 Q410.0,96.5 410.0,97.2 L410.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Fri 17 Jul — $0.08</title></path><path d="M416.7,98 L416.7,18.0 Q416.7,14.0 420.7,14.0 L426.7,14.0 Q430.7,14.0 430.7,18.0 L430.7,98 Z" fill="#d26617" fill-opacity="1"><title>Sat 18 Jul — $51.41</title></path><path d="M437.3,98 L437.3,97.2 Q437.3,96.5 438.1,96.5 L450.6,96.5 Q451.3,96.5 451.3,97.2 L451.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sun 19 Jul — $0.00</title></path><path d="M458.0,98 L458.0,97.2 Q458.0,96.5 458.8,96.5 L471.2,96.5 Q472.0,96.5 472.0,97.2 L472.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Mon 20 Jul — $0.00</title></path><path d="M478.7,98 L478.7,96.9 Q478.7,95.8 479.8,95.8 L491.6,95.8 Q492.7,95.8 492.7,96.9 L492.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Tue 21 Jul — $1.36</title></path><path d="M499.3,98 L499.3,96.8 Q499.3,95.5 500.6,95.5 L512.1,95.5 Q513.3,95.5 513.3,96.8 L513.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Wed 22 Jul — $1.50</title></path><path d="M520.0,98 L520.0,40.8 Q520.0,36.8 524.0,36.8 L530.0,36.8 Q534.0,36.8 534.0,40.8 L534.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Thu 23 Jul — $37.43</title></path><path d="M540.7,98 L540.7,94.2 Q540.7,90.4 544.5,90.4 L550.9,90.4 Q554.7,90.4 554.7,94.2 L554.7,98 Z" fill="#d26617" fill-opacity="0.85"><title>Fri 24 Jul — $4.63</title></path><path d="M561.3,98 L561.3,85.8 Q561.3,81.8 565.3,81.8 L571.3,81.8 Q575.3,81.8 575.3,85.8 L575.3,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sat 25 Jul — $9.94</title></path><path d="M582.0,98 L582.0,73.9 Q582.0,69.9 586.0,69.9 L592.0,69.9 Q596.0,69.9 596.0,73.9 L596.0,98 Z" fill="#d26617" fill-opacity="0.85"><title>Sun 26 Jul — $17.17</title></path><path d="M602.7,98 L602.7,97.2 Q602.7,96.5 603.4,96.5 L615.9,96.5 Q616.7,96.5 616.7,97.2 L616.7,98 Z" fill="#d26617" fill-opacity="1"><title>Mon 27 Jul — $0.00</title></path><text x="423.7" y="9.0" text-anchor="middle" font-size="10" fill="#8a929b" font-family="Inter,sans-serif">peak $51.41</text><text x="0" y="114" text-anchor="start" font-size="10" fill="#8a929b" font-family="Inter,sans-serif">28 Jun</text><text x="620" y="114" text-anchor="end" font-size="10" fill="#8a929b" font-family="Inter,sans-serif">27 Jul</text></svg>
     <p>This week ran 69% lower than last.</p>
     <h3>Where it went</h3>
-    <svg viewBox="0 0 620 64" width="100%" role="img" aria-label="Share of spend: you typing versus jobs running"><rect x="0" y="26" width="547.3" height="18" rx="4" fill="#8a6a1c"><title>You, at the keyboard — $322</title></rect><rect x="549.3" y="26" width="70.7" height="18" rx="4" fill="#5c554a" fill-opacity="0.55"><title>Scheduled jobs — $41.54</title></rect><text x="0" y="18" text-anchor="start" font-size="11" fill="#5c554a" font-family="Inter,sans-serif">You, typing  $322  ·  89%</text><text x="620" y="18" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif">Jobs, running  $41.54  ·  11%</text></svg>
+    <svg viewBox="0 0 620 64" width="100%" role="img" aria-label="Share of spend: you typing versus jobs running"><rect x="0" y="26" width="547.3" height="18" rx="4" fill="#af8100"><title>You, at the keyboard — $322</title></rect><rect x="549.3" y="26" width="70.7" height="18" rx="4" fill="#8a929b" fill-opacity="0.85"><title>Scheduled jobs — $41.54</title></rect><text x="0" y="18" text-anchor="start" font-size="11" fill="#8a929b" font-family="Inter,sans-serif">You, typing  $322  ·  89%</text><text x="620" y="18" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif">Jobs, running  $41.54  ·  11%</text></svg>
     <h3>By model</h3>
-    <svg viewBox="0 0 620 188" width="100%" role="img" aria-label="Cost by model"><rect x="0" y="6" width="322.4" height="12" rx="4" fill="#4f7a62" fill-opacity="1.00"><title>anthropic/claude-fable-5 — $154</title></rect><text x="330.4" y="16" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">claude-fable-5</text><text x="620" y="16" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$154</text><rect x="0" y="32" width="235.4" height="12" rx="4" fill="#4f7a62" fill-opacity="0.90"><title>openai/gpt-5.6-sol — $112</title></rect><text x="243.4" y="42" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">gpt-5.6-sol</text><text x="620" y="42" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$112</text><rect x="0" y="58" width="80.0" height="12" rx="4" fill="#4f7a62" fill-opacity="0.80"><title>openai/gpt-5.5 — $38.17</title></rect><text x="88.0" y="68" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">gpt-5.5</text><text x="620" y="68" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$38.17</text><rect x="0" y="84" width="38.7" height="12" rx="4" fill="#4f7a62" fill-opacity="0.70"><title>moonshotai/kimi-k3 — $18.46</title></rect><text x="46.7" y="94" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">kimi-k3</text><text x="620" y="94" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$18.46</text><rect x="0" y="110" width="36.0" height="12" rx="4" fill="#4f7a62" fill-opacity="0.60"><title>x-ai/grok-4.20 — $17.20</title></rect><text x="44.0" y="120" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">grok-4.20</text><text x="620" y="120" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$17.20</text><rect x="0" y="136" width="28.4" height="12" rx="4" fill="#4f7a62" fill-opacity="0.50"><title>anthropic/claude-opus-5 — $13.55</title></rect><text x="36.4" y="146" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">claude-opus-5</text><text x="620" y="146" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$13.55</text><rect x="0" y="162" width="20.5" height="12" rx="4" fill="#4f7a62" fill-opacity="0.40"><title>all other models — $9.76</title></rect><text x="28.5" y="172" font-size="11" fill="#1a1815" font-family="Inter,sans-serif">all other models</text><text x="620" y="172" text-anchor="end" font-size="11" fill="#5c554a" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$9.76</text></svg>
+    <svg viewBox="0 0 620 188" width="100%" role="img" aria-label="Cost by model"><rect x="0" y="6" width="322.4" height="12" rx="4" fill="#0ea175" fill-opacity="1.00"><title>anthropic/claude-fable-5 — $154</title></rect><text x="330.4" y="16" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">claude-fable-5</text><text x="620" y="16" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$154</text><rect x="0" y="32" width="235.4" height="12" rx="4" fill="#0ea175" fill-opacity="0.90"><title>openai/gpt-5.6-sol — $112</title></rect><text x="243.4" y="42" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">gpt-5.6-sol</text><text x="620" y="42" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$112</text><rect x="0" y="58" width="80.0" height="12" rx="4" fill="#0ea175" fill-opacity="0.80"><title>openai/gpt-5.5 — $38.17</title></rect><text x="88.0" y="68" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">gpt-5.5</text><text x="620" y="68" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$38.17</text><rect x="0" y="84" width="38.7" height="12" rx="4" fill="#0ea175" fill-opacity="0.70"><title>moonshotai/kimi-k3 — $18.46</title></rect><text x="46.7" y="94" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">kimi-k3</text><text x="620" y="94" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$18.46</text><rect x="0" y="110" width="36.0" height="12" rx="4" fill="#0ea175" fill-opacity="0.60"><title>x-ai/grok-4.20 — $17.20</title></rect><text x="44.0" y="120" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">grok-4.20</text><text x="620" y="120" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$17.20</text><rect x="0" y="136" width="28.4" height="12" rx="4" fill="#0ea175" fill-opacity="0.50"><title>anthropic/claude-opus-5 — $13.55</title></rect><text x="36.4" y="146" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">claude-opus-5</text><text x="620" y="146" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$13.55</text><rect x="0" y="162" width="20.5" height="12" rx="4" fill="#0ea175" fill-opacity="0.40"><title>all other models — $9.76</title></rect><text x="28.5" y="172" font-size="11" fill="#e8ecf0" font-family="Inter,sans-serif">all other models</text><text x="620" y="172" text-anchor="end" font-size="11" fill="#8a929b" font-family="Inter,sans-serif" style="font-variant-numeric:tabular-nums">$9.76</text></svg>
     <p style="font-size:0.8rem;opacity:0.75">This is only the AI usage that ran through the Hetzner server — your own sessions and the jobs it runs on a schedule. Anything billed elsewhere, like a Claude or ChatGPT subscription, is not counted here. List those in <code>~/.hermes/spend-budget.json</code> and this total becomes the real one.</p>
   </div>
 </article>
@@ -314,6 +330,108 @@ Since the last run: the generic Transport Malta index proved stale; the live sch
 
 
 </main>
-<footer><a href="/">mattcarpenter.com</a></footer>
+<footer>
+  <span><a href="/">mattcarpenter.com</a></span>
+  <span id="footnote">newest first</span>
+</footer>
+<script>
+/* Progressive enhancement only — every entry is in the HTML and readable with
+   this script disabled. The script adds counting, relative dates, permalinks
+   and source filtering, all derived from the DOM at load, so entries appended
+   later by briefing-append.py are picked up with no change here. */
+(function () {
+  var arts = [].slice.call(document.querySelectorAll("article.briefing"));
+  if (!arts.length) return;
+
+  var DAY = 86400000, now = new Date();
+  function rel(d) {
+    var diff = Math.floor((now - d) / DAY);
+    if (diff <= 0) return "today";
+    if (diff === 1) return "yesterday";
+    if (diff < 7) return diff + " days ago";
+    if (diff < 14) return "last week";
+    if (diff < 60) return Math.floor(diff / 7) + " weeks ago";
+    return Math.floor(diff / 30) + " months ago";
+  }
+
+  var counts = {}, dates = [];
+  arts.forEach(function (a, i) {
+    var t = a.querySelector("time"),
+        s = a.querySelector(".source"),
+        src = s ? s.textContent.trim() : "Other";
+    a.dataset.source = src;
+    counts[src] = (counts[src] || 0) + 1;
+
+    if (t && t.getAttribute("datetime")) {
+      var d = new Date(t.getAttribute("datetime"));
+      if (!isNaN(d)) {
+        dates.push(d);
+        var span = document.createElement("span");
+        span.className = "rel";
+        span.textContent = rel(d);
+        t.parentNode.appendChild(span);
+        a.id = a.id || "b-" + t.getAttribute("datetime").replace(/[^0-9]/g, "").slice(0, 12);
+      }
+    }
+    var meta = a.querySelector("p.meta");
+    if (meta && a.id) {
+      var link = document.createElement("a");
+      link.className = "permalink";
+      link.href = "#" + a.id;
+      link.textContent = "#";
+      link.setAttribute("aria-label", "Link to this entry");
+      meta.appendChild(link);
+    }
+  });
+
+  dates.sort(function (x, y) { return x - y; });
+  var iso = function (d) { return d.toISOString().slice(0, 10); };
+  document.getElementById("k-total").textContent = arts.length;
+  document.getElementById("k-sources").textContent = Object.keys(counts).length;
+  if (dates.length) {
+    var newest = dates[dates.length - 1];
+    document.getElementById("k-latest").textContent = rel(newest);
+    document.getElementById("k-span").textContent =
+      Math.max(1, Math.round((newest - dates[0]) / DAY));
+    document.getElementById("stamp").innerHTML =
+      iso(newest).replace(/-/g, "&middot;") + "<br>" + arts.length + " ENTRIES";
+  }
+
+  /* filters, ordered by frequency so the noisy sources sit first */
+  var bar = document.getElementById("filters"), empty = document.getElementById("empty");
+  var names = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+  function chip(label, key, n) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.dataset.key = key;
+    b.setAttribute("aria-pressed", key === "*" ? "true" : "false");
+    b.innerHTML = label + (n != null ? ' <i>' + n + '</i>' : "");
+    b.addEventListener("click", function () { apply(key); });
+    bar.appendChild(b);
+  }
+  chip("ALL", "*", arts.length);
+  names.forEach(function (n) { chip(n.toUpperCase(), n, counts[n]); });
+
+  function apply(key) {
+    var shown = 0;
+    arts.forEach(function (a) {
+      var on = key === "*" || a.dataset.source === key;
+      a.hidden = !on;
+      if (on) shown++;
+    });
+    [].forEach.call(bar.children, function (b) {
+      b.setAttribute("aria-pressed", b.dataset.key === key ? "true" : "false");
+    });
+    empty.hidden = shown > 0;
+    document.getElementById("footnote").textContent =
+      key === "*" ? "newest first" : shown + " of " + arts.length + " shown";
+    history.replaceState(null, "", key === "*" ? location.pathname
+      : location.pathname + "?source=" + encodeURIComponent(key));
+  }
+
+  var pre = new URLSearchParams(location.search).get("source");
+  if (pre && counts[pre]) apply(pre);
+})();
+</script>
 </body>
 </html>

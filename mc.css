@@ -168,6 +168,8 @@
     text-decoration:none; opacity:0; transition:opacity .15s; }
   article.briefing:hover .permalink { opacity:1; }
   .permalink:hover { color:var(--ac-orange); }
+  button.clip-btn { background:none; border:none; cursor:pointer; padding:0; text-transform:lowercase; }
+
 
   .empty { padding:34px 0; text-align:center; color:var(--faint);
     font:400 11.5px/1.6 var(--mono); }

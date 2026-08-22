@@ -420,6 +420,33 @@ Since the last run: the generic Transport Malta index proved stale; the live sch
       link.textContent = "#";
       link.setAttribute("aria-label", "Link to this entry");
       meta.appendChild(link);
+
+      /* Clip button: copies a ready-to-run clip command (first external
+         link in the entry becomes the source URL). Paste it to any Hermes
+         session and the article lands in second-brain/Resources/Clippings/
+         via ~/bin/clip.py. */
+      var firstHref = a.querySelector(".body a[href^='http']");
+      if (firstHref) {
+        var clipBtn = document.createElement("button");
+        clipBtn.className = "permalink clip-btn";
+        clipBtn.type = "button";
+        clipBtn.textContent = "clip";
+        clipBtn.title = "Copy a clip command - paste it to Hermes to save this to second brain";
+        clipBtn.addEventListener("click", function () {
+          var h2 = a.querySelector("h2.headline");
+          var title = h2 ? h2.textContent.trim() : document.title;
+          var cmd = "python3 ~/bin/clip.py --url " + firstHref.href +
+                    " --title " + JSON.stringify(title);
+          (navigator.clipboard ? navigator.clipboard.writeText(cmd)
+                               : Promise.reject()).then(function () {
+            clipBtn.textContent = "clipped!";
+            setTimeout(function () { clipBtn.textContent = "clip"; }, 1500);
+          }, function () {
+            window.prompt("Copy this clip command:", cmd);
+          });
+        });
+        meta.appendChild(clipBtn);
+      }
     }
   });
 

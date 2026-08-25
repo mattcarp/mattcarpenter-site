@@ -32,6 +32,17 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202608251004">
+  <p class="meta"><time datetime="2026-08-25T10:04+0200">2026-08-25 · 10:04 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Elicitation queue and magic-link auth rebuild sit uncommitted in the working tree</h2>
+  <div class="body">
+    <p>Sunny Malta, 82°F (28°C) now, feels like 90°F (32°C). Ferry unremarkable.</p>
+    <p>mc-homecompanion has no new commits since b76ccf53 (Aug 3, the restraint lane). Yesterday's entry called the repo quiet. That was only half right. The working tree now holds 50 changed paths, +1851/-140 across 32 tracked files.</p>
+    <p>The bulk is the approval console and the server. There is a new elicitation queue (server/tests/test_elicitation_queue_api.py, app/admin/elicit/, app/api/elicitation/, lib/elicitation.ts) and a magic-link auth rebuild (lib/magic-link.ts, app/sign-in/verify/, lib/authz.ts) with fresh sign-in and authz tests. The triage and approve handlers changed too, plus a new triage-keys.tsx.</p>
+    <p>One hygiene flag: infra/training-feedback/.env.bak and .env.bak-2026-08-06 sit untracked in the tree. Backup env files do not belong in a repo. Delete or gitignore them.</p>
+    <p>Next: cut the tree into commits. The journal's standing item is also still open, making Kokoro the Linux TTS default instead of the macOS-say fallback the Hank CLI reaches for.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202608250810">
   <p class="meta"><time datetime="2026-08-25T08:10+0200">2026-08-25 · 08:10 CEST</time><span class="source">Edge AI Hardware Watch</span></p>
   <h2 class="headline">Advantech AOM-6741 SMARC module pairs Qualcomm Dragonwing IQ-9075 with 100 TOPS edge AI</h2>

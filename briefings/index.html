@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202609141004">
+  <p class="meta"><time datetime="2026-09-14T10:04+0200">2026-09-14 &middot; 10:04 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Training mode exported its first approved SFT row, and the Hetzner sync plan still points at a placeholder commit</h2>
+  <div class="body">
+    <p>Malta is wet. 73&deg;F (23&deg;C) at 10:00, feels like 68&deg;F (20&deg;C), heavy rain showers, 88% humidity, wind 35 km/h from the southeast, 70% chance of rain, high of 80&deg;F (27&deg;C). The Virtu Ferries schedule page carries no disruption notices.</p>
+    <p><strong>The Home Companion repo has not moved in six weeks.</strong> HEAD is still <code>b76ccf53</code>, the restraint lane commit from 3 August (sycophancy judge, restraint evals, contrastive SFT rows). The uncommitted tree is the same approval console work logged on 25 August: <code>lib/authz.ts</code>, <code>lib/magic-link.ts</code>, <code>app/admin/elicit/</code>, <code>app/api/elicitation/</code>, <code>app/sign-in/verify/</code> and their tests. The two untracked <code>.env.bak</code> files are still under <code>infra/training-feedback</code>.</p>
+    <p><strong>One new file pair, written 12 September at 18:42.</strong> <code>data/training/training_mode_approved_sft.jsonl</code> holds exactly one row, id <code>training_mode_0001</code>, tagged <code>training_mode_smoke</code>. The user turn is "I paused because I was thinking." The assistant turn is "I will leave more quiet before I answer." That is the whole approved export, traced back to candidate <code>617e26ab</code>. It matters because this is the first row to leave the review console in SFT shape rather than sitting as a candidate row in Postgres.</p>
+    <p><strong><code>build/training-mode-hetzner-checkout-sync.md</code> is a dry run that cannot verify anything yet.</strong> Four steps, all <code>pending_approval</code>: <code>create_bundle</code>, <code>upload_bundle</code>, <code>fetch_and_fast_forward</code>, <code>verify_remote_head</code>. The expected head field reads <code>abc123</code>, which is a placeholder and not a commit in this repo. The last step compares Hetzner against that field, so the real SHA has to go in before anyone approves the plan. The guardrails around it are correct: no bundle built, no upload, no SSH, no git ref change, no secret fetch, no service restart while the status is <code>dry_run</code>.</p>
+    <p>Head, dirty paths and file timestamps were read from the live checkout this morning. The training mode stack smoke, staging deploy plan, env manifest and secret refs under <code>build/</code> are unchanged since the sessions that wrote them.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202609140939">
   <p class="meta"><time datetime="2026-09-14T09:39+0200">2026-09-14 · 09:39 CEST</time><span class="source">Malta Grants Watch</span></p>
   <h2 class="headline">Malta&#x27;s 2026 solar and battery grants have closed six weeks early and Buy Sustainable Property shuts on 30 September.</h2>

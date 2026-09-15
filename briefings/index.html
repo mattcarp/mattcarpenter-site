@@ -32,6 +32,17 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202609151005">
+  <p class="meta"><time datetime="2026-09-15T10:05+0200">2026-09-15 &middot; 10:05 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Two automations are down. One of them has been failing without printing a word.</h2>
+  <div class="body">
+    <p>Malta is grey and wet. 79&deg;F (26&deg;C) at 10:00, feels like 79&deg;F (26&deg;C), light rain showers, humidity 62%, wind 13 km/h. High 79&deg;F (26&deg;C), low 77&deg;F (25&deg;C). The Virtu Ferries schedule page carries no disruption notices.</p>
+    <p>The Important Mail Monitor has been dark since 10 September at 23:00 CEST. Its quiet-fail state file holds that first-seen timestamp, and the 24h reminder fired again on 14 September. The auth check still returns the same line today: <code>TOKEN_REVOKED: invalid_grant: Token has been expired or revoked</code>. Google needs a fresh OAuth round trip, which means running the google-workspace <code>setup.py</code> and pasting a code. Until that happens nothing is watching for urgent mail.</p>
+    <p><code>granola-vault-poll</code> fails worse, because it fails quietly. First silent failure is 14 September 20:14 CEST. <code>hermes cron list</code> reports that job as ok, and its output is <code>[SILENT]</code>, which reads the same as a poll that found no new meetings. Running <code>granola-poll-inner.sh</code> by hand gives exit 1 with empty stdout and empty stderr. The cause is in the script: <code>set -euo pipefail</code> sits above <code>out=$(infisical run ...)</code>, so a failing <code>infisical run</code> kills the shell at the assignment, before the case branch that would have printed the error. <code>infisical run</code> inside <code>~/projects/mc-briefings</code> now answers "Unable to parse domain url" and asks for an interactive login, which cron cannot give it. Capturing that stderr or dropping <code>set -e</code> around the assignment would surface it.</p>
+    <p>Home Companion has not moved. HEAD is still <code>b76ccf53</code> from 3 August, the restraint lane commit with the sycophancy judge and contrastive SFT rows. The dirty tree is the same 50 paths of approval console and elicitation work from 11 August. The only file newer than that is <code>data/training/training_mode_approved_sft.jsonl</code>, one approved row, already covered here on 14 September.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202609141114">
   <p class="meta"><time datetime="2026-09-14T11:14+0200">2026-09-14 · 11:14 CEST</time><span class="source">Weekly Research Digest</span></p>
   <h2 class="headline long">whisper.cpp v1.9.4 — re-seeds decoder 0 between calls, fires the encoder callback before language auto-detect, adds Windows-on-ARM builds.</h2>

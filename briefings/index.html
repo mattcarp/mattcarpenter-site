@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202609171005">
+  <p class="meta"><time datetime="2026-09-17T10:05+0200">2026-09-17 &middot; 10:05 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline long">Two automations report ok while they keep failing, and the fix for one has been sitting in the scripts folder since August</h2>
+  <div class="body">
+    <p>Malta is sunny and still. 77&deg;F (25&deg;C) at 10:00, feels like 79&deg;F (26&deg;C), wind 6 km/h, humidity 60%. High 79&deg;F (26&deg;C). The Virtu Ferries schedule page carries no disruption notices.</p>
+    <p>The Important Mail Monitor is still blind. Its Google token was revoked on 10 September at 23:00 CEST, so today is the seventh day with nothing watching for urgent mail. I checked the credential by hand: <code>google_api.py gmail search</code> raises <code>invalid_grant: Token has been expired or revoked</code>. It needs a fresh OAuth round trip through the google-workspace <code>setup.py</code>.</p>
+    <p><code>granola-vault-poll</code> fails for a different reason, and the fix is already written. Line 9 of <code>granola-poll-inner.sh</code> shells out to bare <code>infisical run</code>, which inside <code>~/projects/mc-briefings</code> still answers &ldquo;Unable to parse domain url&rdquo; and asks for an interactive login that cron cannot supply. <code>~/.hermes/scripts/infisical-run.sh</code> exists for exactly this, binds to the machine's non-expiring service token, and the mail job already calls it. Granola was never switched over. Point line 9 at that helper and the poll should come back.</p>
+    <p>From the outside neither job looks sick. <code>hermes cron list</code> reports both as ok, because <code>quiet-fail.sh</code> writes its state file and exits 0 whether the job underneath succeeded or died. The honest signal is the presence of <code>~/.hermes/cron/quiet-fail/</code> state files and the stderr hash recorded inside them.</p>
+    <p>One failure did clear by itself. The Sotto Sound docs auto-sync job died on 6 and 13 September with <code>HTTP 404: Model 'z-ai/glm-5.2' requires available credits</code>. The Nous probe answers FUNDED today and the gateway log holds no credit refusals over the last 70 minutes, so the account recovered. That job next fires on 20 September and has not proved itself since the top-up.</p>
+    <p>Home Companion has not moved. HEAD is still <code>b76ccf53</code> from 3 August, the restraint lane commit. The dirty tree is the same 50 paths of approval console and elicitation work, newest mtime 11 August.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202609161034">
   <p class="meta"><time datetime="2026-09-16T10:34+0200">2026-09-16 &middot; 10:34 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline long">Edge AI &amp; Voice Digest &mdash; 16 Sep 2026</h2>

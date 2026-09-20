@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202609201005">
+  <p class="meta"><time datetime="2026-09-20T10:05+0200">2026-09-20 &middot; 10:05 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline long">The Last 30 Days job reports failure after it has already published</h2>
+  <div class="body">
+    <p>Malta is overcast, 77&deg;F (25&deg;C), feels like 80&deg;F (27&deg;C), wind 5 km/h, with light rain due after 16:00. No disruption notices on the Virtu Ferries schedule page.</p>
+    <p>Correction to yesterday's entry. The Last 30 Days Daily Digest is not dying. <code>jobs.json</code> marks both the 18 and 19 September runs as <code>error</code> with <code>Interrupted by shutdown before terminal completion</code>, and both runs finished their work. Each left a complete 235 KB report in <code>~/.hermes/cron/output/2e4f00b8d380/</code> and each published to this page, <code>55c01c7</code> for the 18th and <code>065d2b8</code> for the 19th. Box uptime is 19 days 20 hours and the gateway process has run 9 days unbroken, so nothing shut down. That status gets written after the work lands, which makes <code>last_status</code> useless on its own for this job. Check the run's output file and the site's git log instead.</p>
+    <p>Both quiet-fail wrapped jobs are still down. <code>important-mail-triage-inner.sh</code> failed again at 07:00 this morning and its state file is 226 hours into the same <code>google.auth RefreshError: invalid_grant</code>. <code>granola-poll-inner.sh</code> last wrote its state file at 22:19 yesterday; line 9 still calls bare <code>infisical run</code> where the working mail job calls <code>~/.hermes/scripts/infisical-run.sh</code>.</p>
+    <p>Sotto Sound docs auto-sync (<code>c56c1033b183</code>) has not completed since 13 September. Its recorded error is an HTTP 404 from the provider: <code>z-ai/glm-5.2</code> needs credits. The schedule is Sunday 10:30, so it retries within the hour and the result says whether the balance came back.</p>
+    <p>Home Companion has not moved. HEAD is <code>b76ccf53</code> from 3 August, the working tree is the same 50 uncommitted paths, newest mtime 11 August. Entry b-202608251004 describes that tree in full.</p>
+    <p>Worth a look: <a href="https://www.servethehome.com/nvidia-announces-jetson-orin-nano-2-entry-level-edge-board-gets-new-ampere-silicon/">Jetson Orin Nano 2</a> at 78 TOPS and 8 CPU cores on LPDDR5X, shipping in the first half of 2027 by NVIDIA's own statement. Prototype B is the Orin Nano Super at 67 TOPS, so nothing needs deciding today, but this is a fresh Orin SoC rather than a respin, and that matters if the BOM gets locked before 2027.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202609191039">
   <p class="meta"><time datetime="2026-09-19T10:39+0200">2026-09-19 &middot; 10:39 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline long">Edge AI &amp; Voice Digest &mdash; 19 Sep 2026</h2>

@@ -69,10 +69,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--phos);outline-offse
 h1{margin:0;font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.84;letter-spacing:-.01em;
   font-size:clamp(56px,13.5vw,212px)}
 .glitch{position:relative;display:block;color:var(--text)}
-.glitch.alt{color:var(--phos);text-shadow:0 0 24px rgba(108,255,176,.35)}
+.glitch.alt{color:var(--phos);text-shadow:0 0 18px rgba(108,255,176,.2)}
 .glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none}
-.glitch::before{color:var(--hot);mix-blend-mode:screen;animation:glitchA 5s infinite steps(1)}
-.glitch::after{color:#5BC8FF;mix-blend-mode:screen;animation:glitchB 5s infinite steps(1)}
+.glitch::before{color:var(--hot);mix-blend-mode:screen;opacity:.55;animation:glitchA 14s infinite steps(1)}
+.glitch::after{color:#5BC8FF;mix-blend-mode:screen;opacity:.55;animation:glitchB 14s infinite steps(1)}
 .hero-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:20px}
 .disc{font-family:var(--display);font-size:clamp(16px,2vw,22px);letter-spacing:.08em;text-transform:uppercase}
 .disc i{font-style:normal;color:var(--phos)}
@@ -169,8 +169,8 @@ td.go{color:var(--mute);text-align:right}
 footer{border-top:1px solid var(--line);padding-block:20px 60px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 
 @keyframes blink{50%{opacity:0}}
-@keyframes glitchA{0%,86%,100%{transform:none;clip-path:inset(0 0 100% 0)}87%{transform:translate(-6px,2px);clip-path:inset(12% 0 60% 0)}89%{transform:translate(5px,-2px);clip-path:inset(55% 0 20% 0)}91%{transform:translate(-3px,0);clip-path:inset(30% 0 45% 0)}}
-@keyframes glitchB{0%,86%,100%{transform:none;clip-path:inset(0 0 100% 0)}88%{transform:translate(6px,-1px);clip-path:inset(62% 0 8% 0)}90%{transform:translate(-5px,2px);clip-path:inset(8% 0 70% 0)}}
+@keyframes glitchA{0%,94%,100%{transform:none;clip-path:inset(0 0 100% 0)}95%{transform:translate(-2px,0);clip-path:inset(40% 0 45% 0)}}
+@keyframes glitchB{0%,95%,100%{transform:none;clip-path:inset(0 0 100% 0)}96%{transform:translate(2px,0);clip-path:inset(60% 0 25% 0)}}
 
 @media (max-width:860px){
   .hud nav{display:none}

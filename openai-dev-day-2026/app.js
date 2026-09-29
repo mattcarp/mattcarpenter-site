@@ -122,8 +122,9 @@
     }
     if (info.playerState === 1 && !player.soundTried) {
       player.soundTried = true;
-      setTimeout(() => { ytSend('unMute'); ytSend('setVolume', [100]); }, 800);
+      setTimeout(() => { if (player.userMuted) return; ytSend('unMute'); ytSend('setVolume', [100]); }, 800); // never undo a viewer who already chose Sound off
       setTimeout(() => {
+        if (player.userMuted) return;
         if (player.state !== 1 || player.muted !== false) { ytSend('mute'); ytSend('playVideo'); player.muted = true; updateSoundUi(); $('stream-status').textContent = 'Live from OpenAI \u00b7 tap for sound'; }
       }, 3800);
     }
@@ -173,14 +174,27 @@
     $('stream-url').value = url;
   }
   let captionsShown = false;
+  let captionStyle = 'mt'; // 'mt' Maltese, 'mte' Maltenglish
+  try { if (localStorage.getItem('devday-caption-style') === 'mte') captionStyle = 'mte'; } catch { /* storage can be blocked */ }
+  function setCaptionStyle(style) {
+    captionStyle = style === 'mte' ? 'mte' : 'mt';
+    try { localStorage.setItem('devday-caption-style', captionStyle); } catch { /* storage can be blocked */ }
+    $('cap-mt').setAttribute('aria-pressed', String(captionStyle === 'mt')); $('cap-mte').setAttribute('aria-pressed', String(captionStyle === 'mte'));
+    captionsShown = false; renderCaptions(); // jump to the newest line in the chosen style
+  }
+  $('cap-mt').addEventListener('click', () => setCaptionStyle('mt'));
+  $('cap-mte').addEventListener('click', () => setCaptionStyle('mte'));
+  $('cap-mt').setAttribute('aria-pressed', String(captionStyle === 'mt')); $('cap-mte').setAttribute('aria-pressed', String(captionStyle === 'mte'));
   function renderCaptions() {
     if (!captions.length) return;
     const list = $('captions');
     const follow = !captionsShown || list.scrollHeight - list.scrollTop - list.clientHeight < 80; // stay put if the reader scrolled up
     list.replaceChildren(); list.lang = 'mt';
     for (const caption of captions) {
-      if (!caption.mt) continue;
-      const row = element('div', 'caption-entry'); row.append(element('time', '', time(caption.ts)), element('p', '', caption.mt)); list.append(row);
+      const text = (captionStyle === 'mte' && caption.mte) || caption.mt; // Maltenglish falls back to Maltese when a line has no second version
+      if (!text) continue;
+      const stamp = Number.isFinite(Number(caption.pos)) && caption.pos !== null && caption.pos !== undefined ? Math.floor(caption.pos / 60) + ':' + String(caption.pos % 60).padStart(2, '0') : time(caption.ts);
+      const row = element('div', 'caption-entry'); row.append(element('time', '', stamp), element('p', '', text)); list.append(row);
     }
     captionsShown = true;
     if (follow) list.scrollTop = list.scrollHeight;

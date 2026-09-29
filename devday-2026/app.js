@@ -80,6 +80,7 @@
     if ($('stream').getAttribute('src') !== source) $('stream').src = source;
     $('stream').hidden = false; $('player-empty').hidden = true;
     $('stream-status').textContent = 'English audio · press play to join the keynote';
+    const fallback = $('stream-fallback'); if (fallback) { fallback.href = 'https://www.youtube.com/watch?v=' + videoId; fallback.hidden = false; }
     $('stream-url').value = url;
   }
   function renderCaptions() {

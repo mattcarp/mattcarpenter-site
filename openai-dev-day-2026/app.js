@@ -26,7 +26,7 @@
   function toast(text) { $('toast').textContent = text; $('toast').hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').hidden = true, 4500); }
   function send(data) { if (!ready || socket.readyState !== WebSocket.OPEN) return false; socket.send(JSON.stringify(data)); return true; }
   function setCaptionStatus(text) { $('caption-status').textContent = text; }
-  window.devday = { getHostKey: () => host && ready ? hostKey : '', relayHttp, setCaptionStatus, getFeatures: () => features };
+  window.devday = { player: () => player, getHostKey: () => host && ready ? hostKey : '', relayHttp, setCaptionStatus, getFeatures: () => features };
   function connection(connected) {
     ready = connected;
     $('connection').textContent = connected ? 'Room connected' : 'Reconnecting';
@@ -80,7 +80,7 @@
   const KEYNOTE_START_MS = Date.parse('2026-09-29T17:00:00Z');
   const KEYNOTE_LEAD_SECONDS = 111;
   const KNOWN_KEYNOTE_START = { Fls_onRviPM: 818 };
-  const player = { videoId: null, scheduledPos: null, live: false, rewound: false };
+  const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false };
   function ytSend(func, args) { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
   function ytListen() { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN); }
   function keynoteStartPosition() {
@@ -98,8 +98,29 @@
     if (info.playerState === 1 && player.scheduledPos === null && player.live && typeof info.currentTime === 'number' && info.currentTime > 30) {
       player.scheduledPos = info.currentTime - (Date.now() - KEYNOTE_START_MS) / 1000;
     }
-    if (info.playerState === 1) $('rewind').hidden = false;
+    if (info.playerState === 1) { $('rewind').hidden = false; if (!player.captionsOff) { player.captionsOff = true; ytSend('unloadModule', ['captions']); } }
+    // Health tracking for the stall watchdog below.
+    const now = Date.now();
+    player.heardAt = now;
+    if (typeof info.playerState === 'number') { if (info.playerState !== player.state) player.stateAt = now; player.state = info.playerState; }
+    if (typeof info.currentTime === 'number') { if (player.movedTime === null || Math.abs(info.currentTime - player.movedTime) > 0.4) { player.movedAt = now; player.movedTime = info.currentTime; } player.time = info.currentTime; }
   });
+  // Stall watchdog: if the picture freezes or sits buffering, nudge it once, then reconnect it (at most 3 times).
+  // A deliberate pause (state 2) and a finished stream (state 0) are left alone.
+  let reloads = 0;
+  document.addEventListener('visibilitychange', () => { player.movedAt = Date.now(); player.stateAt = Date.now(); player.nudged = false; });
+  setInterval(() => {
+    if ($('stream').hidden || document.hidden || !player.videoId || !player.heardAt) return;
+    const now = Date.now();
+    const stuck = [3, -1, 5].includes(player.state) && now - player.stateAt > 12000;
+    const frozen = player.state === 1 && now - player.movedAt > 10000;
+    if (!stuck && !frozen) { player.nudged = false; return; }
+    if (!player.nudged) { player.nudged = true; ytSend('playVideo'); return; }
+    if (reloads < 3 && now - (player.reloadedAt || 0) > 20000) {
+      reloads++; player.reloadedAt = now; player.scheduledPos = null; player.rewound = false; player.captionsOff = false; $('go-live').hidden = true;
+      toast('Reconnecting the stream'); $('stream').src = $('stream').getAttribute('src');
+    }
+  }, 4000);
   $('unmute').addEventListener('click', () => { ytSend('unMute'); ytSend('setVolume', [100]); ytSend('playVideo'); });
   $('rewind').addEventListener('click', () => { ytSend('seekTo', [keynoteStartPosition(), true]); ytSend('playVideo'); player.rewound = true; $('go-live').hidden = false; $('stream-status').textContent = 'Replaying from the start of the keynote'; });
   $('go-live').addEventListener('click', () => { ytSend('seekTo', [1e9, true]); ytSend('playVideo'); player.rewound = false; $('go-live').hidden = true; $('stream-status').textContent = 'English audio · live from OpenAI'; });
@@ -108,7 +129,7 @@
     const url = typeof data === 'string' ? data : data?.url;
     const videoId = youtube(url);
     if (!videoId) return;
-    const source = YT_ORIGIN + '/embed/' + videoId + '?rel=0&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+    const source = YT_ORIGIN + '/embed/' + videoId + '?rel=0&cc_load_policy=0&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
     if (player.videoId !== videoId) { player.videoId = videoId; player.scheduledPos = null; player.rewound = false; }
     if ($('stream').getAttribute('src') !== source) $('stream').src = source;
     $('stream').hidden = false; $('player-empty').hidden = true;

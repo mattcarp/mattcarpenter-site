@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>DevDay 2026 Watch Room</title>
+
+<!-- Tailwind via CDN: fine for a one-hour deploy. Swap for a built stylesheet later. -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'ui-monospace', 'monospace'] },
+        colors: { neon: { cyan: '#22d3ee', lime: '#a3e635', pink: '#f472b6' } }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  body { letter-spacing: 0.01em; }
+  /* Slim, quiet scrollbars: keep the chrome out of the way */
+  .scroll::-webkit-scrollbar { width: 6px; }
+  .scroll::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+  .scroll::-webkit-scrollbar-track { background: transparent; }
+  @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  .live-dot { animation: pulseDot 1.2s ease-in-out infinite; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .enter { animation: slideIn .18s ease-out; }
+</style>
+</head>
+
+<body class="h-full bg-slate-950 text-slate-200 font-sans antialiased">
+
+<div class="flex h-full flex-col gap-3 p-3 lg:p-4">
+
+  <!-- ============ HEADER ============ -->
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="h-2.5 w-2.5 rounded-full bg-neon-cyan shadow-[0_0_10px_#22d3ee]"></span>
+      <h1 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-100">OpenAI DevDay 2026 <span class="text-slate-500">/ Watch Room</span></h1>
+    </div>
+    <div class="text-xs tracking-wider text-slate-500">Malta Startup Space</div>
+  </header>
+
+  <main class="grid min-h-0 flex-1 grid-cols-1 gap-3 lg:grid-cols-[2fr_1fr]">
+
+    <!-- ============ PANEL A: MAIN EVENT ============ -->
+    <section class="flex min-h-0 flex-col gap-3">
+
+      <div class="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black shadow-[0_0_40px_-12px_rgba(34,211,238,.35)]">
+        <!-- The iframe is filled by JS once a stream URL is known (CONFIG.STREAM_URL, ?stream=, or the form). -->
+        <iframe id="player" class="absolute inset-0 hidden h-full w-full" title="DevDay stream"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <div id="playerEmpty" class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+          <p class="text-sm text-slate-300">The keynote streams free from OpenAI at 10am PT.</p>
+          <a href="https://openai.com/live" target="_blank" rel="noopener noreferrer"
+             class="rounded-md bg-neon-cyan px-5 py-2 text-sm font-semibold text-slate-950 hover:brightness-110">Open the official stream</a>
+          <p class="mt-2 max-w-md text-xs text-slate-500">If it is a YouTube stream, paste the link below to watch it in this room.</p>
+          <form id="streamForm" class="flex w-full max-w-lg gap-2">
+            <input id="streamInput" type="url" placeholder="https://www.youtube.com/watch?v=..."
+                   class="min-w-0 flex-1 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm placeholder-slate-600 outline-none focus:border-neon-cyan">
+            <button class="rounded-md bg-slate-800 px-4 py-2 text-sm font-semibold hover:bg-slate-700">Load</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Active context card -->
+      <div class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/60 px-5 py-4">
+        <div>
+          <div id="statusLabel" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Event starts</div>
+          <div id="statusText" class="mt-1 text-lg font-medium text-slate-100">Event Starts at 19:00 Malta Time</div>
+          <a href="https://openai.com/live" target="_blank" rel="noopener noreferrer" class="mt-1 inline-block text-xs text-neon-cyan hover:underline">openai.com/live</a>
+        </div>
+        <div class="text-right">
+          <div id="countdown" class="font-mono text-3xl font-medium tabular-nums text-neon-cyan">--:--:--</div>
+          <div id="liveBadge" class="hidden items-center justify-end gap-2 text-sm font-semibold uppercase tracking-widest text-neon-lime">
+            <span class="live-dot h-2.5 w-2.5 rounded-full bg-neon-lime"></span> LIVE
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIGHT COLUMN ============ -->
+    <div class="grid min-h-0 grid-rows-2 gap-3">
+
+      <!-- PANEL B: SYSTEM LOGS & API CONTEXT -->
+      <section class="flex min-h-[260px] flex-col rounded-xl border border-slate-800 bg-slate-900/60">
+        <div class="flex items-center justify-between border-b border-slate-800 px-4 py-2.5">
+          <h2 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">System Logs &amp; API Context</h2>
+          <button id="logToggle" class="text-xs text-slate-500 hover:text-neon-cyan" type="button">+ add</button>
+        </div>
+
+        <form id="logForm" class="hidden gap-2 border-b border-slate-800 p-3">
+          <input id="logTitle" required maxlength="140" placeholder="Announcement or spec"
+                 class="mb-2 w-full rounded-md border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs outline-none focus:border-neon-cyan">
+          <div class="flex gap-2">
+            <input id="logUrl" type="url" placeholder="https:// (optional)"
+                   class="min-w-0 flex-1 rounded-md border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs outline-none focus:border-neon-cyan">
+            <button class="rounded-md bg-slate-800 px-3 py-1.5 text-xs font-semibold hover:bg-slate-700">Push</button>
+          </div>
+        </form>
+
+        <ol id="logFeed" class="scroll flex-1 space-y-2 overflow-y-auto p-3 font-mono text-xs"></ol>
+      </section>
+
+      <!-- PANEL C: MALTA STARTUP SPACE CHAT -->
+      <section class="flex min-h-[300px] flex-col rounded-xl border border-slate-800 bg-slate-900/60">
+        <div class="flex items-center justify-between border-b border-slate-800 px-4 py-2.5">
+          <h2 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">Malta Startup Space</h2>
+          <span id="connState" class="text-[11px] tracking-wider text-slate-500">local mode</span>
+        </div>
+
+        <div id="chatFeed" class="scroll flex-1 space-y-3 overflow-y-auto p-3"></div>
+
+        <form id="chatForm" class="flex gap-2 border-t border-slate-800 p-3">
+          <input id="nameInput" maxlength="24" placeholder="Name"
+                 class="w-24 rounded-md border border-slate-700 bg-slate-950 px-2.5 py-2 text-sm outline-none focus:border-neon-pink">
+          <input id="chatInput" maxlength="500" autocomplete="off" placeholder="Say something..."
+                 class="min-w-0 flex-1 rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-neon-pink">
+          <button class="rounded-md bg-neon-pink px-4 py-2 text-sm font-semibold text-slate-950 hover:brightness-110">Send</button>
+        </form>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIG: everything you are likely to touch lives here
+   ===================================================================== */
+const QS = new URLSearchParams(location.search);
+const CONFIG = {
+  // Keynote: 10:00 PT = 17:00 UTC = 19:00 Malta (CEST, UTC+02:00) on 29 Sep 2026.
+  // Override for testing: ?start=2026-09-29T19:00:00%2B02:00
+  EVENT_START: QS.get('start') || '2026-09-29T19:00:00+02:00',
+
+  // Optional preset stream, or pass ?stream=<youtube url> in the page link.
+  // Accepts youtube.com/watch?v=, youtu.be/, or youtube.com/live/ links.
+  STREAM_URL: '',
+
+  // Your chat server. Leave '' to run in local mode (same-browser tabs sync via BroadcastChannel).
+  // Expected protocol: JSON text frames { type:'chat', user, text, ts }.
+  WS_URL: '',
+
+  HOST_NAME: 'Matt',
+  MAX_CHAT: 200
+};
+
+/* =====================================================================
+   SMALL HELPERS
+   ===================================================================== */
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* private mode: ignore */ } }
+};
+const pad = (n) => String(n).padStart(2, '0');
+const hhmm = (ts) => { const d = new Date(ts); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+// Only allow http(s) links; anything else (javascript:, data:) is dropped.
+const safeUrl = (u) => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } };
+
+/* =====================================================================
+   PANEL A: VIDEO + COUNTDOWN
+   ===================================================================== */
+function toEmbed(url) {
+  const u = safeUrl(url); if (!u) return '';
+  const x = new URL(u); let id = '';
+  if (x.hostname === 'youtu.be') id = x.pathname.slice(1);
+  else if (/youtube\.com$/.test(x.hostname)) {
+    if (x.pathname === '/watch') id = x.searchParams.get('v') || '';
+    else { const m = x.pathname.match(/^\/(live|embed)\/([\w-]{6,})/); if (m) id = m[2]; }
+  }
+  return /^[\w-]{6,}$/.test(id) ? 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&modestbranding=1' : '';
+}
+
+function loadStream(url) {
+  const src = toEmbed(url);
+  if (!src) return false;
+  $('player').src = src;
+  $('player').classList.remove('hidden');
+  $('playerEmpty').classList.add('hidden');
+  store.set('devday.stream', url);
+  return true;
+}
+
+$('streamForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!loadStream($('streamInput').value.trim())) $('streamInput').classList.add('border-red-500');
+});
+
+const startMs = new Date(CONFIG.EVENT_START).getTime();
+
+function tick() {
+  const diff = startMs - Date.now();
+  if (diff > 0) {
+    const s = Math.floor(diff / 1000);
+    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+    $('countdown').textContent = pad(h) + ':' + pad(m) + ':' + pad(sec);
+    $('liveBadge').classList.add('hidden'); $('liveBadge').classList.remove('flex');
+    $('statusLabel').textContent = 'Event starts';
+    $('statusText').textContent = 'Event Starts at 19:00 Malta Time';
+  } else {
+    // Past the start time: flip to LIVE and show elapsed time instead of a negative countdown.
+    const s = Math.floor(-diff / 1000);
+    $('countdown').textContent = '+' + pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
+    $('liveBadge').classList.remove('hidden'); $('liveBadge').classList.add('flex');
+    $('statusLabel').textContent = 'Now streaming';
+    $('statusText').textContent = 'LIVE: OpenAI DevDay 2026';
+  }
+}
+setInterval(tick, 1000); tick();
+
+/* =====================================================================
+   PANEL B: SYSTEM LOGS & API CONTEXT
+   Confirmed items come from OpenAI's DevDay page. RUMOR items are press
+   previews; OpenAI has not confirmed them.
+   ===================================================================== */
+const SEED_LOGS = [
+  { tag: 'BOOT',  text: 'Watch room online. Keynote starts 10am PT, 19:00 Malta time.', url: '' },
+  { tag: 'INFO',  text: 'OpenAI DevDay 2026 is at Fort Mason, San Francisco. The opening keynote is livestreamed for free; other sessions are recorded and posted on openai.com afterwards.', url: 'https://devday.openai.com/' },
+  { tag: 'INFO',  text: 'DevDay Exchanges follow in Bengaluru, Tokyo, Seoul, Paris, Berlin, London, Sao Paulo and Mexico City.', url: 'https://devday.openai.com/' },
+  { tag: 'RUMOR', text: 'Press previews float agent products, a "GPT-6" update and a pricier ChatGPT tier. OpenAI has confirmed none of it. Treat as noise until announced.', url: '' },
+  { tag: 'RUMOR', text: 'Talk of an agent platform codenamed "Aeon". Unconfirmed.', url: '' },
+  { tag: 'SETUP', text: 'API baseline: set OPENAI_API_KEY in your environment, install the official SDK, list models to confirm access.', url: 'https://platform.openai.com/docs' },
+  { tag: 'SETUP', text: 'Check your rate-limit tier before you plan a live demo. Status page below if things get spicy.', url: 'https://status.openai.com/' },
+  { tag: 'CHAT',  text: 'Developer community thread for the keynote.', url: 'https://community.openai.com/t/join-us-for-the-openai-devday-2026-keynote/1401738' }
+];
+let logs = store.get('devday.logs.v2', null) || SEED_LOGS.map((l) => ({ ...l, ts: Date.now() }));
+
+function renderLog(l, animate) {
+  const li = document.createElement('li');
+  li.className = 'rounded-md border border-slate-800 bg-slate-950/60 p-2.5 leading-relaxed' + (animate ? ' enter' : '');
+  const head = document.createElement('div');
+  head.className = 'mb-1 flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500';
+  const tag = document.createElement('span');
+  tag.className = l.tag === 'NEW' ? 'text-neon-lime' : l.tag === 'RUMOR' ? 'text-neon-pink' : 'text-neon-cyan';
+  tag.textContent = l.tag;
+  const t = document.createElement('span'); t.textContent = hhmm(l.ts);
+  head.append(tag, t);
+  const body = document.createElement('div'); body.className = 'text-slate-300'; body.textContent = l.text;
+  li.append(head, body);
+  const href = safeUrl(l.url);
+  if (href) {
+    const a = document.createElement('a');
+    a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.className = 'mt-1 inline-block text-neon-cyan hover:underline';
+    a.textContent = new URL(href).hostname + ' \u2197';
+    li.append(a);
+  }
+  return li;
+}
+function paintLogs() { $('logFeed').replaceChildren(...logs.map((l) => renderLog(l, false))); }
+function pushLog(entry) {
+  logs.push(entry); store.set('devday.logs.v2', logs.slice(-100));
+  $('logFeed').append(renderLog(entry, true));
+  $('logFeed').scrollTop = $('logFeed').scrollHeight;
+}
+$('logToggle').addEventListener('click', () => $('logForm').classList.toggle('hidden'));
+$('logForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  pushLog({ tag: 'NEW', text: $('logTitle').value.trim(), url: $('logUrl').value.trim(), ts: Date.now() });
+  $('logTitle').value = ''; $('logUrl').value = '';
+});
+
+/* =====================================================================
+   PANEL C: CHAT
+   Transport order: WebSocket if WS_URL is set and connected,
+   otherwise localStorage plus BroadcastChannel (same-browser tabs).
+   NOTE: the host badge is cosmetic. Enforce identity server-side
+   before you trust it in front of a real audience.
+   ===================================================================== */
+const SEED_CHAT = [
+  { user: 'Kristina', text: 'Who else is refreshing the rate-limit page like it owes us money?', ts: Date.now() - 600000 },
+  { user: 'Jean-Paul', text: 'Cisk is in the fridge, pastizzi are in the oven. The keynote is technically optional.', ts: Date.now() - 480000 },
+  { user: 'Marija', text: 'If they announce another agent framework I am making it a drinking game. Water. Mostly.', ts: Date.now() - 300000 },
+  { user: 'Matt', text: 'Welcome all. Links land in the log panel as they drop. Be nice, be nerdy.', ts: Date.now() - 120000 }
+];
+let chat = store.get('devday.chat.v2', null) || SEED_CHAT;
+
+function renderMsg(m, animate) {
+  const isHost = m.user === CONFIG.HOST_NAME;
+  const row = document.createElement('div');
+  row.className = 'flex flex-col ' + (isHost ? 'items-end' : 'items-start') + (animate ? ' enter' : '');
+  const meta = document.createElement('div');
+  meta.className = 'mb-0.5 flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-slate-500';
+  const name = document.createElement('span');
+  name.className = isHost ? 'font-semibold text-neon-lime' : 'text-slate-400';
+  name.textContent = m.user;
+  meta.append(name);
+  if (isHost) { const b = document.createElement('span'); b.className = 'rounded border border-neon-lime/40 px-1 text-[9px] text-neon-lime'; b.textContent = 'HOST'; meta.append(b); }
+  const time = document.createElement('span'); time.textContent = hhmm(m.ts); meta.append(time);
+  const bubble = document.createElement('div');
+  bubble.className = 'max-w-[85%] rounded-lg px-3 py-2 text-sm leading-snug ' +
+    (isHost ? 'border border-neon-lime/30 bg-neon-lime/10 text-slate-100' : 'bg-slate-800/80 text-slate-200');
+  bubble.textContent = m.text;   // textContent, never innerHTML: chat is untrusted input
+  row.append(meta, bubble);
+  return row;
+}
+function addMsg(m, animate = true) {
+  chat.push(m); chat = chat.slice(-CONFIG.MAX_CHAT); store.set('devday.chat.v2', chat);
+  const feed = $('chatFeed');
+  const pinned = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 80;
+  feed.append(renderMsg(m, animate));
+  if (pinned || m.user === $('nameInput').value.trim()) feed.scrollTop = feed.scrollHeight;
+}
+function paintChat() { $('chatFeed').replaceChildren(...chat.map((m) => renderMsg(m, false))); $('chatFeed').scrollTop = $('chatFeed').scrollHeight; }
+
+// --- transports ---
+let ws = null;
+const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('devday-chat') : null;
+if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'chat') addMsg(e.data); };
+
+function connectWS() {
+  if (!CONFIG.WS_URL) return;
+  $('connState').textContent = 'connecting...';
+  ws = new WebSocket(CONFIG.WS_URL);
+  ws.onopen = () => { $('connState').textContent = 'live'; $('connState').className = 'text-[11px] tracking-wider text-neon-lime'; };
+  ws.onmessage = (e) => {
+    try {
+      const d = JSON.parse(e.data);
+      if (d.type === 'chat' && typeof d.user === 'string' && typeof d.text === 'string')
+        addMsg({ user: d.user.slice(0, 24), text: d.text.slice(0, 500), ts: d.ts || Date.now() });
+      else if (d.type === 'log' && typeof d.text === 'string')
+        pushLog({ tag: 'NEW', text: d.text.slice(0, 200), url: d.url || '', ts: Date.now() });
+    } catch { /* ignore malformed frames */ }
+  };
+  ws.onclose = () => {   // fall back to local mode and retry quietly
+    $('connState').textContent = 'local mode'; $('connState').className = 'text-[11px] tracking-wider text-slate-500';
+    setTimeout(connectWS, 4000);
+  };
+  ws.onerror = () => ws.close();
+}
+
+$('nameInput').value = store.get('devday.name', '');
+$('chatForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = $('chatInput').value.trim();
+  const user = ($('nameInput').value.trim() || 'Guest').slice(0, 24);
+  if (!text) return;
+  store.set('devday.name', user);
+  const msg = { type: 'chat', user, text, ts: Date.now() };
+  if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(msg));   // server echoes back; we render on receive
+  else { addMsg(msg); if (bc) bc.postMessage(msg); }
+  $('chatInput').value = '';
+});
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+paintLogs(); paintChat(); connectWS();
+loadStream(QS.get('stream') || CONFIG.STREAM_URL || store.get('devday.stream', ''));
+</script>
+</body>
+</html>

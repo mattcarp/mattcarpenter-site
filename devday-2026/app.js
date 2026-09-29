@@ -80,7 +80,7 @@
   const KEYNOTE_START_MS = Date.parse('2026-09-29T17:00:00Z');
   const KEYNOTE_LEAD_SECONDS = 111;
   const KNOWN_KEYNOTE_START = { Fls_onRviPM: 818 };
-  const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false };
+  const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false, soundTried: false, muted: true };
   function ytSend(func, args) { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
   function ytListen() { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN); }
   function keynoteStartPosition() {
@@ -92,11 +92,18 @@
     if (event.origin !== YT_ORIGIN || event.source !== $('stream').contentWindow) return;
     let data; try { data = JSON.parse(event.data); } catch { return; }
     const info = data && data.event === 'infoDelivery' && data.info; if (!info) return;
-    if (typeof info.muted === 'boolean') { $('unmute').hidden = !info.muted; if (!info.muted) $('stream-status').textContent = 'English audio · live from OpenAI'; }
+    if (typeof info.muted === 'boolean') { player.muted = info.muted; $('unmute').hidden = !info.muted; if (!info.muted) $('stream-status').textContent = 'English audio · live from OpenAI'; }
     if (info.videoData && typeof info.videoData.isLive === 'boolean') player.live = info.videoData.isLive;
     // The first "playing" report after load is at the live edge: pin where the scheduled start sits in the stream.
     if (info.playerState === 1 && player.scheduledPos === null && player.live && typeof info.currentTime === 'number' && info.currentTime > 30) {
       player.scheduledPos = info.currentTime - (Date.now() - KEYNOTE_START_MS) / 1000;
+    }
+    if (info.playerState === 1 && !player.soundTried) {
+      player.soundTried = true;
+      setTimeout(() => { ytSend('unMute'); ytSend('setVolume', [100]); }, 800);
+      setTimeout(() => {
+        if (player.state !== 1 || player.muted !== false) { ytSend('mute'); ytSend('playVideo'); $('unmute').hidden = false; $('stream-status').textContent = 'Live from OpenAI \u00b7 your browser needs a tap for sound'; }
+      }, 3800);
     }
     if (info.playerState === 1) { $('rewind').hidden = false; if (!player.captionsOff) { player.captionsOff = true; ytSend('unloadModule', ['captions']); } }
     // Health tracking for the stall watchdog below.
@@ -117,7 +124,7 @@
     if (!stuck && !frozen) { player.nudged = false; return; }
     if (!player.nudged) { player.nudged = true; ytSend('playVideo'); return; }
     if (reloads < 3 && now - (player.reloadedAt || 0) > 20000) {
-      reloads++; player.reloadedAt = now; player.scheduledPos = null; player.rewound = false; player.captionsOff = false; $('go-live').hidden = true;
+      reloads++; player.reloadedAt = now; player.scheduledPos = null; player.rewound = false; player.captionsOff = false; player.soundTried = false; $('go-live').hidden = true;
       toast('Reconnecting the stream'); $('stream').src = $('stream').getAttribute('src');
     }
   }, 4000);
@@ -130,22 +137,27 @@
     const videoId = youtube(url);
     if (!videoId) return;
     const source = YT_ORIGIN + '/embed/' + videoId + '?rel=0&cc_load_policy=0&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
-    if (player.videoId !== videoId) { player.videoId = videoId; player.scheduledPos = null; player.rewound = false; }
+    if (player.videoId !== videoId) { player.videoId = videoId; player.scheduledPos = null; player.rewound = false; player.soundTried = false; }
     if ($('stream').getAttribute('src') !== source) $('stream').src = source;
     $('stream').hidden = false; $('player-empty').hidden = true;
     $('stream-status').textContent = 'Live from OpenAI · sound is off, tap Sound on';
     $('stream-url').value = url;
   }
+  let captionsShown = false;
   function renderCaptions() {
     if (!captions.length) return;
-    const list = $('captions'); list.replaceChildren(); list.lang = language;
-    for (const caption of captions.slice(-12)) {
-      const row = element('div', 'caption-entry'); row.append(element('time', '', time(caption.ts)), element('p', '', caption[language] || caption.en || '')); list.append(row);
+    const list = $('captions');
+    const follow = !captionsShown || list.scrollHeight - list.scrollTop - list.clientHeight < 80; // stay put if the reader scrolled up
+    list.replaceChildren(); list.lang = 'mt';
+    for (const caption of captions) {
+      if (!caption.mt) continue;
+      const row = element('div', 'caption-entry'); row.append(element('time', '', time(caption.ts)), element('p', '', caption.mt)); list.append(row);
     }
-    list.scrollTop = list.scrollHeight;
+    captionsShown = true;
+    if (follow) list.scrollTop = list.scrollHeight;
   }
   function caption(data) {
-    captions.push(data); captions = captions.slice(-30); latestCaption = Number(data.ts) || Date.now(); renderCaptions();
+    captions.push(data); captions = captions.slice(-700); latestCaption = Number(data.ts) || Date.now(); renderCaptions();
     setCaptionStatus('Captions received · ' + time(latestCaption));
   }
   const reactions = { fire: 'On fire', mind: 'Mind blown', ship: 'Ship it', rate: 'Rate limit?', cisk: 'Cisk o’clock' };
@@ -166,9 +178,9 @@
           $('presence').textContent = data.n + (data.n === 1 ? ' in room' : ' in room');
           if (data.chat?.length) { $('chat').replaceChildren(); data.chat.forEach(addChat); $('chat').scrollTop = $('chat').scrollHeight; }
           if (data.logs?.length) { $('announcements').replaceChildren(); data.logs.forEach(addLog); }
-          setStream(data.stream); captions = (data.captions || []).slice(-30); renderCaptions();
+          setStream(data.stream); captions = (data.captions || []).slice(-700); renderCaptions();
           if (captions.length) { latestCaption = Number(captions.at(-1).ts) || 0; setCaptionStatus('Latest captions · ' + time(latestCaption)); }
-          else setCaptionStatus(features.captions ? 'Waiting for the host’s caption feed' : 'Maltese captions are not connected yet');
+          else setCaptionStatus(features.captions ? 'Waiting for the first words' : 'Maltese captions are not connected yet');
           if (hostKey) send({ type: 'auth', key: hostKey });
           window.dispatchEvent(new CustomEvent('devday:features', {detail:features})); break;
         case 'presence': $('presence').textContent = data.n + ' in room'; break;
@@ -211,7 +223,6 @@
   $('stream-form').addEventListener('submit', event => { event.preventDefault(); const url = $('stream-url').value.trim(); if (!youtube(url)) { toast('Use a complete YouTube watch or live video link.'); return; } send({type:'stream',url}); });
   $('log-form').addEventListener('submit', event => { event.preventDefault(); const text = $('log-text').value.trim(); if (text && send({type:'log',text,url:$('log-url').value.trim()})) { $('log-text').value = ''; $('log-url').value = ''; } });
   document.querySelectorAll('[data-reaction]').forEach(button => button.addEventListener('click', () => { if (Date.now() - lastReact < 250) return; if (send({type:'react',kind:button.dataset.reaction})) { lastReact = Date.now(); react(button.dataset.reaction); } }));
-  for (const lang of ['mt','en']) $('lang-' + lang).addEventListener('click', () => { language = lang; for (const other of ['mt','en']) $('lang-' + other).setAttribute('aria-pressed', String(other === lang)); renderCaptions(); });
   const tabs = [...document.querySelectorAll('[data-tab]')];
   function selectTab(button) { tabs.forEach(tab => { tab.setAttribute('aria-selected', String(tab === button)); tab.tabIndex = tab === button ? 0 : -1; }); document.querySelectorAll('[data-panel]').forEach(panel => panel.classList.toggle('active', panel.dataset.panel === button.dataset.tab)); }
   tabs.forEach((button, index) => { button.addEventListener('click', () => selectTab(button)); button.addEventListener('keydown', event => { let next; if (event.key === 'ArrowRight') next = (index + 1) % tabs.length; if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length; if (event.key === 'Home') next = 0; if (event.key === 'End') next = tabs.length - 1; if (next !== undefined) { event.preventDefault(); selectTab(tabs[next]); tabs[next].focus(); } }); });

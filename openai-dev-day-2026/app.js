@@ -88,9 +88,18 @@
   const KEYNOTE_START_MS = Date.parse('2026-09-29T17:00:00Z');
   const KEYNOTE_LEAD_SECONDS = 111;
   const KNOWN_KEYNOTE_START = { Fls_onRviPM: 818 };
-  const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false, soundTried: false, muted: true };
-  function ytSend(func, args) { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
+  const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false, soundTried: false, muted: null, userMuted: false, sent: [] };
+  function ytSend(func, args) { player.sent.push(func); if (player.sent.length > 120) player.sent.shift(); const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
   function ytListen() { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN); }
+  function updateSoundUi() {
+    const soundOn = player.muted === false;
+    $('unmute').hidden = !player.heardAt;
+    $('unmute').textContent = soundOn ? 'Sound off' : 'Sound on';
+    $('unmute').setAttribute('aria-pressed', String(soundOn));
+    $('sound-prompt').hidden = !(player.state === 1 && !soundOn && !player.userMuted);
+    if (soundOn && !player.rewound) $('stream-status').textContent = 'English audio \u00b7 live from OpenAI';
+  }
+  function captionsOff() { ytSend('unloadModule', ['captions']); ytSend('setOption', ['captions', 'track', {}]); }
   function keynoteStartPosition() {
     if (KNOWN_KEYNOTE_START[player.videoId] != null) return KNOWN_KEYNOTE_START[player.videoId];
     if (player.scheduledPos != null) return Math.max(0, player.scheduledPos + KEYNOTE_LEAD_SECONDS);
@@ -100,7 +109,7 @@
     if (event.origin !== YT_ORIGIN || event.source !== $('stream').contentWindow) return;
     let data; try { data = JSON.parse(event.data); } catch { return; }
     const info = data && data.event === 'infoDelivery' && data.info; if (!info) return;
-    if (typeof info.muted === 'boolean') { player.muted = info.muted; $('unmute').hidden = !info.muted; if (!info.muted) $('stream-status').textContent = 'English audio · live from OpenAI'; }
+    if (typeof info.muted === 'boolean') player.muted = info.muted;
     if (info.videoData && typeof info.videoData.isLive === 'boolean') player.live = info.videoData.isLive;
     // The first "playing" report after load is at the live edge: pin where the scheduled start sits in the stream.
     if (info.playerState === 1 && player.scheduledPos === null && player.live && typeof info.currentTime === 'number' && info.currentTime > 30) {
@@ -110,13 +119,14 @@
       player.soundTried = true;
       setTimeout(() => { ytSend('unMute'); ytSend('setVolume', [100]); }, 800);
       setTimeout(() => {
-        if (player.state !== 1 || player.muted !== false) { ytSend('mute'); ytSend('playVideo'); $('unmute').hidden = false; $('stream-status').textContent = 'Live from OpenAI \u00b7 your browser needs a tap for sound'; }
+        if (player.state !== 1 || player.muted !== false) { ytSend('mute'); ytSend('playVideo'); player.muted = true; updateSoundUi(); $('stream-status').textContent = 'Live from OpenAI \u00b7 tap for sound'; }
       }, 3800);
     }
-    if (info.playerState === 1) { $('rewind').hidden = false; if (!player.captionsOff) { player.captionsOff = true; ytSend('unloadModule', ['captions']); } }
+    if (info.playerState === 1) { $('rewind').hidden = false; if (!player.captionsOff) { player.captionsOff = true; captionsOff(); [1500, 4000, 9000, 16000].forEach(ms => setTimeout(captionsOff, ms)); } }
     // Health tracking for the stall watchdog below.
     const now = Date.now();
     player.heardAt = now;
+    updateSoundUi();
     if (typeof info.playerState === 'number') { if (info.playerState !== player.state) player.stateAt = now; player.state = info.playerState; }
     if (typeof info.currentTime === 'number') { if (player.movedTime === null || Math.abs(info.currentTime - player.movedTime) > 0.4) { player.movedAt = now; player.movedTime = info.currentTime; } player.time = info.currentTime; }
   });
@@ -136,7 +146,13 @@
       toast('Reconnecting the stream'); $('stream').src = $('stream').getAttribute('src');
     }
   }, 4000);
-  $('unmute').addEventListener('click', () => { ytSend('unMute'); ytSend('setVolume', [100]); ytSend('playVideo'); });
+  const soundOn = () => { player.userMuted = false; ytSend('unMute'); ytSend('setVolume', [100]); ytSend('playVideo'); };
+  $('unmute').addEventListener('click', () => { if (player.muted === false) { player.userMuted = true; ytSend('mute'); } else soundOn(); });
+  $('sound-prompt').addEventListener('click', soundOn);
+  // Browsers only allow sound after a touch on the page, so the first touch anywhere turns it on (unless the viewer muted it).
+  const onGesture = () => { if (player.muted !== false && !player.userMuted && player.state === 1) { ytSend('unMute'); ytSend('setVolume', [100]); } };
+  for (const type of ['pointerdown', 'keydown', 'touchstart']) document.addEventListener(type, onGesture, true);
+  setInterval(() => { if (player.state === 1) captionsOff(); }, 20000);
   $('rewind').addEventListener('click', () => { ytSend('seekTo', [keynoteStartPosition(), true]); ytSend('playVideo'); player.rewound = true; $('go-live').hidden = false; $('stream-status').textContent = 'Replaying from the start of the keynote'; });
   $('go-live').addEventListener('click', () => { ytSend('seekTo', [1e9, true]); ytSend('playVideo'); player.rewound = false; $('go-live').hidden = true; $('stream-status').textContent = 'English audio · live from OpenAI'; });
   $('stream').addEventListener('load', () => { ytListen(); setTimeout(ytListen, 1500); setTimeout(ytListen, 4000); });

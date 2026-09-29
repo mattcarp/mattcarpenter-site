@@ -110,10 +110,15 @@
     let data; try { data = JSON.parse(event.data); } catch { return; }
     const info = data && data.event === 'infoDelivery' && data.info; if (!info) return;
     if (typeof info.muted === 'boolean') player.muted = info.muted;
-    if (info.videoData && typeof info.videoData.isLive === 'boolean') player.live = info.videoData.isLive;
+    if (info.videoData && typeof info.videoData.isLive === 'boolean') { player.live = info.videoData.isLive; player.liveKnown = true; }
     // The first "playing" report after load is at the live edge: pin where the scheduled start sits in the stream.
     if (info.playerState === 1 && player.scheduledPos === null && player.live && typeof info.currentTime === 'number' && info.currentTime > 30) {
       player.scheduledPos = info.currentTime - (Date.now() - KEYNOTE_START_MS) / 1000;
+    }
+    // The broadcast has ended and YouTube serves it as a recording that starts at 0:00 (the countdown): open at the keynote itself.
+    if (info.playerState === 1 && player.liveKnown && !player.live && !player.autoSeeked && KNOWN_KEYNOTE_START[player.videoId] != null && typeof info.currentTime === 'number') {
+      player.autoSeeked = true;
+      if (info.currentTime < KNOWN_KEYNOTE_START[player.videoId] - 5) { ytSend('seekTo', [KNOWN_KEYNOTE_START[player.videoId], true]); player.time = KNOWN_KEYNOTE_START[player.videoId]; }
     }
     if (info.playerState === 1 && !player.soundTried) {
       player.soundTried = true;
@@ -161,7 +166,7 @@
     const videoId = youtube(url);
     if (!videoId) return;
     const source = YT_ORIGIN + '/embed/' + videoId + '?rel=0&cc_load_policy=0&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
-    if (player.videoId !== videoId) { player.videoId = videoId; player.scheduledPos = null; player.rewound = false; player.soundTried = false; }
+    if (player.videoId !== videoId) { player.videoId = videoId; player.autoSeeked = false; player.liveKnown = false; player.scheduledPos = null; player.rewound = false; player.soundTried = false; }
     if ($('stream').getAttribute('src') !== source) $('stream').src = source;
     $('stream').hidden = false; $('player-empty').hidden = true;
     $('stream-status').textContent = 'Live from OpenAI · sound is off, tap Sound on';

@@ -8,6 +8,14 @@
   const read = (key, fallback = '') => { try { return localStorage.getItem(key) || fallback; } catch { return fallback; } };
   const write = (key, value) => { try { localStorage.setItem(key, value); } catch { /* Private browsing still works. */ } };
   const id = read('devday-v2-id', crypto.randomUUID().replaceAll('-', '').slice(0, 32));
+  // Visitors who leave the name blank get a stable anonymous name so their messages thread together.
+  const guestName = (() => {
+    const saved = read('devday-v2-guest');
+    if (/^SottoSound-\d{6}$/.test(saved)) return saved;
+    const made = 'SottoSound-' + (100000 + crypto.getRandomValues(new Uint32Array(1))[0] % 900000);
+    write('devday-v2-guest', made);
+    return made;
+  })();
   write('devday-v2-id', id);
   let socket, ready = false, host = false, hostKey = '', captions = [], language = 'mt', lastChat = 0, pending = null, toastTimer, lastReact = 0;
   let features = {}, latestCaption = 0;
@@ -208,8 +216,8 @@
     socket.addEventListener('error', () => socket.close());
   }
   $('chat-form').addEventListener('submit', event => {
-    event.preventDefault(); const text = $('message').value.trim(), user = $('name').value.trim();
-    if (!text || !user || pending) return;
+    event.preventDefault(); const text = $('message').value.trim(), user = $('name').value.trim() || guestName;
+    if (!text || pending) return;
     if (Date.now() - lastChat < 750) { $('send-status').textContent = 'Give the room a moment.'; return; }
     const clientId = crypto.randomUUID();
     if (send({ type: 'chat', text, user, clientId })) {
@@ -235,4 +243,6 @@
     if (latestCaption && ready && Date.now() - latestCaption > 45000) setCaptionStatus('No new captions · last received ' + time(latestCaption));
   }
   clock(); setInterval(clock,1000); connect();
+  // Built-in default: the keynote plays even if the room connection is down. The host can still change it for everyone.
+  setStream('https://www.youtube.com/watch?v=Fls_onRviPM');
 })();

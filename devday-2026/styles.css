@@ -4,3 +4,4 @@
 
 /* Keep a long conversation inside its panel instead of stretching the page. */
 .chat{height:480px;min-height:0;flex:none}.chat-list{min-height:0;flex:1}.chat-form,.chat>.panel-heading{flex-shrink:0}
+.stage-bar{flex-wrap:wrap}.stage-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.stage-controls button{min-height:36px;font-size:13px}

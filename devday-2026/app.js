@@ -72,15 +72,47 @@
       return ['http:', 'https:'].includes(url.protocol) && /^[A-Za-z0-9_-]{11}$/.test(videoId || '') ? videoId : null;
     } catch { return null; }
   }
+  // --- Player: muted autoplay at the live edge, Sound on, Back to the start, Jump to live ---
+  // Positions are in stream seconds. OpenAI ran a two-minute countdown after the scheduled 19:00 (Malta) start,
+  // so the keynote's real first frame is about 111 s after the scheduled time. For the known video the exact
+  // point was measured on 29 Sep 2026 (countdown reached zero at 821 s; 3 s of pre-roll).
+  const YT_ORIGIN = 'https://www.youtube-nocookie.com';
+  const KEYNOTE_START_MS = Date.parse('2026-09-29T17:00:00Z');
+  const KEYNOTE_LEAD_SECONDS = 111;
+  const KNOWN_KEYNOTE_START = { Fls_onRviPM: 818 };
+  const player = { videoId: null, scheduledPos: null, live: false, rewound: false };
+  function ytSend(func, args) { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
+  function ytListen() { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN); }
+  function keynoteStartPosition() {
+    if (KNOWN_KEYNOTE_START[player.videoId] != null) return KNOWN_KEYNOTE_START[player.videoId];
+    if (player.scheduledPos != null) return Math.max(0, player.scheduledPos + KEYNOTE_LEAD_SECONDS);
+    return 0;
+  }
+  window.addEventListener('message', event => {
+    if (event.origin !== YT_ORIGIN || event.source !== $('stream').contentWindow) return;
+    let data; try { data = JSON.parse(event.data); } catch { return; }
+    const info = data && data.event === 'infoDelivery' && data.info; if (!info) return;
+    if (typeof info.muted === 'boolean') { $('unmute').hidden = !info.muted; if (!info.muted) $('stream-status').textContent = 'English audio · live from OpenAI'; }
+    if (info.videoData && typeof info.videoData.isLive === 'boolean') player.live = info.videoData.isLive;
+    // The first "playing" report after load is at the live edge: pin where the scheduled start sits in the stream.
+    if (info.playerState === 1 && player.scheduledPos === null && player.live && typeof info.currentTime === 'number' && info.currentTime > 30) {
+      player.scheduledPos = info.currentTime - (Date.now() - KEYNOTE_START_MS) / 1000;
+    }
+    if (info.playerState === 1) $('rewind').hidden = false;
+  });
+  $('unmute').addEventListener('click', () => { ytSend('unMute'); ytSend('setVolume', [100]); ytSend('playVideo'); });
+  $('rewind').addEventListener('click', () => { ytSend('seekTo', [keynoteStartPosition(), true]); ytSend('playVideo'); player.rewound = true; $('go-live').hidden = false; $('stream-status').textContent = 'Replaying from the start of the keynote'; });
+  $('go-live').addEventListener('click', () => { ytSend('seekTo', [1e9, true]); ytSend('playVideo'); player.rewound = false; $('go-live').hidden = true; $('stream-status').textContent = 'English audio · live from OpenAI'; });
+  $('stream').addEventListener('load', () => { ytListen(); setTimeout(ytListen, 1500); setTimeout(ytListen, 4000); });
   function setStream(data) {
     const url = typeof data === 'string' ? data : data?.url;
     const videoId = youtube(url);
     if (!videoId) return;
-    const source = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0';
+    const source = YT_ORIGIN + '/embed/' + videoId + '?rel=0&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+    if (player.videoId !== videoId) { player.videoId = videoId; player.scheduledPos = null; player.rewound = false; }
     if ($('stream').getAttribute('src') !== source) $('stream').src = source;
     $('stream').hidden = false; $('player-empty').hidden = true;
-    $('stream-status').textContent = 'English audio · press play to join the keynote';
-    const fallback = $('stream-fallback'); if (fallback) { fallback.href = 'https://www.youtube.com/watch?v=' + videoId; fallback.hidden = false; }
+    $('stream-status').textContent = 'Live from OpenAI · sound is off, tap Sound on';
     $('stream-url').value = url;
   }
   function renderCaptions() {

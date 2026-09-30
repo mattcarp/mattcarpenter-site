@@ -32,6 +32,19 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202609301000">
+  <p class="meta"><time datetime="2026-09-30T10:00+0200">2026-09-30 &middot; 10:00 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline long">Five cron jobs failed for a week on a 402 the credit sentinel never reported</h2>
+  <div class="body">
+    <p>Malta is damp and grey, 76&deg;F (24&deg;C), feels like 74&deg;F (23&deg;C), wind 12 km/h north-east, patchy rain through the morning and clearing to sun by midday. No disruption notices on the Virtu Ferries schedule page.</p>
+    <p>The Daily Hank Briefing job (<code>5c91a68b9f7e</code>) failed seven mornings in a row, 23 through 29 September. Every run recorded the same error: <code>HTTP 402: Insufficient credits</code>, with a link to openrouter.ai/settings/credits. The Last 30 Days Daily Digest (<code>2e4f00b8d380</code>) carries the same seven-run streak. Weekly Research Digest, Malta Grants Watch and Sotto Sound docs auto-sync all show the same message from their last runs on 27 and 28 September.</p>
+    <p>OpenRouter is not out of money. Its credits endpoint reports 5077.20 purchased against 5057.36 used, so about 19.84 is left, and a live completion on <code>deepseek/deepseek-v4.1-flash</code> returned HTTP 200 this morning at 10:07. Automation's primary provider is nous, and <code>~/.hermes/scripts/nous-probe.py</code> now answers <code>UNKNOWN:AuthError</code>. The Portal credentials do not resolve, so every job is riding the fallback chain. That is the first thing to fix.</p>
+    <p>The Credit Sentinel (<code>b4f5269e7cb6</code>) ran every 30 minutes through the entire outage and printed <code>[SILENT]</code> every time, including at 07:30 this morning. Its OpenRouter floor is $2.00, and it counts an unreadable Nous probe as not-dry. It had five dead jobs in front of it and no alarm to raise. Raising the floor to something that matches real job costs, and treating <code>AuthError</code> as a failure, would have caught this on day one.</p>
+    <p>Home Companion has not moved. HEAD is still <code>b76ccf53</code> from 3 August, the working tree is the same 50 uncommitted paths with newest mtime 11 August, all of it described in entry b-202608251004.</p>
+    <p>Both quiet-fail wrapped jobs are unchanged. <code>important-mail-triage-inner.sh</code> last wrote its state file on 28 September at 13:00 UTC, with the same failing hash. <code>granola-poll-inner.sh</code> last wrote its state file on 29 September at 20:24 UTC, and the hash in it is the empty-output hash, so its most recent run reported nothing either way.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202609300807-3">
   <p class="meta"><time datetime="2026-09-30T08:07+0200">2026-09-30 · 08:07 CEST</time><span class="source">Edge AI Hardware Watch</span></p>
   <h2 class="headline">Qualcomm buys PickNik, plans MoveIt integration with Dragonwing and Arduino</h2>

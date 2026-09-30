@@ -87,7 +87,8 @@
   const YT_ORIGIN = 'https://www.youtube-nocookie.com';
   const KEYNOTE_START_MS = Date.parse('2026-09-29T17:00:00Z');
   const KEYNOTE_LEAD_SECONDS = 111;
-  const KNOWN_KEYNOTE_START = { Fls_onRviPM: 818 };
+  // 30 Sep 2026: YouTube re-cut the recording (68 min -> 53 min, countdown removed); speech starts at about 0:20.
+  const KNOWN_KEYNOTE_START = { Fls_onRviPM: 15 };
   const player = { videoId: null, scheduledPos: null, live: false, rewound: false, state: null, stateAt: Date.now(), time: null, movedTime: null, movedAt: Date.now(), heardAt: 0, nudged: false, reloadedAt: 0, captionsOff: false, soundTried: false, muted: null, userMuted: false, sent: [] };
   function ytSend(func, args) { player.sent.push(func); if (player.sent.length > 120) player.sent.shift(); const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'command', func, args: args || [] }), YT_ORIGIN); }
   function ytListen() { const w = $('stream').contentWindow; if (w) w.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN); }
@@ -190,7 +191,9 @@
     const list = $('captions');
     const follow = !captionsShown || list.scrollHeight - list.scrollTop - list.clientHeight < 80; // stay put if the reader scrolled up
     list.replaceChildren(); list.lang = 'mt';
-    for (const caption of captions) {
+    const latestByPos = new Map(); captions.forEach((c, i) => { if (c.pos !== null && c.pos !== undefined) latestByPos.set(c.pos, i); }); // a replayed piece replaces its earlier version
+    for (const [index, caption] of captions.entries()) {
+      if (caption.pos !== null && caption.pos !== undefined && latestByPos.get(caption.pos) !== index) continue;
       const text = (captionStyle === 'mte' && caption.mte) || caption.mt; // Maltenglish falls back to Maltese when a line has no second version
       if (!text) continue;
       const stamp = Number.isFinite(Number(caption.pos)) && caption.pos !== null && caption.pos !== undefined ? Math.floor(caption.pos / 60) + ':' + String(caption.pos % 60).padStart(2, '0') : time(caption.ts);
@@ -274,7 +277,7 @@
   function clock() {
     const remaining = Date.parse('2026-09-29T17:00:00Z') - Date.now();
     if (remaining > 0) { const s = Math.floor(remaining / 1000); $('countdown').textContent = [Math.floor(s/3600), Math.floor(s/60)%60, s%60].map(n=>String(n).padStart(2,'0')).join(':'); $('schedule-label').textContent = 'UNTIL SCHEDULED START'; }
-    else { $('countdown').textContent = '19:00 Malta'; $('schedule-label').textContent = 'SCHEDULED START'; }
+    else { $('countdown').textContent = '29 September'; $('schedule-label').textContent = 'RECORDED'; }
     if (latestCaption && ready && Date.now() - latestCaption > 45000) setCaptionStatus('No new captions · last received ' + time(latestCaption));
   }
   clock(); setInterval(clock,1000); connect();

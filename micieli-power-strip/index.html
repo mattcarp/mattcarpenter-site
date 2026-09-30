@@ -6,11 +6,21 @@
 <style>
 :root { --card-background: white; }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--card-background); }
-a { display: block; }
-img { display: block; width: 100%; height: auto; max-width: 1024px; margin: auto; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--card-background); }
+body { display: grid; place-items: center; }
+img { display: block; width: 100vw; height: 100dvh; object-fit: contain; cursor: pointer; }
+img:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
 </style>
-<a href="card.png" aria-label="Iftaħ l-istampa sħiħa">
-<img src="card.png" width="1024" height="1536" alt="Sur Micieli, Nixtieq tnejn bħal dan jew simili. 2 extension leads. Mill-inqas 6 sokits kull wieħed. Preferibbilment 8. Plagg Ingliż bi 3 pinnijiet. Grazzi ħafna!">
-</a>
+<img tabindex="0" role="button" aria-label="Open card fullscreen" src="card.png" width="1024" height="1536" alt="Sur Micieli, Nixtieq tnejn bħal dan jew simili. 2 extension leads. Mill-inqas 6 sokits kull wieħed. Preferibbilment 8. Plagg Ingliż bi 3 pinnijiet. Grazzi ħafna!">
+<script>
+const card = document.querySelector('img')
+function fullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {})
+}
+card.addEventListener('click', fullscreen)
+card.addEventListener('dblclick', fullscreen)
+card.addEventListener('keydown', event => {
+  if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); fullscreen() }
+})
+</script>
 </html>

@@ -223,7 +223,7 @@
           if (data.logs?.length) { $('announcements').replaceChildren(); data.logs.forEach(addLog); }
           setStream(data.stream); captions = (data.captions || []).slice(-700); renderCaptions();
           if (captions.length) { latestCaption = Number(captions.at(-1).ts) || 0; setCaptionStatus('Latest captions · ' + time(latestCaption)); }
-          else setCaptionStatus(features.captions ? 'Waiting for the first words' : 'Maltese captions are not connected yet');
+          else setCaptionStatus(features.captions ? 'Waiting for the first words' : 'Captions ran live on the night');
           if (hostKey) send({ type: 'auth', key: hostKey });
           window.dispatchEvent(new CustomEvent('devday:features', {detail:features})); break;
         case 'presence': $('presence').textContent = data.n + ' in room'; break;
@@ -274,7 +274,7 @@
   function clock() {
     const remaining = Date.parse('2026-09-29T17:00:00Z') - Date.now();
     if (remaining > 0) { const s = Math.floor(remaining / 1000); $('countdown').textContent = [Math.floor(s/3600), Math.floor(s/60)%60, s%60].map(n=>String(n).padStart(2,'0')).join(':'); $('schedule-label').textContent = 'UNTIL SCHEDULED START'; }
-    else { $('countdown').textContent = '19:00 Malta'; $('schedule-label').textContent = 'SCHEDULED START'; }
+    else { $('countdown').textContent = '29 September'; $('schedule-label').textContent = 'RECORDED'; }
     if (latestCaption && ready && Date.now() - latestCaption > 45000) setCaptionStatus('No new captions · last received ' + time(latestCaption));
   }
   clock(); setInterval(clock,1000); connect();

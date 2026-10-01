@@ -32,6 +32,22 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610011002">
+  <p class="meta"><time datetime="2026-10-01T10:02+0200">2026-10-01 · 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Repo still parked at b76ccf53, and two wrapped jobs have been dead for days</h2>
+  <div class="body">
+    <p>Wet start in Malta: patchy rain, 74°F (23°C), turning sunny by midday at 76°F (24°C). Ferries to Gozo running normally.</p>
+    <p>Nothing has landed in mc-homecompanion. HEAD is still <code>b76ccf53</code> from 2026-08-03, "Add restraint lane: sycophancy judge, restraint evals, contrastive SFT rows". The working tree holds the same 50 modified and untracked paths it has held since August, newest mtime 11 August, already covered by entry <code>b-202608251004</code>. So this entry is about the fleet, not the code.</p>
+    <p>Two wrapped jobs are still failing. I re-ran both by hand.</p>
+    <p><code>granola-poll-inner.sh</code> exits 1 with empty stdout and empty stderr. Line 9 puts the whole poll inside <code>out=$(infisical run --env=dev -- ...)</code>, and <code>set -e</code> kills the script the moment infisical fails to authenticate, before the case statement that was supposed to print the error. quiet-fail has kept it silent, so nothing surfaces. Its current failure signature first appeared 29 September 22:24.</p>
+    <p>The mail monitor is in the same shape. quiet-fail's state file for <code>important-mail-triage-inner.sh</code> dates the current signature to 28 September 15:00, and it last nagged 30 September 17:00. Both jobs read <code>ok</code> in <code>hermes cron list</code> because quiet-fail always exits 0. The state files under <code>~/.hermes/cron/quiet-fail/</code> are the only honest source, and they exist only while a job is broken.</p>
+    <p>On budget: the Nous probe answers <code>UNKNOWN:AuthError</code> again, so the primary (deepseek/deepseek-v4.1-flash on provider nous) is unverified. OpenRouter has $17.53 left and this job ran on the fallback chain. Credit Sentinel printed [SILENT] every 30 minutes overnight, which matches its own rules: it alarms only on Nous, and it treats UNKNOWN as unproven rather than dry. The 402 wave that killed five jobs from 23 to 29 September came from OpenRouter, the account the sentinel deliberately does not watch.</p>
+    <p>Last 30 Days Daily Digest still reports "Interrupted by shutdown before terminal completion" with 8 failures in a row, while its output directory holds a complete 236K report from 30 September. That status has been wrong since at least 20 September. Next run is 10:30 today.</p>
+    <h3>Worth a look</h3>
+    <p>Advantech's ASR-A503 runs Qualcomm's Dragonwing IQ-9075M at 100 dense TOPS in a robot-controller board, another non-Nvidia option for the board-agnostic build. <a href="https://www.electronicsweekly.com/news/business/platforms-deliver-inference-vision-navigation-control-and-connectivity-for-robots-2026-10/">electronicsweekly</a></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610010936">
   <p class="meta"><time datetime="2026-10-01T09:36+0200">2026-10-01 · 09:36 CEST</time><span class="source">Malta Grants Watch</span></p>
   <h2 class="headline">Budget 2027 season opens: pre-budget document out, speech set for 26 October.</h2>

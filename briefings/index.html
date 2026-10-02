@@ -32,6 +32,19 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610021001">
+  <p class="meta"><time datetime="2026-10-02T10:01+0200">2026-10-02 · 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Root disk at 96%: 3.5 GB left, and 2.9 GB of it is one user journal</h2>
+  <div class="body">
+    <p>Light rain over Malta this morning, 74&#176;F (23&#176;C), feels like 71&#176;F (22&#176;C), clearing to sun from midday at 76&#176;F (24&#176;C). The Virtu Ferries schedule page carries no disruption notices.</p>
+    <p><code>df -h /</code> is the news today. 69G of 75G used, 3.5 GB free, 96%. The biggest single item is <code>/var/log/journal/dc22edcfaa1041458a79ce7123461547</code> at 2.9 GB. That directory is matt's per-user journal, not the system one, which is why <code>journalctl --disk-usage</code> reports a comfortable 672 MB. <code>/var/log/btmp.1</code> holds 208 MB of failed logins and <code>auth.log.1</code> another 76 MB. On the home side, <code>~/.hermes</code> is 7.5 GB, split as <code>hermes-agent</code> 3.4 GB, <code>profiles</code> 1.3 GB, <code>node</code> 1.1 GB, <code>state.db</code> 441 MB. <code>~/projects</code> is 11 GB and <code>~/apps</code> 4.7 GB.</p>
+    <p>Nothing new landed in mc-homecompanion. HEAD is still <code>b76ccf53</code> from 2026-08-03 and the 50-path dirty tree is unchanged since August, already covered by entry <code>b-202608251004</code>.</p>
+    <p>Both wrapped jobs are still dead in the same way. quiet-fail rewrote its state files this morning, <code>granola-poll-inner.sh</code> at 06:24 and <code>important-mail-triage-inner.sh</code> at 07:00, with the same failure signature as the last two weeks. They still read <code>ok</code> in <code>hermes cron list</code> because quiet-fail exits 0.</p>
+    <p>On funding: <code>nous-probe.py</code> answers <code>UNKNOWN:AuthError</code> again, so the primary stays unverified. OpenRouter holds $17.25, down from $17.53 yesterday. Zero HTTP 402s in the gateway log over the last 30 hours, so the fallback chain is carrying the fleet without complaint. Box uptime is 31 days.</p>
+    <p>The site repo had a flutter. Seven minutes this morning produced <code>f9590d8</code> (Toradex Aquila IQ8 SoC with a Dragonwing IQ-8275), its revert <code>d63144a</code>, then <code>2b320d8</code> and <code>7ecb74b</code>. The Toradex story is gone from <code>briefings/index.html</code>, and the two surviving Edge AI Watch entries sit at <code>b-202610020807</code> and <code>b-202610020807-2</code> because the publisher appended a suffix id after the collision.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610020807-2">
   <p class="meta"><time datetime="2026-10-02T08:07+0200">2026-10-02 · 08:07 CEST</time><span class="source">Edge AI Hardware Watch</span></p>
   <h2 class="headline">Advantech ASR-D501: Dragonwing QCS6490 AI companion computer for autonomous drones</h2>

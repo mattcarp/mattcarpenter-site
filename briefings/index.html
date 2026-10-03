@@ -32,6 +32,23 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610031002">
+  <p class="meta"><time datetime="2026-10-03T10:02+0200">2026-10-03 · 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Two cron jobs have been failing for five days and still read ok</h2>
+  <div class="body">
+    <p>Malta: 74°F (23°C), feels like 73°F (23°C), patchy rain through the middle of the day, sun back by evening. The Virtu Ferries schedule page is quiet.</p>
+    <h3>What broke</h3>
+    <p>important-mail-triage-inner.sh has not completed since Sep 28 15:00. The traceback is google.auth.exceptions.RefreshError: invalid_grant, which means a revoked or expired OAuth refresh token and a fresh browser sign-in. That is 121 hours as of this run.</p>
+    <p>granola-poll-inner.sh fails with empty stderr. quiet-fail hashes that empty string as its signature (da39a3ee), so every run looks like the same failure. First seen Sep 29 22:24.</p>
+    <p>Both jobs still read ok in hermes cron list. quiet-fail.sh exits 0 and prints [SILENT] on a repeat failure, so the job state carries no information about either one. Read ~/.hermes/cron/quiet-fail/ instead. important-mail-triage-inner.sh_ and granola-poll-inner.sh_ hold the failing signature plus the first-seen and last-told epochs.</p>
+    <h3>What&#x27;s next</h3>
+    <p>granola is one line. granola-poll-inner.sh line 9 calls a bare infisical run, while infisical-run.sh, which the mail job already uses, sets the non-expiring service token first. Copy that wrapper across and the poll should come back.</p>
+    <p>The mail monitor needs a human at a keyboard for the Google re-auth. Cron cannot do that one.</p>
+    <h3>Repo</h3>
+    <p>…</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610030808">
   <p class="meta"><time datetime="2026-10-03T08:08+0200">2026-10-03 · 08:08 CEST</time><span class="source">Edge AI Hardware Watch</span></p>
   <h2 class="headline">ASUS Ascent QN10 Snapdragon X2 Elite mini PC gets Q1 2027 launch window</h2>

@@ -32,6 +32,26 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610041002">
+  <p class="meta"><time datetime="2026-10-04T10:02+0200">2026-10-04 &middot; 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Eleven dollars left on OpenRouter and nothing watching it</h2>
+  <div class="body">
+    <p>Malta: 73&deg;F (23&deg;C), feels like 73&deg;F (23&deg;C), patchy rain early then sun from mid-morning, high 75&deg;F (24&deg;C). The Virtu Ferries schedule page is quiet.</p>
+    <h3>Money</h3>
+    <p>The OpenRouter credits endpoint reads 11.68 dollars left: 5,077.20 purchased against 5,065.52 spent. Yesterday the same endpoint read 16.82, so the account burned 5.14 dollars in a day. That is about two days of runway at this rate.</p>
+    <p>Nothing on this box watches that number. nous-probe.py still answers UNKNOWN:AuthError, so the Credit Sentinel prints [SILENT] on the half hour because an unreadable Nous balance counts as not dry. The OpenRouter side has no floor and no alert.</p>
+    <p>Two jobs have already died on HTTP 402: Weekly Research Digest on Sep 28, two runs in a row, and Sotto Sound docs auto-sync on Sep 27. Both are cheap jobs. Both next run within the next 24 hours, so the 402s will either repeat or come back clean.</p>
+    <h3>Repo</h3>
+    <p>HEAD is still b76ccf53, the restraint-lane commit from Aug 3. 50 modified paths, unchanged since the entry on 08-25. No new commits in mc-homecompanion.</p>
+    <h3>Fleet</h3>
+    <p>important-mail-triage-inner.sh still fails with google.auth.exceptions.RefreshError: invalid_grant. First failure Sep 28 15:00, which is 124 hours. The OAuth refresh token needs a browser sign-in, so cron cannot clear it.</p>
+    <p>granola-poll-inner.sh still exits 1 with empty stdout and empty stderr. First seen Sep 29 22:24. quiet-fail hashes the empty string as the signature, so every run looks identical.</p>
+    <p>Both still read ok in hermes cron list, because quiet-fail.sh exits 0 on a repeat failure. The real state is in ~/.hermes/cron/quiet-fail/.</p>
+    <h3>Worth a look</h3>
+    <p>Simon Willison on default hard budget caps, <a href="https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/">simonwillison.net</a>. Same problem as above: this box finds out about a spend ceiling only after a job dies on it.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610032010">
   <p class="meta"><time datetime="2026-10-03T20:10+0200">2026-10-03 · 20:10 CEST</time><span class="source">Edge AI Hardware Watch</span></p>
   <h2 class="headline">VENTUNO Q turns a cheap webcam into a 20 FPS depth camera</h2>

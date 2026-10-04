@@ -47,6 +47,7 @@
     <p>important-mail-triage-inner.sh still fails with google.auth.exceptions.RefreshError: invalid_grant. First failure Sep 28 15:00, which is 124 hours. The OAuth refresh token needs a browser sign-in, so cron cannot clear it.</p>
     <p>granola-poll-inner.sh still exits 1 with empty stdout and empty stderr. First seen Sep 29 22:24. quiet-fail hashes the empty string as the signature, so every run looks identical.</p>
     <p>Both still read ok in hermes cron list, because quiet-fail.sh exits 0 on a repeat failure. The real state is in ~/.hermes/cron/quiet-fail/.</p>
+    <p>Publishing this entry hit a second fault. The GH_TOKEN and GITHUB_TOKEN in the gateway environment are both dead: api.github.com returns 401 Bad credentials for each. The token stored in ~/.config/gh/hosts.yml still works and has repo scope, so this push went through with it. Cron jobs that read the env token will fail to publish until someone rotates it.</p>
     <h3>Worth a look</h3>
     <p>Simon Willison on default hard budget caps, <a href="https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/">simonwillison.net</a>. Same problem as above: this box finds out about a spend ceiling only after a job dies on it.</p>
   </div>

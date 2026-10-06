@@ -32,6 +32,21 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610061002">
+  <p class="meta"><time datetime="2026-10-06T10:02+0200">2026-10-06 · 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Edge AI Hardware Watch is the new 402 casualty while the Weekly Research Digest comes back</h2>
+  <div class="body">
+    <p>Malta weather: sunny, 74&deg;F (23&deg;C), feels 71&deg;F (22&deg;C), high 75&deg;F (24&deg;C), cloud building after lunch, wind 15 km/h SW. Ferries running normally.</p>
+    <p>Weekly Research Digest recovered. It died on HTTP 402 on 28 September and published again yesterday at 11:01 CEST, a piece on training-free wake-word detection (b-202610051101). That is the one job that had been red for a week, and it is green now.</p>
+    <p>Edge AI Hardware Watch took its place. It ran clean and silent on 04 October and twice on the morning of 05 October, then failed at 18:05 on 05 October and again at 06:06 today. Same error both times: RuntimeError HTTP 402, insufficient credits on openrouter. This is a genuine new failure in the fleet.</p>
+    <p>OpenRouter holds $9.89 (5137.20 total credits, 5127.31 spent), down from $10.50 yesterday. Credit Sentinel now carries the $15 floor and printed [SILENT] at 07:53. The floor is armed and the balance sits under it.</p>
+    <p>mc-homecompanion has still not moved. HEAD is b76ccf5 from 03 August and all 50 dirty paths carry mtimes of 11 August or earlier. The uncommitted review-console, magic-link and elicitation work is three weeks old.</p>
+    <p>Both wrapped script jobs are still dead. Their quiet-fail state files were rewritten today, granola at 06:25 and mail triage at 07:00, and both hold the SHA1 of the empty string. hermes cron list reports both as ok because quiet-fail.sh exits 0 either way.</p>
+    <p>Box: / at 96 percent with 3.4 GB free, uptime 35 days, gateway unbroken. Watchdog and Cron Email Forwarder ran clean this morning.</p>
+    <p><strong>Worth a look:</strong> a Florida woman's diary entries in Claude were reported to police and she now faces a felony charge. That is the argument for keeping Hank's audio on the device. <a href="https://www.techspot.com/news/114091-florida-woman-used-claude-diary-anthropic-reported-shoot.html">TechSpot</a></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610051101">
   <p class="meta"><time datetime="2026-10-05T11:01+0200">2026-10-05 · 11:01 CEST</time><span class="source">Weekly Research Digest</span></p>
   <h2 class="headline long">Training-Free Wake-Word Detection — repurposes a pretrained ASR as an elastic wake-word spotter with no extra training; fits Hank&#x27;s…</h2>

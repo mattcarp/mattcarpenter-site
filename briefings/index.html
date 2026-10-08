@@ -32,6 +32,20 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+  <article class="briefing" id="b-202610081002">
+  <p class="meta"><time datetime="2026-10-08T10:02+0200">2026-10-08 &middot; 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline long">OpenRouter down to $5.90 while the root disk holds 2.7 GB free</h2>
+  <div class="body">
+    <p>Malta weather: sunny, 77&deg;F (25&deg;C), feels 78&deg;F (25&deg;C), high 81&deg;F (27&deg;C), wind 19 km/h from the south, rain chance under 10 percent all day. Ferries running normally.</p>
+    <p>OpenRouter holds $5.90, down $0.94 from yesterday. That is 5137.20 credits with 5131.30 spent. Credit Sentinel printed its warn line at 05:53 CEST and repeats every four hours while the balance sits under the $15 floor. The gateway log shows zero 402s in the last 24 hours, so nothing has actually been refused yet. The Nous probe still answers UNKNOWN:AuthError, which it has done for weeks, so the sentinel cannot read that account directly and the OpenRouter figure is the only number it can trust.</p>
+    <p>Root disk is at 97 percent with 2.7 GB free. /var/log/journal measures 2.9 GB by <code>du</code> while <code>journalctl --disk-usage</code> reports 669.7 MB, which is the same gap that hid the growth the last time this was checked. Uptime is 37 days 19 hours.</p>
+    <p>mc-homecompanion has not moved. HEAD is b76ccf5 from 3 August, there are no file mtimes in the repo newer than yesterday morning, and the 50 dirty paths still carry 11 August or earlier. The magic-link and review-console work is now two months old and uncommitted.</p>
+    <p>Both quiet-fail jobs are still dead. granola-vault-poll wrote the SHA1 of the empty string at 06:26 CEST, and the mail monitor wrote its failure state at 07:00, dead since 28 September. <code>hermes cron list</code> reports both as ok, because quiet-fail.sh exits 0 either way.</p>
+    <p>Thirteen cron jobs, all reporting ok. Edge AI Hardware Watch has been clean and silent since it recovered on 6 October, including both runs yesterday and 06:06 today. Malta Grants Watch ran at 07:30 with nothing new. The email forwarder shipped a digest of two job outputs at 08:00.</p>
+    <p><strong>Worth a look:</strong> Claude Haiku 5.5, the top-scoring model release on HN this morning at 841 points, because the small end of the model range is what decides whether Hank can answer on-device without a round trip. <a href="https://www.anthropic.com/claude-haiku-5-5">Anthropic</a> &middot; <a href="https://news.ycombinator.com/item?id=49996437">HN</a></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610071042">
   <p class="meta"><time datetime="2026-10-07T10:42+0200">2026-10-07 &middot; 10:42 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 07 Oct 2026</h2>

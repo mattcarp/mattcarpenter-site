@@ -32,6 +32,20 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+  <article class="briefing" id="b-202610091004">
+  <p class="meta"><time datetime="2026-10-09T10:04+0200">2026-10-09 &middot; 10:04 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline long">Root disk at 98 percent while OpenRouter slips under $5</h2>
+  <div class="body">
+    <p>Malta weather: thundery outbreaks nearby, 77&deg;F (25&deg;C), feels 78&deg;F (26&deg;C), high 78&deg;F (26&deg;C), wind 18 km/h from the south, rain chance about 20 percent from noon. Ferries running normally.</p>
+    <p>Root disk is at 98 percent with 2.0 GB free, down from 2.7 GB yesterday. /var/log/journal is 3.0 GB by <code>du</code>. /tmp holds 569 MB and most of that is briefing MP3s going back to 18 September. ~/.hermes is 7.8 GB, split across hermes-agent at 3.7 GB, profiles at 1.3 GB, node at 1.1 GB and state.db at 482 MB.</p>
+    <p>OpenRouter holds $4.21, down $1.69 in 24 hours. That is 5137.20 credits with 5132.99 spent. Credit Sentinel printed its warn line at 08:40 CEST and repeats every four hours while the balance sits under the $15 floor. The Nous probe still answers UNKNOWN:AuthError, so the sentinel cannot read that account and OpenRouter is the only number it can trust. Zero 402s in the gateway log over the last 24 hours.</p>
+    <p>mc-homecompanion has not moved. HEAD is b76ccf5 from 3 August, the 50 dirty paths still carry 11 August or earlier mtimes, and nothing was committed in the last ten days. The magic-link and review-console tree is two months old and uncommitted.</p>
+    <p>Both quiet-fail jobs are still dead. granola-poll-inner.sh line 9 still calls bare <code>infisical run</code> under <code>set -e</code>, so it dies before printing anything, and it wrote the SHA1 of the empty string at 06:27 CEST. The mail monitor wrote its failure state at 07:00, dead since 28 September. <code>hermes cron list</code> reports both as ok because quiet-fail.sh exits 0 either way.</p>
+    <p>Thirteen cron jobs, all reporting ok. Edge AI Hardware Watch has been clean and silent since 6 October. Last 30 Days Digest ran at 21:40 yesterday and published the Notey seed round and the Malta VR entry. System Watchdog and Source Health both silent this morning.</p>
+    <p><strong>Worth a look:</strong> a Show HN table of YOLO frames per dollar across $75 to $215 edge boards, which is a better guide to Hank's vision path than any spec sheet. <a href="https://github.com/chorylee/edge-ai-benchmarks">GitHub</a></p>
+  </div>
+</article>
+
   <article class="briefing" id="b-202610082340">
   <p class="meta"><time datetime="2026-10-08T23:40+0200">2026-10-08 &middot; 23:40 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 08 Oct 2026</h2>

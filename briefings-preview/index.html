@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mattie's Briefs (preview) — Matt Carpenter</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Daily machine-room log. Mostly for me.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/mc.css">
+</head>
+<body>
+<main>
+  <div class="empty" style="display:block;border:1px solid #f90;padding:.6em;margin:.6em 0">Preview: new free pipeline. Compare with <a href="/briefings/">/briefings</a></div>
+  <div class="mast">
+    <div>
+      <h1>MATTIE<span>&rsquo;</span>S BRIEFS</h1>
+      <div class="sub">LET'S GET INTO THEM</div>
+    </div>
+    <div class="s" id="stamp">&mdash;</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="k-total">&mdash;</b><span>entries</span></div>
+    <div class="stat g"><b id="k-sources">&mdash;</b><span>sources</span></div>
+    <div class="stat o"><b id="k-latest">&mdash;</b><span>latest</span></div>
+    <div class="stat"><b id="k-span">&mdash;</b><span>days covered</span></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="empty" id="empty" hidden>Nothing under that source.</div>
+
+  <!-- ENTRIES -->
+<article class="briefing" id="b-202610110215">
+  <p class="meta"><time datetime="2026-10-11T02:15+0200">2026-10-11 &middot; 02:15 CEST</time><span class="source">Free Pipeline</span></p>
+  <h2 class="headline">Personal Briefing (preview) &mdash; 11 Oct 2026</h2>
+  <div class="body">
+    <h3>Hank / on-device voice</h3>
+    <p><strong>Babytalk: offline speech-to-text and text-to-speech on an ESP32.</strong> Both directions of voice on a microcontroller, no cloud. <a href="https://github.com/tlack/babytalk">GitHub</a> &middot; <a href="https://news.ycombinator.com/item?id=50026819">HN 13pts</a></p>
+    <p><strong>Ito: streaming neural TTS for the ESP32-S3.</strong> A 4.9 MB voice model with no NPU and no cloud. <a href="https://github.com/lokutor-ai/ito">GitHub</a> &middot; <a href="https://news.ycombinator.com/item?id=49934308">HN</a></p>
+    <p><strong>&ldquo;I built a voice assistant that is faster than Alexa and completely private.&rdquo;</strong> How-To Geek writeup of a fully local assistant build. <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOaXdqang4SEFtMlNNdTFuTlVZTjRCSEdWOGVZdjdOS2hEcnRnSGdvbW50akxLb2x6WEFBdXVHYWtrd0o4TnZQaVBTQkVpanpORzNtN3lUQ3JranF6Mi1CTUdGcURfRjFTUDAtR3hJVEV3YWxRZDBmX3ZUc3RHeTR6WG16Q09vSndvQVdJOC1nRXc?oc=5">How-To Geek</a></p>
+    <p><strong>Best Linux dictation apps with local AI.</strong> ZDNET roundup of private, on-device voice typing. <a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxNS3Y2STVVZzktYTZtVkhyd19MRWJoZXRtT0NZN05VOFY1YzFpYTN1Ykc1TkN1NF92NzJLYTQwNjRON05NRVRWOWZxSnJWd3hiVlBRQWZuQW9ocEFNMEdhTHI1VGk1UVVpSUVXU2VrRmc3NUswajN2U09mZkh0OVhyQWRhZmY0QWNqZ2xtT29hd2EwQQ?oc=5">ZDNET</a></p>
+    <p><strong>Google released EmbeddingGemma 2.</strong> On-device multimodal embedding model; reported minimum around 191 MB RAM. <a href="https://news.google.com/rss/articles/CBMie0FVX3lxTE0xeXR3YXFnbmpROWt2NExKX3NOQXZfcjdJYUItczlocE4xV2lPTVBTTkd6VHptbXM1b25XUzZqUEZZSHhvV1RNSDh2RTRTdVJqWnJBLXh0OE9MRlkxYU8wYnpTQkM4bkstUG5fVEZMMjZua0xLQTRXb09TMA?oc=5">Google</a></p>
+    <h3>Edge AI hardware</h3>
+    <p><strong>NVIDIA announced Jetson Orin Nano 2.</strong> The next entry-level Jetson; Matic is among the first home-robotics adopters. <a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxQMTVNSHhYUjJUaGJPbEdBZXBvdlRWN0lYZnU1aVJGZWlEOG9Uc2c2cFZqV2NhN0EwNUlPWDdraC1mWVItZmZCMjM3dldaeTdBNGJqMXN2WV9OV0FOSTlubzVRMGJLcDI4STdRZ2pwU0NkTmUtaXl4QVctclF2V29MUGNneGpzbkNLbGlSaldDS213SHU3S3VHdVBfT0RDXzAzY0x1SHphUVIxM1p3aGV1Rm10NFVNYTA4Tk1Zcg?oc=5">NVIDIA</a></p>
+    <p><strong>Jetson Thor in MLPerf v6.1.</strong> Edge agentic inference results for NVIDIA&rsquo;s top Jetson. <a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxQMWQ5Ri1kM1RqNXRlSVBTSlJzN2VZNThSRlZhX0JIdkFCUUIyZzZ2bzFHcUhORVdTR1Z4b2lWcFpiNHNlTkhMRy1Hd2V3cWNUN19vX2xmck1EZ1ZnRVpMbWZjR3BPSzFqNnl1MXNPZEszWTB5VWpLMnNNbHFfTC01c3pDd2ZJbTZkMmtGcW9wMDRGZVVm?oc=5">IoT News</a></p>
+    <p><strong>MSI MS-C9ZA edge AI box PC.</strong> A boxed Jetson Orin Nano system. <a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxOVlFma0oySTRGa3laRk82dEwxVmRfZmFhWUtsbFViRllUNEUxdndsWnRGRDU4TkJtM0xHZXNmUWxlaXBSQTcwRzAtWDBwanR5aEZ6ZWcyT3h2aW5qY19yanZDUmdGUTZ3RVZRbXFsa2c0RzJYdUNEMkxmSE1kUnd3R2lhaFpnWlNnb010Vzh6Z1lnZG5DYkk3X2xraU8wZnRBemRCaFZyM0VnNXpp0gGyAUFVX3lxTFBhVlVkTktlb2R0aEdxTlY0QWF1V0JJWkpzQlZBdWJhQ3ZnZkdfYkVCZE56Wkp3a0Jyc3lZck1hNWlXbDUyUGRXUXl3WUtIVFpSU2NSUW54bnNqd3JUbktuM0xWcGNIVlFRc0pJdUZ6X1FxaVhMSW0xM3A3ZDdJWGktOThzUktLZXd1Q3owT2V0WDFObnJiTUR1cTlNejVYSWMwZHdkVEV2NFU1NjFjeTctc0E?oc=5">TechPowerUp</a></p>
+    <p><strong>DEBIX M8391-01 industrial SBC.</strong> MediaTek Genio 720 with a 9 TOPS NPU. <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxNY1ljcGhtNVZ5NkpvVnMzSWpBMlVpOW9QZDFabWhUWGhIMFhMWTRVd3c4VExXcEE1WWtIcUNOeVpqM2ItY2I5VXFTNVYwWl9Oa0VKNDJvWFQ0LTBGa3Bjb0VWV241Yl9xbXdsUzlwT2wybFZSWVhpVV9yc3lZbkMteFRXcHJpTk5Dd2EyNkhqX2NHemRnLVhvRXZyM01IcjZJdFk4Mlk5d1VOSjFQODJUa2x2RmI2MWtjWEU2eE9McEJqcXE1OFFsWXNZZElyU3A1c3NEYjhn0gHeAUFVX3lxTE5kUDVpMkdvdGU5N0tYMVc0b0V2U0xCb01jU3VWcHpfTk1qN3dKYUVqQXVjbVJFcU1DZ2RiemJ6WUVFZ1JHM3NtRFlZSzl4RzJZa0U2YUtFZzBMRXN3M2QxR1J5XzNxSU9Qd0toTVRNNEhzWVhIandMZUFrZkptQTRPTlNzWDhKY3lRXzN5WHpUT29YMUJLWVNuSHN6Si1pVDZlcDF4bTgwYmN1ZDRzRGhzRm16ajRGeVBLR25zYk1OdmdrZUx4ZXNFaTZkSnJ4RnpMQUx4MVRzbG5LcGdmZw?oc=5">CNX Software</a></p>
+    <p><strong>Avaota F2 RISC-V SBC.</strong> Allwinner V861 board aimed at AI cameras, with audio support. <a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxOSzlUb3dlRXRrUUpwUWpGTlhGSFpWc3l2OHZVR1A2VExnRUt0MjBDV2hKcHBJdFphekJ2THNPc1A2TzNwalFXMHljb3VjcG1sczBtRGZ0UTdscnNKT2UyZkJNcFExS1l1MVEzY1kzdlJ1NmdGMjcwbW1oaE9fQi1HQWNyM1BPMDFwbDhsUk5XSTV4STZmN1NGUk94Y09xNmxZbk05NmpzLWl0bGhHUXotajhlRHU5Wm9mandXZ1Rkc9IBxwFBVV95cUxNdDRheFdQRmtYZnk5ZGFSc2VuWnJlYk1ZSVVZdTh5MGQ0T3FzV0NET3o4aEdMYlQzZjlWQ0Z0MEdyYXJjVGJIdDgzNjB0QWZLbEZHTEloR3VKT2Z3TWNRdE1tb2FfemItaWQ5cGRFM2JTZllPOGVJN1VXS1NhcllNLWpwVVpLZjB5QmMtaWZ3UGZnSzEwaEZVYVhtLWtoS0hYb3cwQTVsZExTcTZYSVUwdk50aWh3d0RwOUduelRYT0N2cGFHRU5j?oc=5">CNX Software</a></p>
+    <h3>SDR / software-defined radio</h3>
+    <p><strong>ESP-SDR: the ESP32 turns out to be an SDR.</strong> Undocumented raw I/Q capture from the Wi-Fi/BT stage of ESP32 chips; several projects found it independently, and a turbo mode now improves throughput. <a href="https://news.ycombinator.com/item?id=49922674">rtl-sdr.com via HN 293pts</a> &middot; <a href="https://github.com/ESPARGOS/esp-sdr">GitHub esp-sdr 820&#9733;</a> &middot; <a href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9pZGVXeGdMc1JPODI1RlN2bHczMTNKVjZfYUx0UTF1NzhidERJb0lLNEtOM2JCMEk1SnpmTU1vRGhYd1pWbHlPaVdPb1RMb1BHNjd2cTJvSk5tZGctcFpZcm1DSk9tRWVqQy1n?oc=5">Hackaday</a> &middot; <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxPc2NDMHBpOUFNeHc4VWRPNWxBcGxFREc1Sl9iaGM0QVBLbFA1OGFXcUVBb0EySUlJQ3A3OGNwYWpscGJpRnhaVldadGRBbnBFTWFhWndMbkM1N2M5M1c0cG5lRW9TMUpqcnViTVR5MWVOcmNHVnJ5S192VU1qSzZ5X2dTcWVtU25QWEtYQ3pDSWdKbUV1UlQ2Rl9HSUo4OWhQWDhZZTZRYnlQX3B0cXRkeERBTdIBuwFBVV95cUxNMU01b0hEUFNvTEd1eTY5SWxZcjFlZlZnRk9jX1pwWHdXRTJJc3NaM1pUSkFjUzdUNFRpdm1kaHMwMUtkbzhPSEV3aGVaRjVLNUZEYXp4X3VpdTQwRWc4R09mRHFrdW9xdjhWdmM1RmFjdTcySGRiZTRNcUp1V3luSDZ0OGRXclJmQ0hWLVY1ZDI0cEhJQzcyUjRMWUFLMG5Qa2UtN1hRanpwa2xvY3pXdm5JUEZNRUhWSERv?oc=5">CNX Software</a> &middot; <a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNY2JEZWQzamZkbXk5d2ZJSDVvbUpKRkRZVDJvLWVoREJCcUJ3R1l0QmtIdDY2d3h3MEwyVC03TFlzVl9mNlA3YUxXTmgxMXJLSVo4NTg4Qm1uYWppVGFvN2ZocGhmY3RVOWlNd3FIYTFWZ0VmaF9kN3FCQXZaanJZaHVQdUJFV0NGcThCZ3lGWjM5UWlSNzBzbHNTeUhhOWNWeHhEQ1o4ekNqT3RqUHYxODRIeTNKN2Y3UkpwUQ?oc=5">Adafruit</a> &middot; <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxQVlNubXY4MGlhSjNkSDRFRmFQUWZHTi0zNmIwNVVuVmZjcmVQcG1wX2d6bm5FLVNzWWpUOUgzMXVidmZHelRmeWZJVnpxd2dMR3p3MEdXaHlud2M0OWZJY21zMWNqdXYxaDQxc3IxVmRJS2JzMThaZDZkUktPY1VzYUIyajYzM2k3Ti00M1ZnUWZJczlMM2FsaFFyaC1udw?oc=5">Adafruit (turbo mode)</a></p>
+    <p><strong>esp32-sdr-trx: a transceiver from one ESP32-S3.</strong> Exposes an rtl_tcp receiver for SDR++. <a href="https://github.com/jochenhammes/esp32-sdr-trx">GitHub</a></p>
+    <p><strong>OFFgrid-SDR.</strong> An RTL USB SDR radio that runs in an HTML page. <a href="https://github.com/diddy-boy/OFFgrid-SDR">GitHub</a> &middot; <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxNb01peFBmbWVSTEtoeUhmejNVdU9pOVpxbWN3U2hWdDFoY0NlM0pXb1ZtbURVeHNFS1UwenlUMFU0QTg1aVJQMFRqa3lBNjd4OE9ocGVzSEpZNTlaYWs0TEpBZl96WUlnbktacTdZMG1ZUnJHY2tFR2hCMUpYUjB6XzJXLWIwRWxVR2tqLV9YRQ?oc=5">Adafruit</a></p>
+    <p><strong>Echo SDR iOS app adds live transcription.</strong> The transcription is in a paid tier. <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxQRmtGS2lsNHNjZGxmeGJsMnNDTTU0MnYySzRYcU9VZUhpdGtBNWRNNzgzVjZkd1pJcV9DclJfdTJHT1RTeUEtQmtUTWtKWWZfUGZKNjJNR1g3c0pjYzZuNUtWYmF3RWR3U0JNQnd1MWFoZ0pPbzRrekJFdkV3MG1UNWJyT0VsTE1hUXplQ3U4ZnJ3dFRDN0RPVktuRU1kcW1sczZ6dGtGYzE?oc=5">Radio World</a></p>
+    <p><strong>FltCast.</strong> An LED-matrix flight tracker built with RTL-SDR on a Raspberry Pi. <a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxPdm0xaDNZMTd5bVhQbk94NHV6M25WRzZ0UmEwV2pjM2FMT1lsQXZZbjZDV3FkUnhld2M4THE0TmxOWXVyRlE0SnR6TWtsNUlXZXM2c0kxUnNCSlRsb2ZYQmdJamVqOWpHWjV0Z0VUSkFycWFHakstbnRfUWFMUnBKUUgzYnJGQzgyeGVwU2Y1dXRDSTZRUm56TEltQWNkb2pETUtab1dad1loSmdVQWFsRGg4dDk?oc=5">Adafruit</a></p>
+    <h3>Malta tech</h3>
+    <p><strong>Notey closes a $3M seed round and opens its European operation in Malta.</strong>  <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbWFmZkxqVFB2bXNvaFVUVjN6QTc1QTJVN19INVZ0TGxEalVSbkQ4NHh1LWhJXzFEN3FySXpHMzlhQTBtdzR0d0VVTEZhQVNQdWIxNkZzaDFsRy1BdE5TTnp0U2hfMmNRU1JmWk5qUlBGcjlMTllaS0d0Nmw3SElqVXNWVGlWTXZTWEgxc1hLNklXaVdLQnRSRy1NLVdLVXJFaXhGWlZ2ZExaSmNOWW9yMVBDek5vaXAw?oc=5">Techstars</a></p>
+    <p><strong>Malta&rsquo;s EBO gets Olea backing to take healthcare AI to the US.</strong>  <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQVTMyYWl2bC1rX0dudHlDd3RrMjFBQjZyTGRXSnJBNHNuVmJZVE5uSWtQVllqTUd1R0x6VXFPSXhIUEc5ZEZGSVU2ZmJxbWdlek9sbXJjVHRZV2I2WnFoNEd0akQ1UE9RSFpoTGdtNFd5ekg2LVEyQ1AxanBTNF9ZRzRNY2ZPR0haVER2WTI5Z1I5VkhiMXREZ1JnNXc?oc=5">Dealroom</a></p>
+    <p><strong>Malta unveils an AI Charter.</strong> The guidance flags human oversight, including for gambling. <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxPaGUzTG40eUFBa25hYU9tblhPbmpsRWFzQnZIVlJHbXlCaVRaUDRoNzFJai1Sa0JKdmJsN3lUaEVhRnFKQ19tY1JTVVIyY3JKd2F4UkVqQ3FSR2plSklqbVhZLW45S3ZwUzhNV2lRQ2V5aS14TWF6cEhCNjhqSk03REFFX1Y5WUliWFMxczJacEpLVm9BTmc?oc=5">Casino.org</a></p>
+    <h3>AI agents</h3>
+    <p><strong>AX: Google&rsquo;s open agentic orchestrator.</strong> Top agent story on HN this month. <a href="https://agentexecutor.io">agentexecutor.io</a> &middot; <a href="https://news.ycombinator.com/item?id=49780797">HN 666pts</a></p>
+    <p><strong>Bengio: why are AI agents lying, cheating and coordinating?</strong>  <a href="https://yoshuabengio.org/en/publication/why-are-ai-agents-lying-cheating-and-coordinating">yoshuabengio.org</a> &middot; <a href="https://news.ycombinator.com/item?id=49678969">HN 660pts</a></p>
+    <p><strong>Talorys: a self-hosted personal AI agent on Cloudflare&rsquo;s free tier.</strong>  <a href="https://github.com/rociiu/talorys">GitHub</a> &middot; <a href="https://news.ycombinator.com/item?id=50031614">HN 234pts</a></p>
+    <p><strong>Z.ai open-sourced ZCode, its coding-agent harness.</strong>  <a href="https://github.com/zai-org/ZCode">GitHub 7.6k&#9733;</a></p>
+    <p><strong>Nvidia ships a platform to stop agents misbehaving.</strong>  <a href="https://news.google.com/rss/articles/CBMiYkFVX3lxTE4weHBRVEI3cE1uNDdNT2VtbWxCMm9iWkpzWVY0dXc4X2hGanFpZnRVLW9JY3IzTXJtMWNFMDRaNlJKZ1BUWkNfRlp2Yk00emxRUVllS3N0NlhtM0lTRHp4WUNR0gFnQVVfeXFMTTR0S3E4cUJLNEZjYmtKT2c4Vk5kXzFXQzhVOWVzdFViUlUwYkg5Zl9kVmZzdXpXVldGdW81NHFzVVZhMWZwOXE1TVVEdkdyV1VtRFJZV1ROU3JOblA4emtyTGVoaFF0MA?oc=5">CNBC</a></p>
+    <p><em>Sources: Hacker News (Algolia): 160 hits, 10 used &middot; Google News RSS (CNX, Hackaday, Adafruit, trade press): 785 hits, 19 used &middot; GitHub search: 32 repos, 7 used &middot; X: failed (HTTP 429 rate limit on shared access, 0 posts) &middot; Reddit: failed (HTTP 403 blocked from this host) &middot; Sotto Sound: no results. 10 duplicate items merged (9 in the ESP-SDR story, 1 in OFFgrid-SDR).</em></p>
+  </div>
+</article>
+
+
+
+
+
+
+
+</main>
+<footer>
+  <span><a href="/">mattcarpenter.com</a></span>
+  <span id="footnote">newest first</span>
+</footer>
+<script>
+/* Progressive enhancement only — every entry is in the HTML and readable with
+   this script disabled. The script adds counting, relative dates, permalinks
+   and source filtering, all derived from the DOM at load, so entries appended
+   later by briefing-append.py are picked up with no change here. */
+(function () {
+  var arts = [].slice.call(document.querySelectorAll("article.briefing"));
+  if (!arts.length) return;
+
+  var DAY = 86400000, now = new Date();
+  function rel(d) {
+    var diff = Math.floor((now - d) / DAY);
+    if (diff <= 0) return "today";
+    if (diff === 1) return "yesterday";
+    if (diff < 7) return diff + " days ago";
+    if (diff < 14) return "last week";
+    if (diff < 60) return Math.floor(diff / 7) + " weeks ago";
+    return Math.floor(diff / 30) + " months ago";
+  }
+
+  var counts = {}, dates = [];
+  arts.forEach(function (a, i) {
+    var t = a.querySelector("time"),
+        s = a.querySelector(".source"),
+        src = s ? s.textContent.trim() : "Other";
+    a.dataset.source = src;
+    counts[src] = (counts[src] || 0) + 1;
+
+    if (t && t.getAttribute("datetime")) {
+      var d = new Date(t.getAttribute("datetime"));
+      if (!isNaN(d)) {
+        dates.push(d);
+        var span = document.createElement("span");
+        span.className = "rel";
+        span.textContent = rel(d);
+        t.parentNode.appendChild(span);
+        a.id = a.id || "b-" + t.getAttribute("datetime").replace(/[^0-9]/g, "").slice(0, 12);
+      }
+    }
+    var meta = a.querySelector("p.meta");
+    if (meta && a.id) {
+      var link = document.createElement("a");
+      link.className = "permalink";
+      link.href = "#" + a.id;
+      link.textContent = "#";
+      link.setAttribute("aria-label", "Link to this entry");
+      meta.appendChild(link);
+
+      /* Clip button: copies a ready-to-run clip command (first external
+         link in the entry becomes the source URL). Paste it to any Hermes
+         session and the article lands in second-brain/Resources/Clippings/
+         via ~/bin/clip.py. */
+      var firstHref = a.querySelector(".body a[href^='http']");
+      if (firstHref) {
+        var clipBtn = document.createElement("button");
+        clipBtn.className = "permalink clip-btn";
+        clipBtn.type = "button";
+        clipBtn.textContent = "clip";
+        clipBtn.title = "Copy a clip command - paste it to Hermes to save this to second brain";
+        clipBtn.addEventListener("click", function () {
+          var h2 = a.querySelector("h2.headline");
+          var title = h2 ? h2.textContent.trim() : document.title;
+          var cmd = "python3 ~/bin/clip.py --url " + firstHref.href +
+                    " --title " + JSON.stringify(title);
+          (navigator.clipboard ? navigator.clipboard.writeText(cmd)
+                               : Promise.reject()).then(function () {
+            clipBtn.textContent = "clipped!";
+            setTimeout(function () { clipBtn.textContent = "clip"; }, 1500);
+          }, function () {
+            window.prompt("Copy this clip command:", cmd);
+          });
+        });
+        meta.appendChild(clipBtn);
+      }
+    }
+  });
+
+  dates.sort(function (x, y) { return x - y; });
+  var iso = function (d) { return d.toISOString().slice(0, 10); };
+  document.getElementById("k-total").textContent = arts.length;
+  document.getElementById("k-sources").textContent = Object.keys(counts).length;
+  if (dates.length) {
+    var newest = dates[dates.length - 1];
+    document.getElementById("k-latest").textContent = rel(newest);
+    document.getElementById("k-span").textContent =
+      Math.max(1, Math.round((newest - dates[0]) / DAY));
+    document.getElementById("stamp").innerHTML =
+      iso(newest).replace(/-/g, "&middot;") + "<br>" + arts.length + " ENTRIES";
+  }
+
+  /* filters, ordered by frequency so the noisy sources sit first */
+  var bar = document.getElementById("filters"), empty = document.getElementById("empty");
+  var names = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+  function chip(label, key, n) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.dataset.key = key;
+    b.setAttribute("aria-pressed", key === "*" ? "true" : "false");
+    b.innerHTML = label + (n != null ? ' <i>' + n + '</i>' : "");
+    b.addEventListener("click", function () { apply(key); });
+    bar.appendChild(b);
+  }
+  chip("ALL", "*", arts.length);
+  names.forEach(function (n) { chip(n.toUpperCase(), n, counts[n]); });
+
+  function apply(key) {
+    var shown = 0;
+    arts.forEach(function (a) {
+      var on = key === "*" || a.dataset.source === key;
+      a.hidden = !on;
+      if (on) shown++;
+    });
+    [].forEach.call(bar.children, function (b) {
+      b.setAttribute("aria-pressed", b.dataset.key === key ? "true" : "false");
+    });
+    empty.hidden = shown > 0;
+    document.getElementById("footnote").textContent =
+      key === "*" ? "newest first" : shown + " of " + arts.length + " shown";
+    history.replaceState(null, "", key === "*" ? location.pathname
+      : location.pathname + "?source=" + encodeURIComponent(key));
+  }
+
+  var pre = new URLSearchParams(location.search).get("source");
+  if (pre && counts[pre]) apply(pre);
+})();
+</script>
+</body>
+</html>

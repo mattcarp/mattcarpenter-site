@@ -1,0 +1,12 @@
+{
+  "name": "mattcarpenter-site-ci",
+  "private": true,
+  "description": "CI-only devDependencies for PR checks (Playwright smoke + axe)",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.51.0"
+  }
+}

@@ -33,6 +33,42 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610201022">
+  <p class="meta"><time datetime="2026-10-20T10:22+0200">2026-10-20 &middot; 10:22 CEST</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 20 Oct 2026</h2>
+  <div class="body">
+    <p><em>Today: mixed (black bag). Tomorrow: organic (white bag). Collection from 7:00am.</em></p>
+    <p><em>Ferry: Mġarr&rarr;Valletta 05:45, 06:45 (only 7 seats left when checked), 07:45, 09:45 &middot; Valletta&rarr;Mġarr 06:45, 08:45, 09:45 (only 23 seats left when checked).</em></p>
+    <p>A busy radio day: an RTL-SDR you can plug into an iPad, live TETRA TEA1 decryption, and a browser SDR that now decodes AIS and ACARS. Plus a 1&nbsp;MB speech model and a detailed Reuters account of AI agents hacking on their own.</p>
+    <h3>Hank &amp; on-device voice AI</h3>
+    <ul>
+      <li><a href="https://huggingface.co/AuroraAI-Research/AuroraASR-1M">AuroraASR-1M: English speech-to-text in about 1 MB</a> &mdash; 949K-parameter Conformer-CTC; INT8 weights are 1.06&nbsp;MB and the model card reports 436&times; real time on one CPU thread. The catch is accuracy: 11.43% WER on LibriSpeech test-clean versus 5.6% for Whisper Tiny, with no punctuation or casing. Interesting for wake-word or command spotting, not for Hank&rsquo;s main ASR. <small>(X, web search, 19 Oct)</small></li>
+      <li><a href="https://www.makeuseof.com/offline-voice-typing-on-android-with-whisperboard/">WhisperBoard 3.8 swaps Whisper for NVIDIA Parakeet on Android</a> &mdash; An open-source keyboard running Parakeet TDT 0.6B v3 through sherpa-onnx, fully offline after a roughly 640&ndash;671&nbsp;MB download; push-to-talk rather than streaming, with automatic punctuation across 25 European languages. <small>(Google News (MakeUseOf), X, 19 Oct)</small></li>
+      <li><a href="https://x.com/VoxNexusAI4All/status/2112400943455129866">VoxNexus launches an on-device audio SDK for MediaTek&rsquo;s Dimensity 9600 Pro</a> &mdash; The company claims translation in 103 languages, ASR in 59 and TTS in 29, all on the phone; these are its own numbers and haven&rsquo;t been independently tested. <small>(X, 20 Oct)</small></li>
+    </ul>
+    <h3>Edge AI hardware</h3>
+    <ul>
+      <li><a href="https://www.thelec.net/news/articleView.html?idxno=14669">Micron is building &ldquo;edge inference memory&rdquo; for humanoid robots</a> &mdash; LPDDR stacked on a logic die for more bandwidth at low power, disclosed at SEDEX in Seoul on 16 Oct; TrendForce reports mass production is expected in the second half of 2028. <small>(Google News, web search, 18&ndash;19 Oct)</small></li>
+      <li><a href="https://www.jonpeddie.com/news/edgecortix-scales-raiden-for-physical-ai/">EdgeCortix Raiden: a four-die chiplet for &ldquo;thick edge&rdquo; physical AI</a> &mdash; The flagship X4 targets 3.36 PFLOPS FP4 with 256&nbsp;GB of memory at 548&nbsp;GB/s; Kawasaki Heavy Industries and Unigen are early customers, with sampling in early 2027. First announced 24 Sep; this is Jon Peddie Research&rsquo;s analysis. <small>(Google News, 19 Oct)</small></li>
+    </ul>
+    <h3>SDR</h3>
+    <ul>
+      <li><a href="https://www.rtl-sdr.com/rtl-sdr-running-directly-on-ipad-without-jailbreak-testflight-invitation/">RTL-SDR runs directly on an iPad, no jailbreak, now in TestFlight</a> &mdash; Arved (DK5AV) got Apple&rsquo;s distribution entitlement and wants beta feedback before an App Store release; M-series iPads only for now. <small>(rtl-sdr.com, X, 20 Oct)</small></li>
+      <li><a href="https://www.rtl-sdr.com/live-tea1-decryption-support-added-to-an-osmo-tetra-fork/">Live TETRA TEA1 decryption added to an osmo-tetra fork</a> &mdash; Uses the TETRA:BURST flaw (CVE-2022-24402) that cuts TEA1&rsquo;s effective key from 80 to 32 bits, brute-forceable in minutes on a commodity GPU, and applies recovered keys on the fly. <small>(rtl-sdr.com, 19 Oct)</small></li>
+      <li><a href="https://www.rtl-sdr.com/browsdr-update-multi-sdr-support-limesdr-and-decoders-for-ads-b-ais-acars-rs41-rtl_433-ble-and-dmr/">BrowSDR adds multi-radio support and in-browser AIS, ADS-B and ACARS decoders</a> &mdash; An open-source WebUSB receiver with no install; it now runs several SDRs at once with one WebRTC share link, and supports LimeSDR-USB up to 61.44 MSPS. <small>(rtl-sdr.com, 19 Oct)</small></li>
+      <li><a href="https://www.cnx-software.com/2026/10/20/semtech-lr2021-lora-chip-gets-the-sdr-treatment-supports-100-mhz-to-2-74-ghz/">LR2021-SDR: open-source library turns the LoRa chip into a 100 MHz&ndash;2.74 GHz receiver</a> &mdash; A follow-up to last week&rsquo;s hidden-SDR find: an undocumented ROM command exposes raw 16-bit I/Q, and the C library and tools are on <a href="https://github.com/SAMS0N1TE/lr2021-sdr">GitHub</a>. <small>(Google News (CNX Software), GitHub, 20 Oct)</small></li>
+      <li><a href="https://hackaday.com/2026/10/19/meshtastic-sniffer-for-dragonos/">Meshtastic sniffer built into DragonOS</a> &mdash; A standalone C tool in the radio-focused Linux distro that finds which Meshtastic channels and modes are actually in use nearby. <small>(Google News (Hackaday), 19 Oct)</small></li>
+    </ul>
+    <h3>AI agents</h3>
+    <ul>
+      <li><a href="https://www.reuters.com/legal/government/how-one-hacker-used-ai-agents-few-thousand-dollars-break-into-scores-sites-2026-10-19/">Reuters: one hacker&rsquo;s AI agents broke into sites at 100+ companies</a> &mdash; Using the open-source Cairn platform, agents tried more than 1,200 sites (victims included Deere, SharkNinja and Cummins), took around 23 hours per intrusion and used about $5,000 of tokens, roughly $50 per successful hack, according to NorForge researcher Snorre Fagerland. <small>(Google News (Reuters), web search, 19 Oct)</small></li>
+      <li><a href="https://engineering.fb.com/2026/10/19/ml-applications/thin-orchestrator-ai-agent-architecture/">Meta&rsquo;s &ldquo;thin orchestrator&rdquo;: a dumb router and 14 specialist agents</a> &mdash; After one all-knowing agent kept hallucinating, Meta replaced it with a 1,300-line deterministic router that does no domain work itself; about two-thirds of changes now land without significant human edits. <small>(Google News, web search, 19 Oct)</small></li>
+      <li><a href="https://benjamincongdon.me/blog/2026/10/19/Agentic-Monitoring/">Agentic monitoring: one agent obsessively watching one component</a> &mdash; Ben Congdon riffs on Anthropic&rsquo;s practice of giving each system component its own Claude &ldquo;superfan&rdquo; with access to telemetry and logs. <small>(Hacker News, 94 points, 19 Oct)</small></li>
+    </ul>
+    <p><small>Sources: Hacker News Algolia 161 hits / 1 used &middot; Google News RSS 857 hits / 7 used &middot; GitHub search 32 repos / 1 used &middot; X (free reader) 2 searches, 50 posts / 4 used &middot; rtl-sdr.com feed 8 posts / 3 used &middot; Web search worked (8 queries, used to verify and date stories) &middot; Web fetch worked, but Reuters (401), engineering.fb.com, blogs.microsoft.com, wccftech.com and blog.adafruit.com (403) block direct fetches, so those details come from syndicated copies or were dropped &middot; Reddit public JSON 0 (HTTP 403 blocked on all 5 subreddits, still 403 on retry and via old.reddit.com; no REDDIT_CLIENT_ID/SECRET set) &middot; Malta tech: nothing new (EBO and Notey already covered; the 83-measure AI strategy is from Nov 2025) &middot; Sotto Sound: no new outside coverage. Waste: wastecollection.mt &middot; Ferry: gozohighspeed.com API (18 Mġarr&rarr;Valletta, 17 Valletta&rarr;Mġarr; normal service).</small></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610191020">
   <p class="meta"><time datetime="2026-10-19T10:20+0200">2026-10-19 &middot; 10:20 CEST</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 19 Oct 2026</h2>

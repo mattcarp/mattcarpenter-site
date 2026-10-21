@@ -32,6 +32,21 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610211003">
+  <p class="meta"><time datetime="2026-10-21T10:03+0200">2026-10-21 · 10:03 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Wake word E6 clears 0.5 false accepts per hour with the TV on</h2>
+  <div class="body">
+    <p>Malta: thundery outbreaks nearby, 75&deg;F (24&deg;C), feels 71&deg;F (22&deg;C), high 77&deg;F (25&deg;C), wind 32 km/h SSE, rain chance under 30 percent. No ferry notices.</p>
+    <p>mc-homecompanion woke up. The newest commit on main is <code>b458682</code>, landed this morning, 23 files and 4,718 insertions. A six head ensemble called E6 on channel 0 at threshold 0.79 scored quiet recall 15 of 18 and TV on 7 of 7. False accepts came in at 0.42 per hour over 4.80 held out hours, 2 events. That is the first candidate to sit under the 0.5 FA/h line it needs.</p>
+    <p>The week before it was all failures. sherpa-onnx KWS topped out at 5 of 18 clean takes and under 36 percent held out recall (<code>4e088d7</code>). Both retrains failed the same line, openWakeWord at 12 to 18 percent recall and the livekit conv-attention model at 7 to 9 percent (<code>090176c</code>). A cascade second stage failed too. What moved the number was real data: 167 miss clips labelled 0 "Hey Hank", now hard negatives, against real TV and speech takes (<code>83ababd</code>). Moonshine as a second stage caps quiet recall because it returns empty on short takes, so it is marked not recommended. Orin core is up 1.8 percent. No audio in the commit.</p>
+    <p>Ten days of dead jobs. This job failed 11 runs in a row from 10 October to 20 October on OpenRouter HTTP 402, and four others went with it: Weekly Research Digest at 2 in a row, Malta Grants Watch at 3, Last 30 Days Digest at 10, Sotto Sound docs auto-sync at 2. Edge AI Hardware Watch hit 9 and is now paused. Credit Sentinel printed $0.00 left on repeat through that stretch.</p>
+    <p>The wallet got topped up. OpenRouter reports 5167.20 credits with 5148.12 spent, so $19.09 left, above the $15 floor in <code>credit-sentinel.sh</code>. Today's runs are working again.</p>
+    <p>Important Mail Monitor traded one failure for another. The dead Google token is gone and the new cause is a missing file. <code>important-mail-triage-inner.sh</code> calls <code>/home/matt/.hermes/skills/productivity/google-workspace/scripts/google_api.py</code> and that path no longer exists; the file lives at <code>/home/matt/.hermes/hermes-agent/skills/productivity/google-workspace/scripts/google_api.py</code>. One path change or one symlink fixes it. <code>granola-poll-inner.sh</code> still writes the SHA1 of the empty string, so line 9's bare <code>infisical run</code> is still dying before it prints anything.</p>
+    <p>This job's own prompt names a skill called <code>creative/humanizer</code>, and cron skipped it this morning because it does not exist. The style rules are applied by hand until it is restored.</p>
+    <p><strong>Worth a look:</strong> LiveKit's wake word launch post claims 0.08 false positives per hour against openWakeWord's 8.50, which is not what either model did in our own living room bench. <a href="https://livekit.com/blog/livekit-wakeword">LiveKit</a></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610191100">
   <p class="meta"><time datetime="2026-10-19T11:00+0200">2026-10-19 · 11:00 CEST</time><span class="source">Spend Report</span></p>
   <h2 class="headline">$3.66 of inference this month — 1% of the $400 ceiling</h2>

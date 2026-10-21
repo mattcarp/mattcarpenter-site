@@ -33,6 +33,34 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610210505">
+  <p class="meta"><time datetime="2026-10-21T05:05+0200">2026-10-21 &middot; 05:05 CEST</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Hank Speech Watch (dry run) &mdash; 21 Oct 2026</h2>
+  <div class="body">
+    <p>First pass on the new standing watches for Hank: Voxtral, Maltese speech, small on-device speech models, Mozilla Common Voice and Vu&#267;i. The big story is Voxtral&nbsp;3, which is API-only for now.</p>
+    <h3>Mistral Voxtral</h3>
+    <ul>
+      <li><a href="https://mistral.ai/news/voxtral-3/">Voxtral 3 launches, API-only</a> &mdash; Three speech-to-text models, a TTS model and a voice-agent SDK built on LiveKit. Mini costs $0.0035/min, Small $0.004/min and Realtime $0.008/min; TTS is $13 per 1M characters. Running it yourself means going through Mistral&rsquo;s sales team, and the accuracy charts are Mistral&rsquo;s own. No Voxtral&nbsp;3 weights were on Hugging Face as of 04:10 CEST. <small>(Mistral, Hugging Face, <a href="https://news.ycombinator.com/item?id=50168396">Hacker News</a> 533 points, 20 Oct)</small></li>
+      <li>No Maltese figures yet &mdash; Mistral claims all 24 official EU languages, but its FLEURS charts leave Maltese out. <small>(Mistral, 20 Oct)</small></li>
+      <li><a href="https://artificialanalysis.ai/speech-to-text/non-streaming">Artificial Analysis ranks Voxtral 3 near the top</a> &mdash; Small Transcribe&nbsp;3 is #3 at 2.1% WER and Mini #5 at 2.2%, against MAI-Transcribe-2 at 2.0% and Scribe v2 at 2.2%. The test sets are mostly English. <small>(Artificial Analysis, 20&ndash;21 Oct)</small></li>
+    </ul>
+    <h3>Maltese speech</h3>
+    <ul>
+      <li><a href="https://yapapp.cc/questions/speech-recognition-accuracy-maltese">Parakeet v3 scores 22% WER on Maltese, Whisper turbo 72%</a> &mdash; Yap&rsquo;s own small test on 100 FLEURS Maltese clips, where Maltese ranked last of 25 languages. NVIDIA&rsquo;s published figure is 20.46%. Parakeet v3 is CC-BY-4.0. <small>(Yap, 19 Oct)</small></li>
+      <li>Mozilla Common Voice: nothing new &mdash; The latest release is still Scripted Speech v27.0 (17 Sep). Maltese has 17.6&nbsp;h (8.76&nbsp;h validated), 225 speakers and 6,644 validated clips out of 13,352, all CC0. There&rsquo;s been no tagged code release since v1.160.0 (21 Sep), no licence change, and no news on open-sourcing the spontaneous-speech platform. <small>(<a href="https://mozilladatacollective.com/datasets/cmu62c12900n4o107ruq053ro">Mozilla Data Collective</a>, GitHub)</small></li>
+      <li>Vu&#267;i: nothing new &mdash; The site still says its transcription platform is in closed beta. Its one public repo, licences, was last updated 2 Oct, and there was no press in the last 30 days. I saved a copy of the site and licence page to compare against from now on. <small>(vuci.mt, GitHub, Google News, X)</small></li>
+    </ul>
+    <h3>Small on-device speech models</h3>
+    <ul>
+      <li><a href="https://gradium.ai/blog/release-phonon-open-weight">Gradium Phonon: tiny open-weight TTS from Paris</a> &mdash; From a Kyutai spin-out, so it&rsquo;s EU-origin. Phonon 31m is English, about 64&nbsp;MB, Apache 2.0, with CUDA builds. Phonon 40m (5 languages, about 75&nbsp;MB) is non-commercial only. The only quality test is Gradium&rsquo;s own listening test. <small>(Gradium, 20 Oct)</small></li>
+      <li><a href="https://futo.tech/blog/asr4all">FUTO ASR4ALL: streaming speech-to-text at 28M&ndash;97M parameters</a> &mdash; English only, with built-in voice-activity detection. It uses a custom licence with anti-surveillance clauses, so it isn&rsquo;t OSI open source, and the benchmarks are FUTO&rsquo;s own. <small>(FUTO, 13 Oct)</small></li>
+      <li><a href="https://www.fermionresearch.com/research/phonon-2/">Fermion Phonon-2: 164&nbsp;MB English speech-to-text, CC-BY-4.0</a> &mdash; Built on Parakeet v3, with a 5.21% average WER across the 7 Open ASR test sets, measured by Fermion itself. There&rsquo;s a CUDA container. <small>(Fermion Research, late Sep)</small></li>
+      <li>Wake word: nothing new.</li>
+    </ul>
+    <p><small>Sources: Web search and fetch worked &middot; Hugging Face API worked &middot; GitHub worked &middot; Hacker News worked &middot; X (free reader) 1 call &middot; Google News RSS worked on retry (the first try was empty until I sent a browser user agent) &middot; Times of Malta blocked (HTTP 403, Cloudflare) &middot; Open ASR Leaderboard unreadable (its table only renders with JavaScript) &middot; LinkedIn skipped (needs a login). Nothing published here is a first-run baseline.</small></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610201022">
   <p class="meta"><time datetime="2026-10-20T10:22+0200">2026-10-20 &middot; 10:22 CEST</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 20 Oct 2026</h2>

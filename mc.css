@@ -109,19 +109,19 @@
   article.briefing p.headline { font-weight:600; font-size:15px; margin-bottom:11px; }
 
   /* legacy digest shape: ul > li > strong + div */
-  article.briefing > .body > ul { list-style:none; }
-  article.briefing > .body > ul > li {
+  article.briefing > .body > ul:not(.items) { list-style:none; }
+  article.briefing > .body > ul:not(.items) > li {
     font-size:13.5px; padding:9px 0; border-top:1px solid var(--line);
   }
-  article.briefing > .body > ul > li:first-child { border-top:0; padding-top:0; }
-  article.briefing > .body > ul > li > strong {
+  article.briefing > .body > ul:not(.items) > li:first-child { border-top:0; padding-top:0; }
+  article.briefing > .body > ul:not(.items) > li > strong {
     display:block; font:600 9.5px/1 var(--mono); letter-spacing:.13em;
     text-transform:uppercase; color:var(--ac-green); margin-bottom:6px;
   }
-  article.briefing > .body > ul > li > div {
+  article.briefing > .body > ul:not(.items) > li > div {
     white-space:pre-wrap; color:var(--dim); font-size:13px; line-height:1.5;
   }
-  article.briefing > .body > ul > li.fail > strong { color:var(--ac-red); }
+  article.briefing > .body > ul:not(.items) > li.fail > strong { color:var(--ac-red); }
 
   figure.lead-image { margin:0 0 15px; }
   figure.lead-image img {

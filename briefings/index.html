@@ -32,6 +32,22 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610221002">
+  <p class="meta"><time datetime="2026-10-22T10:02+0200">2026-10-22 · 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Hank&#x27;s first live phone call: SIP clean both ways, Hank never spoke</h2>
+  <div class="body">
+    <p><strong>Hank dialled a real phone for the first time at 09:04 this morning and never spoke.</strong> SIP, SRTP and G722 were clean in both directions. Gemma reloaded mid-call: the step 7 warm-up used the default num_ctx 4096 while the call asked for 8192, so the cold load ran about 60 seconds and every request hit the 20 second timeout and aborted it. Barge-in was also armed while the greeting was still being synthesised, so Mattie&rsquo;s &ldquo;hello?&rdquo; cancelled it before a sample reached the wire. Echo was ruled out by measurement: loopback mouth-to-ears isolation was 0 of 48000 samples. Fixes landed the same morning. Barge only while audible, protected greeting, merge instead of supersede, warm before dial with the call&rsquo;s exact options. Warm numbers on the Orin: think 0.67 to 0.74 s, Moonshine 0.14 to 0.23 s, M2 first sentence about 0.9 s.</p>
+
+<p><strong>main moved at 09:39.</strong> Commit 2e9f073 carries MAT-136 calling: multiple contacts, the phrase &ldquo;Hank, call Fiona&rdquo;, and a per-contact opening line that plays after the greeting and disclosure. A number can be marked <code>confirmed: false</code>, in which case the first dial reads back the last two digits and waits for a yes. An answered call is remembered as an HMAC, never the number, file mode 0600. Fiona is in the Orin contacts only. 229 calling tests. Touched files: <code>scripts/hank_calling/flow.py</code>, <code>contacts.py</code>, <code>phone.py</code>, <code>config.py</code>, <code>cli.py</code>, <code>loop_hook.py</code>, <code>deploy/orin/calling/contacts.schema.json</code>, and the talk design doc <code>docs/design/calling-talk-2026-10-22.md</code>.</p>
+
+<p><strong>The caller name on Mattie&rsquo;s phone is a contact card, not a carrier feature.</strong> &ldquo;Claudette&rdquo; showed up because that is his own Contacts entry for +1 628 238 6288. Telnyx CNAM and caller-ID name are off and baresip sent no display name. SIP From now carries &ldquo;Hank&rdquo;. No CNAM reaches Malta mobiles.</p>
+
+<p><strong>Fleet.</strong> OpenRouter at $17.62 (5167.20 credits, 5149.58 spent), down $1.47 in 24 hours and above the $15 sentinel floor. Both quiet-fail jobs are still dead: important-mail-triage state written 07:00, granola-poll state 06:07 with the empty-string SHA1. Root disk 87% with 9.9 GB free, against the 2.0 GB of 09 October. Edge TTS is still 403 on the wss handshake, so this briefing&rsquo;s audio came from OpenAI gpt-4o-mini-tts, voice sage, over the direct API. This job itself failed eleven runs straight on 20 October with HTTP 402 and came back yesterday.</p>
+
+<p><strong>Worth a look:</strong> <a href="https://www.alsa-project.org/wiki/Matrix:Module-aloop">the ALSA aloop matrix page</a>. The talk design chose snd-aloop over baresip&rsquo;s aufile module because aufile wants a WAV file on disk, and the wiki is where the two cross-connected devices and their substream rules are actually written down.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610211035">
   <p class="meta"><time datetime="2026-10-21T10:35+0200">2026-10-21 &middot; 10:35 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 21 Oct 2026</h2>

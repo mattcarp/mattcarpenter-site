@@ -32,6 +32,30 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610221036">
+  <p class="meta"><time datetime="2026-10-22T10:36+0200">2026-10-22 · 10:36 CEST</time><span class="source">Last 30 Days</span></p>
+  <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 22 Oct 2026</h2>
+  <div class="body">
+    <p><strong>Tenstorrent banked $1.5B at a $6.2B valuation, and the same fortnight put its voice stack into production.</strong> Jim Keller&rsquo;s open-architecture inference silicon closed a Series E on 19 Oct led by Trace Capital and Innovation X, while the 2 Oct Smallest.ai partnership runs Lightning V2 voice AI on-prem on the same hardware. Edge inference compute is being funded like it matters, and voice is the first production workload it is sold for. <a href="https://tenstorrent.com/en/newsroom/tenstorrent-announces-series-e">Tenstorrent</a> &middot; <a href="https://tenstorrent.com/newsroom/tenstorrent-and-smallestai-partner-to-bring-production-grade-voice-ai-on-prem">Smallest.ai</a></p>
+
+    <p><strong>NVIDIA made the voice quick start official on Orin.</strong> Pull request 454 in <code>NVIDIA-AI-IOT/jetson-ai-lab</code> promotes &ldquo;Speaches + Gemma 4 E2B&rdquo; to the recommended Multi-Modal AI Studio quick start and widens the supported device path from Thor-only to Jetson Orin Nano, AGX Orin and AGX Thor. That is the shape of the stack Hank runs on, blessed by the vendor. <a href="https://github.com/NVIDIA-AI-IOT/jetson-ai-lab/pull/454">jetson-ai-lab PR #454</a></p>
+
+    <p><strong>A hobby Orin Nano assistant posted its numbers, and they are a useful yardstick.</strong> faster-whisper base.en on CPU, gemma3 4B Q4_K_M with its vision projector in llama.cpp built for CUDA, Kokoro TTS on CPU: about 1.1 s speech recognition, 15 to 17 tok/s generation, 3 to 4.5 s from stopping talking to first spoken word, and roughly 5 s to read a new camera frame where Ollama took about 40 s. <a href="https://www.reddit.com/r/JetsonNano/comments/1xbudnx/i_turned_my_jetson_orin_nano_into_personal_jarvis/">r/JetsonNano</a></p>
+
+    <p><strong>Local speech-to-text has split by workload.</strong> The October ranking puts Voxtral Realtime on multilingual streaming, Parakeet Ultra on Apple-silicon dictation, Canary-Qwen 2.5B on English accuracy, and Whistle or Moonshine on devices measured in megabytes. Whisper is no longer the accuracy leader in any category, only the language-breadth one - and QVAC distilled Parakeet to 254M for exactly this niche. <a href="https://andrew.ooo/answers/how-to-choose-local-speech-to-text-stack-by-hardware-2026/">andrew.ooo</a> &middot; <a href="https://huggingface.co/blog/qvac/transcribepsy-250m">QVAC TranscribePsy</a></p>
+
+    <p><strong>Aqua Voice came to Android.</strong> Released on Google Play on 6 Oct on the Avalon 1.5 speech recognition model, the floating voice button now types clean punctuated text across Mac, Windows, iPhone and Android. <a href="https://finance.yahoo.com/technology/ai/articles/aqua-voice-brings-ai-dictation-195000106.html">Business Wire via Yahoo</a></p>
+
+    <p><strong>Speech-to-speech got cheap and fast this month.</strong> xAI shipped Grok Voice 3.0 on 14 Oct with speech-to-speech at unchanged pricing, and ElevenLabs released Eleven Realtime on 20 Oct as a new class of models for voice agents. The hosted voice layer is closing the latency gap that used to make local the only option. <a href="https://releasebot.io/updates/xai">xAI release notes</a> &middot; <a href="https://www.scriptbyai.com/elevenlabs-timeline/">ElevenLabs timeline</a></p>
+
+    <p><strong>Malta is writing the AI rules and selling them.</strong> The Malta Gaming Authority brought out a voluntary AI Gaming Charter with the Malta Digital Innovation Authority in late September, the first AI governance framework aimed straight at iGaming operators, built on research among Malta-licensed companies. MDIA then ran a webinar on the proposed Cloud and AI Development Act on 19 Oct, under a line worth keeping: &ldquo;AI is not slowed by governance. It is slowed by the lack of it.&rdquo; <a href="https://news.worldcasinodirectory.com/malta-gaming-authority-ai-charter-sets-governance-focus-for-gaming-sector-124430">World Casino Directory</a> &middot; <a href="https://linkedin.com/company/malta-digital-innovation-authority">MDIA</a></p>
+
+    <p><strong>Malta&rsquo;s AI money is moving while its iGaming jobs wobble.</strong> The DeAI Summit runs 28-30 Oct at Monte Kristo Estate in Is-Siġġiewi, run by MDIA and Tech.mt with frontier AI labs, decentralised AI networks and policymakers in the room. Ask Your Audience launched its &ldquo;human digital twin&rdquo; market research platform here with Esprimi and a 372-person Maltese panel. Meanwhile the top r/malta thread this week is an iGaming consultant warning that AI-driven job losses would take the rental market down with them. <a href="https://europe-startup-guide.com/startup-events/2026-10/malta/deai-summit-2026">DeAI Summit</a> &middot; <a href="https://on.mt/article/ai-powered-digital-twin-market-research-platform-launched-in-malta">ON.MT</a> &middot; <a href="https://www.reddit.com/r/malta/comments/1xcal79/imagine_if_maltas_housing_market_fails_igaming/">r/malta</a></p>
+
+    <p><em>Reddit partial this run: the free Reddit path is blocked from this server (HTTP 403), so Reddit threads came back thin and were not used for weight.</em></p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610221002">
   <p class="meta"><time datetime="2026-10-22T10:02+0200">2026-10-22 · 10:02 CEST</time><span class="source">Daily Hank Briefing</span></p>
   <h2 class="headline">Hank&#x27;s first live phone call: SIP clean both ways, Hank never spoke</h2>

@@ -32,6 +32,27 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610231001">
+  <p class="meta"><time datetime="2026-10-23T10:01+0200">2026-10-23 &middot; 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Hank learns to hang up on a voicemail, and the beep detector had to get stricter</h2>
+  <div class="body">
+    <p>Sunny and breezy in Malta, 71&deg;F (21&deg;C), wind 26 km/h from the northwest, no rain all day. Ferry schedule quiet.</p>
+
+<p><strong>Voicemail detection landed yesterday afternoon, and the first beep test was too loose to survive a phone greeting.</strong> Until Hank&rsquo;s opener has played, an outbound call screens the far end. Three things mark a machine. Three seconds of speech before the opener. Two and a half seconds of talk-over. A beep. The first beep test asked for three tone frames with 70 percent of the energy in the two bins either side of the tone. A Supertonic F1 greeting tripped it at 0.7 of three frames and Hank talked over the greeting. The shipped test (<code>3a7764b</code>) wants eight frames, 256 ms, at one pitch within 6 Hz, with 90 percent of the energy in those bins. Speech after a beep cancels it. On the Orin, <code>python -m hank_calling.trl3_bench</code> gives voicemail 3/3 PASS, and the late-greeting case passed once at 3.39 s of talk-over. The bench limit was 3.0 s and was raised to 3.5 s after that run, written up as post hoc in <code>docs/design/trl3-call-fiona-2026-10-22.md</code> rather than quietly rebaselined.</p>
+
+<p><strong>Beep to message is 3 to 5 s on the Orin.</strong> Making the whole 9 s message at detection took 6.4 s and it started 3.83 s after the beep, so <code>06f30c0</code> builds only the first sentence up front and streams the rest while it plays. Not measured on the box yet. Hank leaves one message, hangs up, and tells the room: &ldquo;Fiona didn&rsquo;t pick up, so I left a voicemail saying you may have fallen. Do you want me to try again, or call someone else?&rdquo; The fall trigger also had to learn Moonshine&rsquo;s &ldquo;Hank, I&rsquo;d fell down&rdquo; and &ldquo;Hanko just fell down&rdquo; from the 14:32 and 14:55 runs.</p>
+
+<p><strong>EchoGate keeps Fiona from hearing herself.</strong> On the bridge, a room-mic frame counts as Mattie only if it is louder than the loudest reference frame of the last 800 ms plus the measured coupling plus 6 dB. Below that it goes to Fiona at -30 dB and is never end-pointed, so her own words cannot become a &ldquo;Hank, hang up&rdquo;. Coupling starts at 0 dB and follows echo-only frames between -40 and +6 dB. Hang-up spotting transcribes the last 3 s of any room speech that runs past 3.5 s, once a second, and requires Hank&rsquo;s name. Both default on. <code>HANK_BRIDGE_ECHO_GATE=0</code> and <code>HANK_BRIDGE_SPOT_S=0</code> turn them off. Box-tested only. The Orin A/B with the gate off was started and never read back.</p>
+
+<p><strong>Nobody has fallen down for real yet.</strong> No call has been placed from the fall flow. The runbook waits on Mattie&rsquo;s go. The drop-in caps one call at 3 minutes and a day at 15, at $0.4801/min billed per started minute. Fiona&rsquo;s number is marked confirmed, so it dials without a read-back. Emergency and short codes stay blocked in <code>guard.py</code>. Unproven live: echo through the bridge. Room loudness. Whether Moonshine catches &ldquo;Hank, hang up&rdquo; in a real voice, since it mangles the bare command into an empty string or &ldquo;And kang up&rdquo;.</p>
+
+<p><strong>Also yesterday:</strong> Pocket TTS v4 small models benched against Supertonic M2 in <code>docs/results/pocket-tts-v4-bench-2026-10-22.md</code>, with the Rust binary recommended for an Orin trial, and the bridge&rsquo;s leg queues measured (<code>a9092e2</code>).</p>
+
+<p><strong>Fleet.</strong> OpenRouter at $17.15 (5167.20 credits, 5150.05 spent), down $0.47 in 24 hours and above the $15 sentinel floor. Root disk 74% with 19 GB free, up from 9.9 GB yesterday. Both quiet-fail jobs are still dead: mail state written 07:00, granola 06:19 with the empty-string SHA1. Edge AI Hardware Watch is still 402, nine failures straight, next run stamped 14 October. Weekly Research Digest last ran 19 October on a 402. The local checkout is still the parked restraint-lane branch at b76ccf5.</p>
+
+<p><strong>Worth a look:</strong> <a href="https://github.com/kyutai-labs/pocket-tts/releases">Kyutai Pocket TTS v4.0.1</a>. 18.2M parameters, 36 ms to first audio and 9.9x real time on one thread, shipped as a Rust binary with a native aarch64 build, which matters because the Python route resolves 22 CUDA wheels and that is the install kind that crashed the Orin on 15 September.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202610221036">
   <p class="meta"><time datetime="2026-10-22T10:36+0200">2026-10-22 · 10:36 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 22 Oct 2026</h2>

@@ -2,7 +2,7 @@
 #
 # 1. build — validate briefings/index.html structure and that the tree serves over HTTP
 # 2. links — lychee: internal links block the job; external links are advisory (continue-on-error)
-# 3. e2e — Playwright smoke tests for /briefings/ and /briefings-preview/
+# 3. e2e — Playwright smoke tests for /briefings/
 # 4. e2e — axe on /briefings/ (fail only on critical violations; all hits are logged)
 #
 # Uses ubuntu-latest, open-source tools only, no secrets.

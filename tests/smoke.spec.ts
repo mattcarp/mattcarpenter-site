@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('briefings smoke', () => {
-  for (const path of ['/briefings/', '/briefings-preview/']) {
+  for (const path of ['/briefings/']) {
     test(`${path} renders entries, filter bar, no console errors`, async ({ page }) => {
       const consoleErrors: string[] = [];
       page.on('console', (msg) => {
@@ -36,4 +36,10 @@ test.describe('briefings smoke', () => {
       expect(consoleErrors, `console errors on ${path}`).toEqual([]);
     });
   }
+});
+
+test('old /briefings-preview/ URL redirects to /briefings/', async ({ page }) => {
+  await page.goto('/briefings-preview/');
+  await page.waitForURL(/\/briefings\/(#.*)?$/);
+  await expect(page.locator('article.briefing').first()).toBeVisible();
 });

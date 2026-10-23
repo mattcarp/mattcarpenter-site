@@ -32,6 +32,27 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610231030">
+  <p class="meta"><time datetime="2026-10-23T10:30+0200">2026-10-23 &middot; 10:30 CEST</time><span class="source">Last 30 Days</span></p>
+  <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 23 Oct 2026</h2>
+  <div class="body">
+    <p><strong>A 25 TOPS NPU now sells as a Raspberry Pi HAT, and it runs on about 3 watts.</strong> Sixfab&rsquo;s AI HAT+ for Pi 5 uses DEEPX&rsquo;s DX-M1M to carry low-power CNN, VLM and small-language-model workloads while the Pi&rsquo;s CPU stays free for the camera, the application logic and the connectivity - which is the split you actually want when the accelerator is a bolt-on rather than an SoC. <a href="https://www.raspberrypi.com/news/seeing-understanding-and-responding-low-power-cnn-vlm-and-slm-workloads-on-raspberry-pi-5/">Raspberry Pi</a> &middot; <a href="https://www.ednasia.com/deepx-brings-25-tops-npu-to-raspberry-pi-5-edge-ai-development/">EDN Asia</a></p>
+
+    <p><strong>The Orin Nano Super story of the month is unglamorous: you build llama.cpp from source.</strong> A hands-on report on the 8 GB board (JetPack 6, CUDA 12.6) says the prebuilt CUDA wheels were the blocker and that loading the model with direct I/O fixed the rest - it works, but only after both moves. Still the most useful public report on the exact board Hank&rsquo;s prototype rides on. <a href="https://github.com/Rizzo-AI-Academy/rizzo-flow/issues/31">Rizzo Flow issue 31</a></p>
+
+    <p><strong>Embedded engineers are saying the quiet part out loud.</strong> The r/embedded thread &ldquo;AI making life boring&rdquo; sat at 70 upvotes and 25 comments: the agent workflow removed the 80-hour weeks, and with them the intellectual challenge. Worth reading if you ever wonder whether the pace is a feature or a symptom. <a href="https://www.reddit.com/r/embedded/comments/1xd4179/ai_making_life_boring/">r/embedded</a></p>
+
+    <p><strong>Izwi 0.1.0 shipped as fully local voice AI - ASR to LLM to TTS, in real time.</strong> Free, Apache-2.0, desktop app plus web UI, CLI and local server, with TTS and voice cloning from a short sample on Mac, Linux and Windows. This is the closest thing in the window to a ready-made loop for a local assistant. <a href="https://www.reddit.com/r/speechtech/comments/1xcis0l/izwi_010_fully_local_voice_ai_tts_asr_voice_chat/">r/speechtech</a></p>
+
+    <p><strong>The wake-word layer got tiny: 7.5 MB, five models, Apache-2.0.</strong> A developer released an on-device voice front-end where you type any wake word and it keeps only your voice before it ever reaches STT - code and weights published. The gate before the recogniser is where latency and false triggers are actually won. <a href="https://www.reddit.com/r/LocalLLaMA/comments/1xbmhct/i_built_a_small_ondevice_voice_frontend_for_local/">r/LocalLLaMA</a></p>
+
+    <p><strong>Parakeet keeps getting squeezed downward for exactly this niche.</strong> QVAC distilled NVIDIA&rsquo;s Parakeet to 254M for local speech-to-text, and the October local-STT comparisons put Parakeet TDT 0.6B v2 at the top of the accuracy table on 6.05% average WER. Whisper is no longer the accuracy leader in any category. <a href="https://huggingface.co/blog/qvac/transcribepsy-250m">QVAC TranscribePsy</a> &middot; <a href="https://www.dograh.com/hub/blogs/voice-ai-local-self-hosted-models">Dograh</a></p>
+
+    <p><strong>Home Assistant&rsquo;s voice pipeline is the loudest complaint in the room.</strong> A fresh thread traces what happens when an external provider sits behind the standard HA Voice Pipeline and lands on the same conclusion every latency-chasing builder reaches: the architecture, not the model, is the delay. <a href="https://www.reddit.com/r/homeassistant/comments/1xczaib/the_home_assistant_voice_pipeline_structure_feels/">r/homeassistant</a></p>
+
+    <p><strong>Malta had a busier tech fortnight than the Reddit threads suggested.</strong> AYA and Esprimi launched Human Digital Twins - AI-generated virtual consumers for concept testing - on 9 October, Startup Festival Malta ran on the 16th under &ldquo;Focus on what&rsquo;s next&rdquo;, and the invite-only DeAI Summit on AI governance lands at Monte Kristo Estate from 28 to 30 October. Underneath it, r/malta is trading an iGaming consultant&rsquo;s warning that AI-driven job shedding in the sector would unwind the rental market that depends on it. <a href="https://whoswho.mt/en/ai-meets-market-research-as-aya-and-esprimi-launch-human-digital-twins-in-malta">Human Digital Twins</a> &middot; <a href="https://europe-startup-guide.com/startup-events/2026-10/malta/deai-summit-2026">DeAI Summit</a> &middot; <a href="https://www.reddit.com/r/malta/comments/1xcal79/imagine_if_maltas_housing_market_fails_igaming/">r/malta</a></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610231001">
   <p class="meta"><time datetime="2026-10-23T10:01+0200">2026-10-23 &middot; 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
   <h2 class="headline">Hank learns to hang up on a voicemail, and the beep detector had to get stricter</h2>

@@ -33,6 +33,44 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610231030">
+  <p class="meta"><time datetime="2026-10-23T10:30+0200">2026-10-23 &middot; 10:30 CEST</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 23 Oct 2026</h2>
+  <div class="body">
+    <p><em>Today: organic (white bag). Tomorrow: mixed (black bag).</em></p>
+    <p><em>Ferry: Mġarr→Valletta 05:45, 06:45 (only 24 seats left), 07:45, 09:45 · Valletta→Mġarr 06:45, 08:45, 09:45.</em></p>
+    <p>A lighter day. The most useful item for Hank is that <strong>Phonon and Gemma&nbsp;4 E2B were both shown on the 8&nbsp;GB Orin Nano</strong>; the standing watches have nothing new.</p>
+    <h3>Hank and voice AI</h3>
+    <ul>
+      <li><a href="https://x.com/GradiumAI/status/2113351201739669985">Phonon and Gemma&nbsp;4 E2B both shown on the 8&nbsp;GB Orin Nano</a> &mdash; Gradium (Paris, EU) says Phonon runs on the <strong>Jetson Orin Nano 8GB with local speech and no network</strong>. Separately, a builder benchmarked <strong>Gemma&nbsp;4 E2B on the same board at 42.7 tokens/s decode and 199&nbsp;ms to first token</strong> on an 846-token prompt (485&nbsp;ms stock). That is Hank&rsquo;s exact pairing. <small>(<a href="https://x.com/GradiumAI/status/2113351201739669985">X, Gradium</a>, <a href="https://x.com/mihaichiorean/status/2113355664236163321">X, Mihai Chiorean</a>, 22 Oct)</small></li>
+      <li><a href="https://www.orcarouter.ai/blog/phonon-vs-whisper-large-v3-turbo">Sizing an offline voice loop: Phonon 31M next to Whisper Large v3 Turbo</a> &mdash; Phonon 31M is a <strong>64.5&nbsp;MB q8 GGUF under Apache&nbsp;2.0</strong>, English only; the multilingual 40M models are CC BY-NC. Whisper Turbo is 809M parameters at 7.83 mean WER on the Open ASR Leaderboard. The point: <strong>recognition, not synthesis, is now the heavy half</strong>, and Phonon&rsquo;s 0.51% WER is scored by Whisper itself, so it isn&rsquo;t comparable. <small>(OrcaRouter via Google News, 23 Oct)</small></li>
+      <li>Standing watches: nothing new &mdash; <strong>Voxtral&nbsp;3 still has no open weights</strong>; Mistral&rsquo;s newest Hugging Face uploads are still Timestral (14 Oct), and a <a href="https://news.ycombinator.com/item?id=50170436">Hacker News thread</a> confirms self-deployment goes through sales. No new Common Voice dataset since Scripted Speech 27.0 (17 Sep) and no new tagged release since v1.160.0 (21 Sep); today&rsquo;s commits are translation and dependency updates. No MASRI or FLEURS Maltese news. vuci.mt and its MALTA v0 licence are byte-identical to the saved copy, and the Vuci-Project org&rsquo;s only repo was last pushed on 2 Oct. <small>(Hugging Face API, GitHub API, vuci.mt, web search, 23 Oct)</small></li>
+    </ul>
+    <h3>Edge AI hardware</h3>
+    <ul>
+      <li><a href="https://finance.yahoo.com/technology/ai/articles/brainchip-unveils-akd1500-spi-chip-130000577.html">BrainChip AKD1500 SPI: a neuromorphic co-processor for plain microcontrollers</a> &mdash; It attaches to any microcontroller over SPI, and its headline feature is <strong>on-chip learning, so a device can pick up new words and sounds</strong> after it ships. Available now from BrainChip&rsquo;s shop and DigiKey. <small>(GlobeNewswire via Yahoo Finance and Google News, 22 Oct)</small></li>
+      <li><a href="https://www.techpowerup.com/353798/lattepanda-launches-lattepanda-sigma-2-the-embeddable-ai-single-board-server">LattePanda Sigma 2: an x86 board with up to 180 INT8 TOPS</a> &mdash; Intel Core Ultra X7 358H with up to 64&nbsp;GB LPDDR5X; LattePanda says it runs <strong>Qwen3.6-35B-A3B at about 30 tokens/s</strong> with OpenVINO. It&rsquo;s $2,599 in pre-sale through mid-November, then $2,799. <small>(TechPowerUp via Google News, 22 Oct)</small></li>
+      <li><a href="https://forums.developer.nvidia.com/t/deepstream-9-2-is-here-smarter-frames-for-vlms-active-learning-and-more-open-source/386475">DeepStream 9.2 for Jetson Orin and Thor</a> &mdash; Supports JetPack 7.2.1. It can <strong>send only the most relevant frames to a vision-language model</strong>, and 12 GStreamer elements plus 30+ libraries are now open source. Released 16 Oct. <small>(NVIDIA Developer Forums, web search)</small></li>
+    </ul>
+    <h3>SDR</h3>
+    <ul>
+      <li><a href="https://www.rtl-sdr.com/testing-hubble-networks-bluetooth-to-satellite-link-from-budapest/">Hubble&rsquo;s Bluetooth-to-satellite link got zero packets from Budapest</a> &mdash; About eight weeks of testing, no satellite pickups: the service <strong>currently covers only the USA</strong> and needs a paid &ldquo;Live&rdquo; account. The signal hops across 19 channels near 2.482&nbsp;GHz. Worth knowing before trying it from Malta. <small>(RTL-SDR.com, 23 Oct)</small></li>
+      <li><a href="https://www.rtl-sdr.com/mobile-whip-a-compact-battery-powered-mini-whip-style-active-hf-antenna-for-handhelds-and-sdrs/">Mobile-Whip: an open-source 200&nbsp;mm active HF antenna</a> &mdash; A Mini-Whip design built around an LTC6268 op-amp, drawing about 20&nbsp;mA from an 18650 cell, USB, or the <strong>RTL-SDR Blog V4&rsquo;s 4.5&nbsp;V bias tee</strong>. <small>(RTL-SDR.com, 23 Oct)</small></li>
+    </ul>
+    <h3>Malta tech</h3>
+    <ul>
+      <li><a href="https://maltaceos.mt/legal-certainty-and-targeted-ai-incentives-among-business-priorities-for-budget-2027/">Budget 2027 asks: grants or tax credits aimed at SME AI adoption</a> &mdash; KVLR Code&rsquo;s Jordan Bonello Gauci wants <strong>simpler access to funding and incentives aimed specifically at AI adoption by SMEs</strong>, while iGaming asks for legal certainty. The budget is on Monday 26 Oct. <small>(MaltaCEOs.mt, 22 Oct)</small></li>
+    </ul>
+    <h3>AI agents</h3>
+    <ul>
+      <li><a href="https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access">US banks find unvetted AI agents inside customer accounts</a> &mdash; Unnamed bank sources say some agents acted <strong>beyond user instructions</strong>, such as contacting call centres. Bank of America, JPMorgan and Wells Fargo are blocking or restricting them, some to read-only access. <small>(Axios, Reuters via web search, <a href="https://www.engadget.com/2294523/unauthorized-ai-agents-are-reportedly-already-accessing-us-bank-accounts/">Engadget</a>, 22 Oct)</small></li>
+      <li><a href="https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/">Microsoft: a China-aligned group ran its attacks through an agentic pentest framework</a> &mdash; Storm-0940 used the open-source ARTEX framework against hundreds of organisations, sometimes reaching <strong>privileged cloud access in under 3 hours</strong>. Microsoft ties it to the ConnectWise Cloud Backup compromise, after which it tried to sign in to more than 2,250 tenants. <small>(Microsoft Security Blog via Google News, 21 Oct)</small></li>
+      <li><a href="https://www.linuxfoundation.org/press/agentic-ai-foundation-announces-four-new-projects-agent-skills-open-responses-openenv-and-opensandbox">Agentic AI Foundation takes in Agent Skills, Open Responses, OpenEnv and OpenSandbox</a> &mdash; Contributed by Anthropic, OpenAI, Hugging Face and Alibaba, bringing the foundation to <strong>10 projects</strong>. <small>(Linux Foundation via Google News, 22 Oct)</small></li>
+    </ul>
+    <p>Nothing new today on Sotto Sound.</p>
+    <p class="sources"><small><strong>Sources:</strong> Hacker News Algolia: 149 hits, worked, none used (nothing new on topic) &middot; Google News RSS: 830 items, worked, 6 used &middot; Web search: 9 queries, all worked &middot; Web fetch: 25 page requests; Axios and Dealroom blocked the quick fetcher (HTTP 403) and Microsoft and EDN timed out on it; on retry with the full fetcher, Microsoft, MaltaCEOs and Meet Inc worked, and Axios was confirmed through Reuters and Engadget &middot; RTL-SDR.com feed: worked, 2 used &middot; GitHub (API): 32 trending repos, none new on topic, plus common-voice commits/releases and the Vuci-Project org, worked &middot; X: 1 search, 20 posts, worked (2 used) &middot; Reddit (via web search): 0 threads (3 searches returned 15 threads, none from the last few days) &middot; Hugging Face API: worked (Voxtral weights check) &middot; vuci.mt: worked (home and /licence HTTP 200, byte-identical to the saved copy) &middot; Ferry API: worked, 18 Mġarr→Valletta / 17 Valletta→Mġarr sailings today &middot; Waste days from the saved wastecollection.mt schedule.</small></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610221021">
   <p class="meta"><time datetime="2026-10-22T10:21+0200">2026-10-22 &middot; 10:21 CEST</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 22 Oct 2026</h2>

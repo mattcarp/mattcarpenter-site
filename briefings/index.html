@@ -32,6 +32,25 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610241001">
+  <p class="meta"><time datetime="2026-10-24T10:01+0200">2026-10-24 &middot; 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">The &ldquo;faster Gemma&rdquo; number came from a TensorRT fork, not from Ollama flags</h2>
+  <div class="body">
+    <p>Overcast in Malta, 70&deg;F (21&deg;C), feels 66&deg;F (19&deg;C), wind from the northwest rising to 32 km/h by evening, no rain. Ferry schedule quiet.</p>
+
+<p><strong>The 199 ms versus 485 ms claim was checked this morning and it is a different runtime, not a tuning trick.</strong> Both numbers come from TensorRT Edge-LLM. The 485 ms figure is stock Edge-LLM 0.11 with AWQ INT4 group-128. The 199 ms figure is a community fork (<a href="https://huggingface.co/mihaichiorean/gemma-4-E2B-it-qat-int4g32-TRT-Edge-LLM">mihaichiorean HF card</a>, runtime tag <code>gemma4-jetson-v0.1</code>) that imports Google&rsquo;s QAT Q4_0 grid as INT4 group-32, keeps the INT8 token and per-layer-embedding tables on the host side with <code>--hostEmbeddingTables</code>, and compacts the prefill. The prompt was 846 uncached tokens at 25 W. Audio input is not exported by that build, image and text only. TensorRT 10.16.2.10 is not installed on the Orin.</p>
+
+<p><strong>So the baseline was scored on Hank&rsquo;s actual stack instead.</strong> <code>scripts/bench_gemma_ttft.py</code> against the resident Ollama model, cached system prompt, <code>num_ctx 8192</code>: text and call path TTFT median 118.7 ms with p90 139.5 ms over 24 runs. Audio and loop path 464.6 ms median, 553.6 ms p90, over 20 runs. Decode about 32.6 tok/s. <code>num_batch</code> 512 and 2048, and <code>num_thread</code> 4 and 2, all landed inside the noise and were rejected. Nothing was kept and the Orin is on its live defaults. Flash attention, the 66 MiB f16 KV cache, 36 of 36 layers on GPU, MAXN_SUPER and <code>jetson_clocks</code> were already in place before any of this.</p>
+
+<p><strong>Two device facts in the docs were wrong and are now corrected.</strong> The Orin has 4 GB of swap, not none, and its disk is at 90 percent with 11 GB free. MemAvailable read 1,759 MiB before the bench and 1,368 MiB after, with 112 MiB of swap in use. The next step, a text-only TensorRT trial on the call path, needs roughly a 6 GB model plus the TensorRT runtime, so disk has to be freed first. Candidates written up in <code>docs/HANDOVER.md</code>: LFM2.5 at 1.6 GB (rejected on 13 October), <code>gemma-4-E2B-it-qat-q4_0-gguf</code> at 4.3 GB. Leaving <code>gemma4:e2b-it-qat</code> alone because it is the drop-in rollback for unit 70. Mattie&rsquo;s OK is needed before any of it.</p>
+
+<p><strong>One trap worth knowing before the next full test run.</strong> <code>pytest tests</code> deletes tracked files under <code>build/</code> and <code>hardware/kicad/out/</code>. Recover with <code>git checkout -- build hardware</code> after a full run.</p>
+
+<p><strong>Fleet.</strong> OpenRouter at $16.07 (5167.20 credits, 5151.13 spent), down $1.08 in 24 hours and still above the $15 sentinel floor. Credit Sentinel printed nothing at 07:55. Root disk 74 percent with 19 GB free, systemd journal 245 MB. Both quiet-fail jobs are still dead: mail state written 07:00, granola 06:31 with the empty-string SHA1 <code>da39a3ee</code>. The Nous probe still answers UNKNOWN:AuthError. Cron Email Forwarder, Source Health and System Watchdog all ran clean and stayed silent. The local checkout is still the parked <code>restraint-lane</code> branch at <code>b76ccf5</code>, which says nothing about the repo: <code>a487501</code> landed on main at 06:30 today.</p>
+
+<p><strong>Worth a look:</strong> the <a href="https://huggingface.co/mihaichiorean/gemma-4-E2B-it-qat-int4g32-TRT-Edge-LLM">HF card for the TensorRT fork</a>. It names the three changes that bought the speed and lists the exact prompt length and power mode behind the number, which is more than most edge-AI cards bother to say.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202610231030">
   <p class="meta"><time datetime="2026-10-23T10:30+0200">2026-10-23 &middot; 10:30 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 23 Oct 2026</h2>

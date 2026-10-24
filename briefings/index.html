@@ -32,6 +32,33 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610241018">
+  <p class="meta"><time datetime="2026-10-24T10:18+0200">2026-10-24 &middot; 10:18 CEST</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 24 Oct 2026</h2>
+  <div class="body">
+    <p><em>Today: mixed (black bag). Tomorrow: no collection.</em></p>
+    <p><em>Ferry: Mġarr&rarr;Valletta 05:45, 06:45, 07:45, 09:45 &middot; Valletta&rarr;Mġarr 06:45, 08:45, 09:45. Full timetable (19 and 18 sailings), no sailing under 50 seats.</em></p>
+    <p>A quieter Saturday: three voice stories worth your time, a few agent tools, and one NVIDIA inference project. No new SDR, Sotto Sound or Malta tech news since yesterday.</p>
+    <h3>Hank and voice AI</h3>
+    <ul>
+      <li><a href="https://huggingface.co/blog/ibm-granite/granite-speech-5">IBM Granite Speech 5.0: new 2B model, and Turbo CTC goes multilingual</a> &mdash; Released 20&ndash;21 Oct under <strong>Apache 2.0</strong>. The <a href="https://huggingface.co/ibm-granite/granite-speech-5.0-470m-turboctc">470M Turbo CTC</a> now covers seven languages including Italian, adds punctuation, and IBM reports English WER of 5.51% and 19,870 RTFx on the Open ASR Leaderboard (IBM&rsquo;s own, unofficial numbers). That size is a realistic <strong>speech-to-text candidate for the Orin next to Gemma 4 E2B</strong>; no Maltese. <small>(Google News, web search, Hugging Face, 21 Oct)</small></li>
+      <li><a href="https://block.xyz/dessa">Block&rsquo;s Dessa: a full-duplex speech-to-speech model trained only on audio</a> &mdash; No text and no pretrained model; Block says it backchannels, listens while talking, and <strong>runs locally on a MacBook Pro M4 Max</strong>. Research preview only: no weights, paper, benchmarks or licence, and access is limited to AI-safety researchers. <a href="https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech">The Verge</a> found the demos &ldquo;a little awkward and uncanny.&rdquo; <small>(Google News, X, web search, 23 Oct)</small></li>
+      <li><a href="https://www.amd.com/en/blogs/2026/sovereign-ai-for-european-customer-conversations.html">LeadDesk, QuTwo and AMD Silo AI build sovereign voice AI for small European languages</a> &mdash; <strong>EU-origin work</strong> (Finland): compressed open-weight models on AMD Instinct MI350P and ROCm, aimed at accents, local names and numbers in contact-centre calls, starting with the Nordic languages. No benchmarks or timetable given. <small>(Google News, AMD blog, 23 Oct)</small></li>
+      <li><strong>Watch list, no change:</strong> still no Voxtral&nbsp;3 weights on Hugging Face (Mistral&rsquo;s newest uploads are the Timestral models from 14 Oct) and no Maltese figures; vuci.mt and its licence page are byte-identical to the MALTA v0 baseline, and Vuci-Project&rsquo;s only repo was last pushed 2 Oct; Common Voice has no new dataset or release since v1.160.0 (21 Sep), only translation and dependency commits. <small>(Hugging Face, GitHub, vuci.mt)</small></li>
+    </ul>
+    <h3>Edge AI hardware</h3>
+    <ul>
+      <li><a href="https://github.com/NVIDIA/flare-local-inference">NVIDIA Flare: a local inference server for DGX Spark-class GPUs</a> &mdash; Apache 2.0 research prototype from 20 Oct for SM120/SM121 chips, built for long conversations and coding agents, with a Rust runtime serving precompiled CUDA graphs. NVIDIA says plainly it is not a vLLM replacement, and it does not target Orin. <small>(GitHub, 627 stars)</small></li>
+    </ul>
+    <h3>AI agents</h3>
+    <ul>
+      <li><a href="https://1password.com/press/2026/october/1password-for-agents-trust-layer-personal-ai-agents">1Password for Agents lets agents sign in without seeing the password</a> &mdash; You approve each login on your own device and 1Password fills the form directly. Partners named include Muse, Claude, OpenAI and <strong>Grok Bot, whose integration is rolling out now</strong>; free on Individual and Family plans, but not for 1Password.eu accounts. <small>(Google News via <a href="https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/">TechCrunch</a>, web search, 22 Oct)</small></li>
+      <li><a href="https://github.com/omnara-ai/omnara">Omnara: an open-source, self-hostable alternative to Claude Managed Agents</a> &mdash; Apache 2.0; aims to replace hosted agent platforms like OpenAI&rsquo;s Agents API with your own. <small>(<a href="https://news.ycombinator.com/item?id=50183892">Hacker News</a>, 112 points, 21 Oct)</small></li>
+      <li><a href="https://github.com/Leonxlnx/earshot">earshot: &ldquo;ears for coding agents&rdquo;</a> &mdash; MIT, CPU-only CLI, Python API and MCP server that describes and scores audio so an agent can judge sounds it makes. <small>(GitHub, 2,524 stars, created 15 Oct)</small></li>
+    </ul>
+    <p class="sources"><small><strong>Sources:</strong> Hacker News (Algolia) 154 hits, 1 used &middot; Google News RSS 831 hits, 4 used &middot; web search 7 queries, used to verify every item &middot; GitHub search 32 repos plus API checks, 3 used &middot; X (free reader) 1 call, 20 posts, used for Dessa &middot; Hugging Face API 2 checks, no new Voxtral weights &middot; Reddit (via web search): 0 threads used (3 searches found older or undated threads, nothing new) &middot; Gozo high-speed ferry API OK (19 and 18 sailings) &middot; Waste schedule from wastecollection.mt rules &middot; vuci.mt OK, unchanged &middot; No sources failed today.</small></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610241001">
   <p class="meta"><time datetime="2026-10-24T10:01+0200">2026-10-24 &middot; 10:01 CEST</time><span class="source">Daily Hank Briefing</span></p>
   <h2 class="headline">The &ldquo;faster Gemma&rdquo; number came from a TensorRT fork, not from Ollama flags</h2>

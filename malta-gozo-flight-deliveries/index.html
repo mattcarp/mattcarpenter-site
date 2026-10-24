@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en-MT">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Malta–Gozo Flight Deliveries · Seed deck</title>
+<meta name="description" content="Small packages from Valletta to Xagħra by drone in about an hour. A €20k seed pilot by Matt Carpenter.">
+<meta name="theme-color" content="#0d2c44">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,100,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stone:#eee6d7; --stone-2:#e2d6c1; --stone-3:#d3c4aa;
+  --ink:#10273a; --ink-2:#3e5466; --rule:#c9b99c;
+  --sea:#0d2c44; --sea-2:#14405f; --sea-3:#1f5a80; --sea-ink:#e9e1d2; --sea-mute:#a9bccb;
+  --accent:#d65a2c; --accent-ink:#b3441b;
+  --land:#e8dcc5; --land-edge:#c8b48f;
+  --pad:clamp(22px,5vw,96px);
+  --display:"Archivo",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--stone);color:var(--ink);font-family:var(--display);font-size:clamp(15px,1.12vw,19px);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-variant-numeric:tabular-nums}
+::selection{background:var(--accent);color:#fff}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{color:var(--accent-ink)}
+.deck{height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--stone-3) transparent}
+.deck::-webkit-scrollbar{width:8px}.deck::-webkit-scrollbar-thumb{background:var(--stone-3);border-radius:8px}
+.slide{position:relative;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;padding:calc(var(--pad)*.9) var(--pad);display:flex;flex-direction:column;overflow:hidden}
+.dark{background:var(--sea);color:var(--sea-ink)}
+.dark ::selection{background:var(--accent)}
+.tint{background:var(--stone-2)}
+h1,h2,h3{font-weight:760;letter-spacing:-.025em;line-height:1.02;text-wrap:balance;font-stretch:112%}
+h1{font-size:clamp(44px,6.6vw,104px);letter-spacing:-.035em}
+h2{font-size:clamp(32px,3.9vw,64px);max-width:18ch}
+h3{font-size:clamp(18px,1.45vw,24px);letter-spacing:-.01em;line-height:1.15;font-stretch:105%}
+p{max-width:62ch;text-wrap:pretty}
+.lede{font-size:clamp(18px,1.55vw,26px);line-height:1.35;color:var(--ink-2);max-width:40ch;font-weight:400}
+.dark .lede{color:var(--sea-mute)}
+.mono{font-family:var(--mono);font-size:.78em;letter-spacing:.01em}
+.accent{color:var(--accent)}
+.dark .accent{color:#f07a4c}
+.note{font-size:12.5px;line-height:1.45;color:var(--ink-2);max-width:none}
+.dark .note{color:var(--sea-mute)}
+.foot{margin-top:auto;padding-top:20px;display:flex;gap:24px;justify-content:space-between;align-items:flex-end}
+.pg{font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:nowrap}
+.dark .pg{color:var(--sea-mute)}
+.head{display:flex;flex-direction:column;gap:18px;margin-bottom:clamp(20px,3.4vw,56px)}
+
+/* nav */
+.dots{position:fixed;right:clamp(10px,1.6vw,26px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:20}
+.dots button{width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:var(--ink-2);cursor:pointer;transition:background .25s,transform .25s,color .25s;position:relative}
+.dots button::after{content:"";position:absolute;inset:-8px}
+.dots button[aria-current="true"]{background:var(--accent);border-color:var(--accent);transform:scale(1.25)}
+.dots.on-dark button{color:var(--sea-mute)}
+.dots button:hover{transform:scale(1.25)}
+.progress{position:fixed;left:0;top:0;height:3px;background:var(--accent);width:0;z-index:21;transition:width .4s cubic-bezier(.16,1,.3,1)}
+.hint{position:fixed;left:var(--pad);bottom:18px;font-family:var(--mono);font-size:11.5px;color:var(--sea-mute);z-index:20;transition:opacity .4s;pointer-events:none}
+.hint kbd{font-family:inherit;border:1px solid currentColor;border-radius:4px;padding:0 5px;margin:0 2px}
+
+/* map */
+.map .land{fill:var(--land);stroke:var(--land-edge);stroke-width:1.2;stroke-linejoin:round}
+.dark .map .land{fill:#e6dac3;stroke:#f3ecdf}
+.map .ferry{fill:none;stroke:var(--sea-mute);stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round;opacity:.85}
+.map .route{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.map .route.sea{stroke-width:4.5}
+.map .stop{fill:var(--sea);stroke:var(--accent);stroke-width:3.5}
+.map .stop.kiosk{fill:var(--accent);stroke:#fff;stroke-width:3}
+.map .lbl{font-family:var(--display);font-size:19px;font-weight:650;fill:var(--ink);font-stretch:105%}
+.map .lbl.sm{font-size:15px;font-weight:500;fill:var(--ink-2)}
+.map .sealbl{font-family:var(--mono);font-size:14px;fill:var(--sea-mute);letter-spacing:.04em}
+.map .seg{font-family:var(--mono);font-size:15px;font-weight:600;fill:#fff}
+.map .segbg{fill:var(--accent)}
+.map .island-name{font-family:var(--display);font-size:15px;letter-spacing:.32em;font-weight:600;fill:#9c8b6c;text-transform:uppercase}
+.map .flyer circle.core{fill:#fff}
+.map .flyer circle.halo{fill:var(--accent);opacity:.28}
+.map .grid line{stroke:rgba(233,225,210,.06)}
+
+/* reveal system: base = final state */
+.motion .slide:not(.in) .rv{opacity:0;transform:translateY(14px)}
+.rv{transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.motion .slide:not(.in) .route{stroke-dashoffset:var(--len)}
+.route{stroke-dasharray:var(--len) var(--len);stroke-dashoffset:0}
+.motion .slide.in .route{transition:stroke-dashoffset var(--dur,1.6s) linear var(--delay,0s)}
+.motion .slide:not(.in) .pop{opacity:0;transform:scale(.4)}
+.pop{transform-box:fill-box;transform-origin:center;transition:opacity .5s ease var(--delay,0s),transform .7s cubic-bezier(.34,1.56,.64,1) var(--delay,0s)}
+
+/* 1 title */
+#s1{padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+#s1 .copy{padding:var(--pad);padding-right:0;display:flex;flex-direction:column;justify-content:center;gap:28px;position:relative;z-index:2}
+#s1 h1{max-width:9ch}
+#s1 .lede{max-width:28ch;color:var(--sea-ink);font-size:clamp(19px,1.75vw,29px)}
+#s1 .lede b{color:#f07a4c;font-weight:650}
+#s1 .meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:13px;color:var(--sea-mute)}
+#s1 .meta span b{color:var(--sea-ink);font-weight:600}
+#s1 .mapwrap{position:relative;display:flex;align-items:center;justify-content:center;padding:4vh 2vw 4vh 0}
+#s1 svg{width:100%;height:100%;max-height:96svh}
+
+/* 2 problem */
+.journey{margin-top:auto;display:flex;flex-direction:column;gap:22px}
+.track{display:flex;width:100%;height:64px;border-radius:6px;overflow:hidden;gap:3px}
+.track div{position:relative;display:flex;align-items:flex-end;padding:9px 11px;font-size:13px;line-height:1.15;font-weight:600;color:var(--ink);background:var(--stone-3);min-width:0}
+.track div span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track .wait{background:repeating-linear-gradient(135deg,#d9c9ab 0 8px,#cdbb99 8px 16px)}
+.track .boat{background:var(--sea);color:var(--sea-ink)}
+.track .taxi{background:#bfae8d}
+.track div em{position:absolute;top:8px;left:11px;font-style:normal;font-family:var(--mono);font-size:11.5px;font-weight:400;opacity:.85}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.4vw,44px);border-top:1px solid var(--rule);padding-top:22px}
+.facts .n{font-size:clamp(24px,2.3vw,38px);font-weight:720;letter-spacing:-.02em;font-stretch:110%;line-height:1}
+.facts p{font-size:14.5px;color:var(--ink-2);margin-top:8px;max-width:28ch}
+.motion .slide:not(.in) .track div{transform:scaleX(0)}
+.track div{transform-origin:left;transition:transform .7s cubic-bezier(.16,1,.3,1) var(--delay,0s)}
+
+/* 3 idea */
+#s3{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,72px);align-items:stretch}
+#s3 .copy{display:flex;flex-direction:column;gap:26px;min-width:0}
+#s3 .mapwrap{display:flex;align-items:center;justify-content:center;min-width:0}
+#s3 svg.map{width:100%;max-height:86svh}
+.steps{list-style:none;display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(233,225,210,.18)}
+.steps li{display:grid;grid-template-columns:5.2em 1fr;gap:14px;padding:13px 0;border-bottom:1px solid rgba(233,225,210,.18);font-size:15.5px;color:var(--sea-mute)}
+.steps li b{display:block;color:var(--sea-ink);font-weight:650;font-size:16.5px;margin-bottom:2px}
+.steps .km{font-family:var(--mono);font-size:13px;color:#f07a4c;padding-top:3px}
+.parcel{display:flex;gap:22px;align-items:center}
+.parcel svg{flex:none;width:150px;height:auto}
+.parcel p{font-size:15px;color:var(--sea-mute);max-width:30ch}
+.parcel p b{color:var(--sea-ink);font-weight:650}
+
+/* 4 speed */
+.race{display:flex;flex-direction:column;gap:clamp(18px,2.6vh,30px);margin-top:clamp(8px,2vh,24px)}
+.lane{display:grid;grid-template-columns:clamp(160px,16vw,250px) 1fr;gap:20px;align-items:center}
+.lane .who b{display:block;font-size:clamp(16px,1.3vw,21px);font-weight:700;letter-spacing:-.01em}
+.lane .who span{font-size:13px;color:var(--ink-2)}
+.trackr{position:relative;height:54px;border-radius:4px;background:linear-gradient(90deg,rgba(16,39,58,.06),rgba(16,39,58,.03))}
+.range{position:absolute;top:50%;height:2px;background:var(--ink-2);opacity:.55;transform:translateY(-50%)}
+.range::before,.range::after{content:"";position:absolute;top:-6px;width:2px;height:14px;background:inherit}
+.range::before{left:0}.range::after{right:0}
+.fill{position:absolute;left:0;top:7px;bottom:7px;border-radius:3px;width:var(--w);background:var(--c,var(--ink));display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:#fff;font-weight:700;font-size:clamp(15px,1.2vw,19px);white-space:nowrap;font-stretch:108%}
+.fill .t{opacity:1;transition:opacity .4s ease var(--d)}
+.motion .slide:not(.in) .fill{width:0}
+.motion .slide:not(.in) .fill .t{opacity:0}
+.motion .slide.in .fill{transition:width var(--d) linear}
+.lane.ferry .fill{--c:var(--sea-3)}
+.lane.drone .fill{--c:var(--accent)}
+.lane.vtol .fill{--c:#6d7f8c}
+.axis{display:grid;grid-template-columns:clamp(160px,16vw,250px) 1fr;gap:20px}
+.axis .ticks{position:relative;height:22px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.axis .ticks span{position:absolute;top:6px;transform:translateX(-50%)}
+.axis .ticks span:first-child{transform:none}
+.speed-row{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;margin-top:auto;padding-top:26px}
+.clock{font-family:var(--mono);font-size:13px;color:var(--ink-2);display:flex;gap:16px;align-items:center}
+.clock b{font-size:28px;color:var(--ink);font-weight:600;min-width:4.6ch;display:inline-block;text-align:right}
+.btn{font:inherit;font-family:var(--mono);font-size:12.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.btn:hover{background:var(--ink);color:var(--stone)}
+.btn svg{vertical-align:-2px;margin-right:6px}
+.wind{border-collapse:collapse;font-size:14px}
+.wind th,.wind td{padding:6px 14px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+.wind th{font-weight:500;color:var(--ink-2);font-size:12.5px}
+.wind td:first-child,.wind th:first-child{text-align:left;padding-left:0}
+.wind caption{text-align:left;font-weight:650;font-size:14px;padding-bottom:6px}
+
+/* 5 why now */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(22px,3.4vw,64px);margin-top:auto;margin-bottom:auto}
+.three > div{border-top:2px solid var(--ink);padding-top:22px;display:flex;flex-direction:column;gap:14px}
+.three .big{font-size:clamp(34px,3.6vw,60px);font-weight:760;letter-spacing:-.03em;line-height:.95;font-stretch:115%}
+.three .big small{font-size:.42em;letter-spacing:-.01em;font-weight:600;display:block;margin-top:8px;font-stretch:105%;color:var(--ink-2)}
+.three p{font-size:clamp(15.5px,1.2vw,19px);color:var(--ink-2)}
+.three p b{color:var(--ink);font-weight:650}
+
+/* 6 budget */
+#s6 .grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);gap:clamp(28px,4.5vw,80px);align-items:start}
+table.budget{width:100%;border-collapse:collapse;font-size:15px}
+.budget td{padding:8px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+.budget td.amt{text-align:right;font-family:var(--mono);font-size:13.5px;white-space:nowrap;padding-left:14px}
+.budget td.bar{width:28%;padding-left:16px}
+.budget td.bar i{display:block;height:8px;border-radius:2px;background:var(--sea-3);width:var(--w)}
+.budget tr.grp td{font-weight:700;font-size:12.5px;letter-spacing:.02em;color:var(--ink-2);padding-top:18px;border-bottom:1px solid var(--ink)}
+.budget tr.grp:first-child td{padding-top:0}
+.budget .sub{color:var(--ink-2);font-size:13px}
+.budget tr.tbd td{color:var(--ink-2)}
+.budget tr.tbd td.bar i{background:repeating-linear-gradient(90deg,var(--stone-3) 0 4px,transparent 4px 8px)}
+.budget tr.sum td{border-bottom:none;border-top:2px solid var(--ink);font-weight:750;padding-top:12px;font-size:16.5px}
+.budget tr.sum td.amt{font-size:15px;font-weight:600}
+.motion .slide:not(.in) .budget td.bar i{width:0}
+.budget td.bar i{transition:width 1s cubic-bezier(.16,1,.3,1) .2s}
+.pot{display:flex;flex-direction:column;gap:22px}
+.pot .meter{height:46px;border-radius:4px;display:flex;overflow:hidden;background:var(--stone-3);gap:2px}
+.pot .meter div{height:100%}
+.pot .legend{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.pot .legend span{display:flex;align-items:center;gap:10px}
+.pot .legend i{width:12px;height:12px;border-radius:2px;flex:none}
+.callout{border-top:2px solid var(--accent);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.callout h3{font-size:clamp(18px,1.4vw,23px)}
+.callout p{font-size:15px;color:var(--ink-2)}
+
+/* 7 obstacles */
+.obs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(28px,4vw,72px);row-gap:0;margin-top:auto;margin-bottom:auto}
+.obs > div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;padding:18px 0;border-top:1px solid rgba(233,225,210,.2)}
+.obs h3{font-size:clamp(17px,1.45vw,24px);color:var(--sea-ink)}
+.obs h3 .tag{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;color:#fff;background:var(--accent);border-radius:3px;padding:2px 7px;margin-top:8px;vertical-align:middle}
+.obs p{font-size:clamp(14.5px,1.12vw,17.5px);color:var(--sea-mute)}
+.obs p b{color:var(--sea-ink);font-weight:600}
+
+/* 8 ask */
+#s8 .top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(28px,5vw,96px);align-items:end}
+.ask{font-size:clamp(86px,13vw,210px);font-weight:800;letter-spacing:-.05em;line-height:.82;font-stretch:118%;color:var(--sea-ink)}
+.ask span{color:#f07a4c}
+.road{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:auto;position:relative}
+.road li{position:relative;padding:34px 22px 0 0;display:flex;flex-direction:column;gap:8px}
+.road li::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:rgba(233,225,210,.25)}
+.road li::after{content:"";position:absolute;left:0;top:2px;width:16px;height:16px;border-radius:50%;background:var(--sea);border:2.5px solid #f07a4c}
+.road li:first-child::after{background:#f07a4c}
+.road h3{font-size:clamp(17px,1.35vw,22px);color:var(--sea-ink)}
+.road p{font-size:14.5px;color:var(--sea-mute);max-width:30ch}
+.road .when{font-family:var(--mono);font-size:12px;color:#f07a4c}
+.contact{font-size:15px;color:var(--sea-mute)}
+.contact b{color:var(--sea-ink)}
+
+/* 9 sources */
+.src{columns:2;column-gap:clamp(28px,4vw,72px);font-size:13px;line-height:1.5;color:var(--ink-2);list-style:none;counter-reset:s}
+.src li{break-inside:avoid;padding:0 0 10px 30px;position:relative;counter-increment:s}
+.src li::before{content:counter(s);position:absolute;left:0;font-family:var(--mono);font-size:11.5px;color:var(--accent-ink);top:1px}
+.src li b{color:var(--ink);font-weight:650}
+.src a{word-break:break-word}
+.assume{margin-top:22px;border-top:1px solid var(--rule);padding-top:16px;font-size:13px;color:var(--ink-2);columns:2;column-gap:clamp(28px,4vw,72px)}
+.assume p{max-width:none;margin-bottom:6px;break-inside:avoid}
+
+/* responsive */
+@media (max-width:1100px){
+  .obs{grid-template-columns:1fr}
+  #s6 .grid{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .deck{scroll-snap-type:y proximity}
+  .slide{min-height:100svh;padding:72px 22px 40px;scroll-snap-stop:normal}
+  #s1{grid-template-columns:1fr;grid-template-rows:auto 1fr;padding:0}
+  #s1 .copy{padding:64px 22px 0;gap:20px}
+  #s1 h1{font-size:clamp(40px,12vw,64px)}
+  #s1 .mapwrap{padding:0 8px 24px;min-height:0}
+  #s1 svg{max-height:52svh}
+  #s3{grid-template-columns:1fr}
+  #s3 .mapwrap{order:-1}
+  .facts{grid-template-columns:1fr 1fr}
+  .track{height:84px}
+  .track div{padding:6px}
+  .track div span{white-space:normal;font-size:11.5px}
+  .lane,.axis{grid-template-columns:1fr;gap:8px}
+  .axis > div:first-child{display:none}
+  .speed-row{grid-template-columns:1fr;gap:22px}
+  .three{grid-template-columns:1fr;gap:28px}
+  .obs > div{grid-template-columns:1fr;gap:6px}
+  #s8 .top{grid-template-columns:1fr;gap:18px}
+  .road{grid-template-columns:1fr;gap:18px}
+  .road li{padding:0 0 0 32px}
+  .road li::before{left:7px;right:auto;top:18px;bottom:-22px;width:2px;height:auto}
+  .road li:last-child::before{display:none}
+  .road li::after{top:2px}
+  .src,.assume{columns:1}
+  .dots{right:8px;gap:9px}
+  .dots button{width:9px;height:9px}
+  .hint{display:none}
+  .budget td.bar{display:none}
+  .scale span:nth-child(2){display:none}
+  .scale span:last-child{text-align:right}
+  .axis .ticks span:nth-child(4),.axis .ticks span:nth-child(6){display:none}
+  #s3 .mapwrap{margin-top:-20px}
+}
+@media (prefers-reduced-motion:reduce){.deck{scroll-behavior:auto}}
+
+/* print: one slide per page, final states */
+@page{size:1440px 900px;margin:0}
+@media print{
+  html,body{height:auto;background:#fff}
+  .deck{height:auto;overflow:visible;scroll-snap-type:none}
+  .slide{height:900px;min-height:0;width:1440px;page-break-after:always;break-after:page;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .dots,.progress,.hint,.btn,.flyer{display:none!important}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<nav class="dots" aria-label="Slides"></nav>
+<div class="hint" aria-hidden="true"><kbd>↓</kbd> <kbd>space</kbd> or scroll</div>
+<main class="deck" id="deck">
+
+<!-- 1 TITLE -->
+<section class="slide dark" id="s1" aria-label="Title">
+  <div class="copy">
+    <h1 class="rv">Malta–Gozo Flight Deliveries</h1>
+    <p class="lede rv" style="transition-delay:.12s">A small package from Valletta to Xagħra in <b>about an hour</b>, not the 1.5–2 hours it takes by ferry today.</p>
+    <div class="meta rv" style="transition-delay:.24s"><span><b>Matt Carpenter</b>, founder</span><span>Seed: <b>€20k</b> pilot</span><span>October 2026</span></div>
+  </div>
+  <div class="mapwrap"><svg class="map" viewBox="40 20 770 650" role="img" aria-label="Map of Malta, Comino and Gozo showing the drone route: Valletta to the Ras il-Qammieħ kiosk, 6.6 km sea hop to the Mġarr kiosk, then to Xagħra. The fast ferry route is shown dotted." preserveAspectRatio="xMidYMid meet"><g class="grid"><line x1="40" y1="0" x2="40" y2="700"/><line x1="140" y1="0" x2="140" y2="700"/><line x1="240" y1="0" x2="240" y2="700"/><line x1="340" y1="0" x2="340" y2="700"/><line x1="440" y1="0" x2="440" y2="700"/><line x1="540" y1="0" x2="540" y2="700"/><line x1="640" y1="0" x2="640" y2="700"/><line x1="740" y1="0" x2="740" y2="700"/><line x1="0" y1="20" x2="840" y2="20"/><line x1="0" y1="120" x2="840" y2="120"/><line x1="0" y1="220" x2="840" y2="220"/><line x1="0" y1="320" x2="840" y2="320"/><line x1="0" y1="420" x2="840" y2="420"/><line x1="0" y1="520" x2="840" y2="520"/><line x1="0" y1="620" x2="840" y2="620"/></g><path class="land" d="M704.4 596.6 L711.4 598.6 L715.0 591.6 L712.0 588.6 L715.0 584.0 L711.2 582.6 L709.8 577.8 L713.8 572.4 L717.8 576.0 L713.8 575.6 L722.6 580.8 L724.8 586.0 L722.8 587.0 L725.2 586.6 L729.4 593.0 L731.0 592.6 L729.4 593.8 L729.8 598.8 L733.8 603.6 L731.8 608.6 L735.4 612.8 L737.4 621.4 L743.2 619.6 L741.0 616.4 L743.0 616.0 L743.2 613.8 L738.0 609.6 L743.8 609.8 L746.2 602.4 L744.6 601.4 L746.8 599.6 L741.6 594.6 L743.2 594.6 L744.4 591.8 L742.4 590.4 L745.0 590.8 L746.2 586.2 L741.2 586.2 L738.6 584.2 L738.4 580.0 L743.0 577.8 L747.6 581.4 L747.4 578.6 L744.0 577.6 L741.6 572.8 L745.8 569.0 L753.2 571.4 L756.6 576.6 L761.8 573.2 L758.4 568.4 L754.6 568.6 L756.2 566.4 L752.4 563.6 L756.0 556.2 L761.0 553.4 L754.6 553.2 L755.2 552.0 L748.2 553.2 L744.8 549.0 L746.0 548.6 L744.8 544.8 L746.8 542.4 L752.6 542.0 L754.8 537.4 L759.4 537.4 L760.6 533.4 L764.6 529.6 L768.4 529.0 L768.4 527.0 L765.2 527.4 L759.2 520.8 L754.0 519.2 L750.6 522.6 L742.0 522.8 L745.0 518.6 L748.6 520.0 L754.0 515.6 L766.6 514.8 L760.6 509.4 L758.8 503.0 L749.8 495.4 L748.8 492.6 L746.6 492.6 L746.2 489.4 L736.4 483.2 L733.8 484.0 L731.8 477.4 L725.4 475.2 L722.6 468.4 L715.4 466.4 L707.2 457.2 L700.0 452.4 L695.2 455.4 L694.6 452.8 L690.8 450.4 L686.6 450.6 L686.0 448.0 L682.6 446.6 L680.4 448.4 L674.6 444.6 L673.2 446.2 L677.6 449.8 L680.8 456.4 L677.0 457.2 L675.2 455.0 L671.6 459.0 L680.0 467.2 L677.8 469.8 L676.2 467.0 L669.0 464.4 L664.8 458.4 L660.8 459.0 L665.4 463.2 L666.4 462.2 L669.2 474.2 L667.0 483.4 L666.8 473.2 L661.4 465.2 L656.2 462.0 L656.0 466.0 L662.6 476.6 L661.2 484.4 L659.0 484.8 L659.2 480.0 L655.0 472.2 L652.0 472.0 L644.2 476.2 L641.8 474.8 L640.4 479.2 L636.0 481.2 L637.4 488.4 L632.0 491.0 L632.2 488.6 L627.4 486.0 L625.0 489.2 L623.6 486.8 L627.2 483.8 L633.6 484.8 L630.2 478.0 L626.8 477.8 L627.0 475.2 L634.2 476.0 L643.2 468.8 L645.2 464.4 L648.2 462.0 L644.8 467.6 L648.4 462.6 L649.2 459.2 L654.6 455.6 L656.8 451.2 L664.0 448.6 L665.4 440.0 L668.0 436.2 L662.4 434.6 L658.4 438.8 L656.2 436.6 L653.8 437.0 L648.8 441.8 L646.0 441.0 L637.0 447.0 L639.0 447.0 L631.8 453.8 L627.4 454.8 L626.2 458.0 L626.0 450.0 L614.6 453.2 L614.0 450.4 L622.4 447.4 L629.2 447.8 L631.0 449.6 L632.0 442.4 L625.2 439.4 L622.8 435.6 L623.4 432.4 L629.6 425.8 L640.0 423.0 L652.8 430.6 L656.8 429.6 L658.2 426.6 L652.0 424.0 L649.0 417.8 L643.6 416.4 L643.6 412.0 L645.6 411.6 L643.4 408.4 L632.8 404.2 L628.8 400.4 L626.4 408.6 L621.8 408.0 L619.4 410.2 L619.8 404.6 L613.0 399.8 L615.2 398.8 L618.2 401.0 L621.8 399.2 L622.6 396.8 L621.6 394.6 L621.4 397.2 L617.4 395.4 L620.2 395.4 L621.6 392.8 L621.8 393.8 L623.0 395.4 L622.4 390.4 L617.8 389.4 L622.8 382.6 L619.6 384.8 L612.2 384.2 L610.4 386.2 L608.6 384.2 L617.2 379.6 L614.8 374.6 L611.4 375.0 L608.8 372.2 L604.8 372.4 L601.6 368.4 L596.8 367.6 L597.6 362.0 L588.0 358.4 L580.8 359.4 L578.6 362.6 L557.6 358.2 L557.6 353.6 L555.2 350.0 L552.2 353.8 L550.2 353.4 L549.2 350.8 L551.2 344.6 L549.4 338.0 L543.8 338.6 L544.8 343.8 L540.8 346.8 L538.8 339.8 L533.4 336.0 L535.6 332.6 L530.0 327.4 L524.6 327.6 L518.2 322.6 L510.0 321.2 L508.8 325.8 L501.6 334.4 L497.0 335.2 L494.4 333.8 L488.8 343.4 L495.4 330.2 L494.4 322.0 L498.2 315.8 L497.6 311.0 L505.0 309.8 L501.6 307.6 L482.8 315.8 L481.2 322.4 L477.4 323.8 L475.8 326.8 L472.4 324.8 L466.2 326.2 L466.0 331.4 L462.2 331.4 L460.4 333.4 L461.8 333.8 L460.0 334.4 L457.4 331.8 L450.2 333.0 L450.2 330.2 L434.8 338.0 L431.8 337.6 L433.8 338.2 L432.2 340.6 L423.4 342.6 L420.2 338.0 L430.8 329.0 L432.0 326.0 L429.6 326.4 L435.2 318.6 L432.4 312.0 L435.6 310.8 L440.6 314.0 L444.2 313.2 L445.4 310.0 L442.2 307.6 L446.8 301.4 L442.2 295.8 L445.4 292.4 L441.0 291.6 L436.2 293.4 L433.0 291.2 L428.6 293.0 L427.0 289.4 L424.2 288.2 L418.0 292.2 L413.8 288.2 L413.4 284.2 L392.2 292.4 L372.4 294.4 L370.6 296.0 L366.0 294.8 L360.4 285.0 L360.4 280.0 L385.4 262.0 L386.8 256.6 L394.2 253.4 L398.6 254.4 L407.4 249.0 L407.8 245.8 L401.2 240.2 L400.6 236.2 L393.4 225.8 L390.6 225.6 L390.8 229.8 L385.0 227.2 L381.6 229.4 L382.8 234.6 L388.2 236.8 L385.4 240.2 L379.6 239.0 L377.6 243.6 L373.8 245.0 L371.4 244.6 L370.2 240.2 L365.0 240.0 L362.6 250.6 L358.0 246.8 L353.6 247.0 L354.2 252.2 L350.0 250.8 L350.6 249.2 L343.4 249.8 L339.0 252.4 L335.2 249.2 L324.6 249.8 L323.0 245.8 L324.4 244.4 L322.8 245.6 L321.8 244.4 L324.0 241.6 L321.2 243.8 L319.0 249.8 L328.6 252.8 L332.0 257.0 L328.4 261.2 L324.8 259.6 L317.6 269.6 L313.8 268.6 L311.4 270.6 L309.2 278.6 L304.4 284.0 L306.4 284.4 L305.8 286.2 L310.0 290.6 L317.0 291.0 L321.8 288.4 L334.2 286.8 L333.4 288.0 L336.4 288.6 L335.4 291.4 L337.6 292.6 L336.8 295.0 L339.0 299.2 L338.2 303.6 L334.6 305.4 L338.8 308.4 L345.4 308.6 L338.6 313.2 L341.0 314.2 L339.6 318.6 L341.8 321.8 L345.6 321.6 L343.6 327.8 L338.2 329.8 L339.8 333.2 L335.4 336.8 L335.2 343.2 L330.8 344.6 L328.6 343.4 L323.6 346.2 L321.8 352.6 L325.8 358.0 L328.2 359.0 L329.4 356.8 L334.0 357.2 L339.4 360.6 L341.4 365.4 L348.8 365.8 L350.4 368.6 L347.8 374.0 L351.4 376.2 L350.6 378.8 L348.2 380.6 L342.8 378.8 L340.6 381.0 L342.8 384.6 L347.2 382.2 L349.0 383.2 L348.0 390.8 L349.8 396.2 L345.4 397.6 L339.8 392.0 L335.8 392.0 L335.6 393.4 L332.8 391.6 L330.2 394.6 L329.0 404.0 L330.6 410.8 L334.6 410.8 L335.0 415.0 L339.6 417.0 L339.6 423.4 L343.4 424.2 L344.4 428.0 L332.6 429.8 L323.2 427.2 L321.0 428.2 L327.2 438.0 L326.2 441.8 L322.0 445.2 L322.8 450.8 L333.0 461.0 L337.6 474.8 L336.2 487.0 L344.8 496.2 L345.8 500.6 L350.2 501.0 L355.0 507.0 L368.4 507.8 L367.6 510.8 L363.6 512.8 L365.6 515.0 L373.0 517.0 L380.6 525.0 L382.8 530.4 L394.4 537.6 L398.8 544.4 L405.4 546.2 L414.8 556.0 L422.8 555.8 L424.4 558.4 L443.8 568.6 L444.4 571.8 L442.4 574.4 L443.8 578.4 L450.4 579.0 L454.4 583.6 L479.2 588.6 L476.8 588.6 L479.4 589.4 L476.8 593.0 L480.8 601.2 L490.2 602.6 L491.2 604.6 L495.4 602.6 L498.2 604.4 L501.0 603.0 L502.8 605.8 L512.4 606.2 L515.2 608.0 L513.2 608.8 L516.0 609.6 L514.6 611.0 L517.8 611.2 L519.4 613.8 L519.6 612.0 L521.6 612.8 L520.2 611.2 L525.0 611.8 L531.2 616.0 L530.8 615.0 L532.6 614.2 L533.2 616.6 L542.2 620.4 L542.8 620.2 L543.4 618.6 L544.6 616.6 L545.0 616.4 L543.6 620.2 L547.4 621.6 L550.8 620.6 L550.2 618.2 L552.6 618.8 L553.0 614.4 L555.6 616.0 L556.0 614.6 L558.0 619.4 L568.8 620.0 L574.6 627.2 L586.0 632.4 L598.6 629.8 L602.8 633.8 L620.2 632.6 L658.8 649.8 L671.2 647.2 L678.4 648.6 L682.4 647.2 L685.8 649.4 L691.2 646.0 L694.4 647.0 L701.4 642.2 L700.6 638.0 L702.8 641.0 L708.4 638.4 L707.4 636.8 L720.4 623.6 L708.4 634.0 L707.0 631.4 L714.4 624.4 L715.2 622.0 L715.4 618.0 L714.8 622.2 L705.2 612.2 L700.8 616.4 L709.8 626.0 L706.6 628.2 L691.2 615.4 L686.0 619.4 L684.4 607.4 L689.6 606.0 L691.6 603.6 L689.2 596.0 L685.8 598.2 L684.6 596.8 L686.4 592.0 L692.4 592.8 L699.4 590.4 L704.4 596.6Z"/><path class="land" d="M74.4 84.2 L73.8 90.2 L76.0 95.0 L69.6 101.8 L68.6 105.0 L72.6 111.4 L69.0 114.8 L75.8 114.4 L78.0 120.0 L71.0 121.0 L71.6 132.8 L64.8 140.2 L68.4 144.4 L79.0 148.2 L94.0 145.0 L100.4 147.8 L107.0 148.0 L109.8 153.2 L113.4 153.0 L114.6 156.2 L119.8 153.2 L121.4 154.6 L117.0 157.2 L119.0 161.0 L116.0 159.0 L112.0 159.8 L118.6 168.6 L124.2 169.0 L122.6 172.4 L124.2 175.0 L126.8 174.0 L130.0 176.4 L140.6 173.0 L157.0 179.0 L167.2 178.4 L182.2 180.6 L186.8 182.8 L186.8 188.6 L190.6 190.8 L196.4 189.6 L200.8 195.8 L205.2 191.4 L221.2 184.6 L217.8 183.2 L220.8 182.2 L219.0 176.0 L222.2 183.0 L233.4 186.2 L234.6 181.4 L244.4 182.4 L252.8 176.8 L254.6 178.8 L252.0 180.6 L254.6 180.8 L256.0 177.6 L264.8 174.6 L274.2 166.2 L268.4 169.0 L268.6 165.8 L266.2 168.6 L264.8 165.0 L268.4 162.2 L273.8 161.0 L273.8 163.8 L274.8 161.0 L279.8 160.8 L280.0 162.6 L283.8 163.2 L294.6 161.8 L299.4 162.8 L299.2 164.0 L300.0 162.6 L307.4 164.2 L309.2 163.2 L307.8 162.2 L310.4 162.0 L310.6 159.2 L320.2 159.0 L320.8 156.8 L322.8 157.6 L326.8 153.8 L332.4 154.2 L331.0 151.8 L333.0 152.4 L335.8 149.4 L334.8 142.8 L330.4 135.6 L311.2 117.4 L308.2 111.4 L303.6 110.2 L300.0 112.8 L295.8 109.8 L296.6 108.0 L291.8 104.2 L291.8 94.6 L287.4 90.0 L281.8 90.6 L272.4 95.4 L270.4 94.6 L268.0 90.0 L259.0 84.6 L257.4 79.2 L254.0 76.0 L250.0 76.8 L245.4 84.0 L237.6 84.8 L233.2 82.2 L230.4 77.8 L223.4 76.6 L220.8 74.4 L218.6 67.2 L211.4 59.2 L207.8 60.2 L204.8 57.0 L200.0 59.2 L198.4 63.2 L195.2 62.8 L194.8 53.4 L189.8 51.0 L184.4 52.4 L181.8 47.8 L183.6 44.2 L177.2 44.4 L176.8 47.6 L175.2 43.8 L174.0 45.0 L161.2 42.2 L155.6 39.4 L153.4 41.8 L146.4 39.6 L141.4 47.0 L142.8 43.2 L131.4 40.2 L130.0 44.6 L124.4 45.2 L120.2 43.2 L114.2 44.4 L113.0 47.6 L113.4 44.6 L95.4 48.0 L92.6 53.0 L87.0 57.2 L83.6 55.8 L77.0 57.8 L64.2 56.2 L62.2 57.6 L60.4 67.8 L63.2 73.6 L61.4 77.4 L67.2 80.2 L70.6 79.6 L74.4 84.2Z"/><path class="land" d="M322.0 177.8 L316.2 182.2 L313.4 179.6 L310.8 182.6 L314.4 185.4 L313.4 191.6 L319.2 199.8 L321.4 197.2 L321.6 199.8 L324.2 201.2 L322.2 206.2 L314.4 212.8 L326.4 211.0 L329.4 212.2 L333.8 210.6 L333.8 209.2 L338.6 210.6 L352.2 206.4 L355.6 207.4 L357.8 206.6 L361.4 201.0 L361.8 198.6 L355.2 189.8 L343.0 183.8 L343.6 179.4 L340.2 178.4 L340.6 177.0 L337.6 177.4 L339.8 181.0 L337.4 185.2 L335.8 184.8 L335.4 181.0 L329.0 177.8 L326.8 178.0 L327.2 179.8 L323.6 185.4 L322.0 177.8Z"/><text class="island-name" x="520" y="520">Malta</text><text class="island-name" x="95" y="132">Gozo</text><path class="ferry" d="M 668 440 C 712 418, 712 372, 650 344 S 470 262, 390 232 S 300 196, 272 172"/><path class="route" d="M655.5 445.6 C 600 400, 470 300, 329.8 268.7" style="--dur:2.1s;--delay:.5s"/><path class="route sea" d="M329.8 268.7 L 268.5 166.5" style="--dur:.9s;--delay:2.6s"/><path class="route" d="M268.5 166.5 L 206.7 109.9" style="--dur:.7s;--delay:3.5s"/><circle class="stop pop" cx="655.5" cy="445.6" r="8" style="--delay:.3s"/><circle class="stop kiosk pop" cx="329.8" cy="268.7" r="9" style="--delay:2.5s"/><circle class="stop kiosk pop" cx="268.5" cy="166.5" r="9" style="--delay:3.4s"/><circle class="stop pop" cx="206.7" cy="109.9" r="8" style="--delay:4.1s"/><g class="flyer" style="opacity:0"><circle class="halo" r="16"/><circle class="core" r="5.5"/></g><text class="lbl" x="673.5" y="475.6" text-anchor="start" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Valletta</text><text class="lbl" x="313.8" y="298.7" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Ras il-Qammieħ</text><text class="lbl" x="254.5" y="196.5" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Mġarr</text><text class="lbl" x="210.7" y="89.9" text-anchor="middle" fill="#10273a" style="fill:#10273a;paint-order:stroke;stroke:#e6dac3;stroke-width:5px;stroke-linejoin:round">Xagħra</text><text class="island-name" x="370" y="202" style="font-size:12px;letter-spacing:.24em">Comino</text><text class="sealbl" x="600" y="268" transform="rotate(32 600 268)">fast ferry · 45 min</text><g class="pop" style="--delay:3.0s"><rect class="segbg" x="166.0" y="222" width="112" height="26" rx="13"/><text class="seg" x="222" y="240.5" text-anchor="middle">6.6 km sea</text></g></svg></div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide" id="s2" aria-label="The problem">
+  <div class="head">
+    <h2 class="rv">A parcel to Gozo waits for a boat.</h2>
+    <p class="lede rv" style="transition-delay:.1s">Sending something small between Malta and Gozo means a ferry timetable, a queue, and a taxi at each end. The crossing is 45 minutes. The journey around it is the rest.</p>
+  </div>
+  <div class="journey rv" style="transition-delay:.2s">
+    <div class="track" role="img" aria-label="Typical door-to-door journey by fast ferry, about 1 hour 40 minutes, split into walk, wait for sailing, crossing, disembark and taxi.">
+      <div style="flex:10;--delay:.25s"><em>~10</em><span>Walk to terminal</span></div>
+      <div class="wait" style="flex:30;--delay:.4s"><em>~30</em><span>Wait for the next sailing</span></div>
+      <div class="boat" style="flex:45;--delay:.6s"><em>45</em><span>Fast ferry crossing</span></div>
+      <div style="flex:5;--delay:.8s"><em>5</em><span></span></div>
+      <div class="taxi" style="flex:12;--delay:.9s"><em>~12</em><span>Taxi to Xagħra</span></div>
+    </div>
+    <div class="scale"><span>St George's Square, Valletta</span><span>≈ 1 h 40 typical, door to door</span><span>19 Triq il-Knisja, Xagħra</span></div>
+    <div class="facts">
+      <div><div class="n">06:45</div><p>First sailing. Then 08:45, then hourly 09:45 to 20:45.</p></div>
+      <div><div class="n">20 min</div><p>Online booking closes before departure. Boarding closes 2 minutes before.</p></div>
+      <div><div class="n">2 h 40</div><p>Worst realistic door-to-door estimate, with an unlucky wait and queue.</p></div>
+      <div><div class="n">€7.50</div><p>Foot-passenger fare (€2.25 for Gozo residents), plus two taxis.</p></div>
+    </div>
+  </div>
+  <div class="foot"><p class="note">Times in minutes. Segment split is an illustrative estimate of the 1 h 30–1 h 50 typical range; the 45-minute crossing, timetable and fares are from Gozo Highspeed. Sources [1][2].</p><span class="pg">02 / 09</span></div>
+</section>
+
+<!-- 3 IDEA -->
+<section class="slide dark" id="s3" aria-label="The idea">
+  <div class="copy">
+    <div class="head" style="margin-bottom:0">
+      <h2 class="rv">Fly it, kiosk to kiosk.</h2>
+      <p class="lede rv" style="transition-delay:.1s">Drones hop between staffed kiosks on each island. The only sea leg is a short 6.6 km crossing that keeps clear of Comino. The recipient collects at the kiosk.</p>
+    </div>
+    <ol class="steps rv" style="transition-delay:.2s">
+      <li><span class="km">18.9 km</span><span><b>Valletta to Ras il-Qammieħ</b>Package handed in, flown to the kiosk at the north-west tip of Malta.</span></li>
+      <li><span class="km">6.6 km</span><span><b>Sea hop to Mġarr</b>About 99% over open water. Battery swap at each kiosk.</span></li>
+      <li><span class="km">4.5 km</span><span><b>Mġarr to Xagħra</b>Last leg inland. Landed and handed over, never dropped.</span></li>
+    </ol>
+    <div class="parcel rv" style="transition-delay:.3s">
+      <svg viewBox="0 0 160 110" aria-hidden="true"><g stroke="#e9e1d2" stroke-width="1.6" stroke-linejoin="round"><path d="M20 50 L95 25 L140 40 L65 65 Z" fill="#d65a2c" fill-opacity=".9"/><path d="M20 50 L65 65 L65 95 L20 80 Z" fill="#b3441b"/><path d="M65 65 L140 40 L140 70 L65 95 Z" fill="#c24e22"/><path d="M57.5 37.5 L102.5 52.5" stroke="#f3ecdf" stroke-width="1" opacity=".7"/></g><g font-family="JetBrains Mono,monospace" font-size="10" fill="#a9bccb"><text x="98" y="94" transform="rotate(-18 98 94)">30 cm</text><text x="2" y="72" transform="rotate(18 2 72)">15</text><text x="146" y="60">12</text></g></svg>
+      <p><b>Up to about 1 kg, 30 × 15 × 12 cm.</b> Smaller than a loaf of bread: documents, keys, medicine, spare parts, a forgotten charger.</p>
+    </div>
+  </div>
+  <div class="mapwrap"><svg class="map" viewBox="40 20 770 650" role="img" aria-label="Map of Malta, Comino and Gozo showing the drone route: Valletta to the Ras il-Qammieħ kiosk, 6.6 km sea hop to the Mġarr kiosk, then to Xagħra. The fast ferry route is shown dotted." preserveAspectRatio="xMidYMid meet"><g class="grid"><line x1="40" y1="0" x2="40" y2="700"/><line x1="140" y1="0" x2="140" y2="700"/><line x1="240" y1="0" x2="240" y2="700"/><line x1="340" y1="0" x2="340" y2="700"/><line x1="440" y1="0" x2="440" y2="700"/><line x1="540" y1="0" x2="540" y2="700"/><line x1="640" y1="0" x2="640" y2="700"/><line x1="740" y1="0" x2="740" y2="700"/><line x1="0" y1="20" x2="840" y2="20"/><line x1="0" y1="120" x2="840" y2="120"/><line x1="0" y1="220" x2="840" y2="220"/><line x1="0" y1="320" x2="840" y2="320"/><line x1="0" y1="420" x2="840" y2="420"/><line x1="0" y1="520" x2="840" y2="520"/><line x1="0" y1="620" x2="840" y2="620"/></g><path class="land" d="M704.4 596.6 L711.4 598.6 L715.0 591.6 L712.0 588.6 L715.0 584.0 L711.2 582.6 L709.8 577.8 L713.8 572.4 L717.8 576.0 L713.8 575.6 L722.6 580.8 L724.8 586.0 L722.8 587.0 L725.2 586.6 L729.4 593.0 L731.0 592.6 L729.4 593.8 L729.8 598.8 L733.8 603.6 L731.8 608.6 L735.4 612.8 L737.4 621.4 L743.2 619.6 L741.0 616.4 L743.0 616.0 L743.2 613.8 L738.0 609.6 L743.8 609.8 L746.2 602.4 L744.6 601.4 L746.8 599.6 L741.6 594.6 L743.2 594.6 L744.4 591.8 L742.4 590.4 L745.0 590.8 L746.2 586.2 L741.2 586.2 L738.6 584.2 L738.4 580.0 L743.0 577.8 L747.6 581.4 L747.4 578.6 L744.0 577.6 L741.6 572.8 L745.8 569.0 L753.2 571.4 L756.6 576.6 L761.8 573.2 L758.4 568.4 L754.6 568.6 L756.2 566.4 L752.4 563.6 L756.0 556.2 L761.0 553.4 L754.6 553.2 L755.2 552.0 L748.2 553.2 L744.8 549.0 L746.0 548.6 L744.8 544.8 L746.8 542.4 L752.6 542.0 L754.8 537.4 L759.4 537.4 L760.6 533.4 L764.6 529.6 L768.4 529.0 L768.4 527.0 L765.2 527.4 L759.2 520.8 L754.0 519.2 L750.6 522.6 L742.0 522.8 L745.0 518.6 L748.6 520.0 L754.0 515.6 L766.6 514.8 L760.6 509.4 L758.8 503.0 L749.8 495.4 L748.8 492.6 L746.6 492.6 L746.2 489.4 L736.4 483.2 L733.8 484.0 L731.8 477.4 L725.4 475.2 L722.6 468.4 L715.4 466.4 L707.2 457.2 L700.0 452.4 L695.2 455.4 L694.6 452.8 L690.8 450.4 L686.6 450.6 L686.0 448.0 L682.6 446.6 L680.4 448.4 L674.6 444.6 L673.2 446.2 L677.6 449.8 L680.8 456.4 L677.0 457.2 L675.2 455.0 L671.6 459.0 L680.0 467.2 L677.8 469.8 L676.2 467.0 L669.0 464.4 L664.8 458.4 L660.8 459.0 L665.4 463.2 L666.4 462.2 L669.2 474.2 L667.0 483.4 L666.8 473.2 L661.4 465.2 L656.2 462.0 L656.0 466.0 L662.6 476.6 L661.2 484.4 L659.0 484.8 L659.2 480.0 L655.0 472.2 L652.0 472.0 L644.2 476.2 L641.8 474.8 L640.4 479.2 L636.0 481.2 L637.4 488.4 L632.0 491.0 L632.2 488.6 L627.4 486.0 L625.0 489.2 L623.6 486.8 L627.2 483.8 L633.6 484.8 L630.2 478.0 L626.8 477.8 L627.0 475.2 L634.2 476.0 L643.2 468.8 L645.2 464.4 L648.2 462.0 L644.8 467.6 L648.4 462.6 L649.2 459.2 L654.6 455.6 L656.8 451.2 L664.0 448.6 L665.4 440.0 L668.0 436.2 L662.4 434.6 L658.4 438.8 L656.2 436.6 L653.8 437.0 L648.8 441.8 L646.0 441.0 L637.0 447.0 L639.0 447.0 L631.8 453.8 L627.4 454.8 L626.2 458.0 L626.0 450.0 L614.6 453.2 L614.0 450.4 L622.4 447.4 L629.2 447.8 L631.0 449.6 L632.0 442.4 L625.2 439.4 L622.8 435.6 L623.4 432.4 L629.6 425.8 L640.0 423.0 L652.8 430.6 L656.8 429.6 L658.2 426.6 L652.0 424.0 L649.0 417.8 L643.6 416.4 L643.6 412.0 L645.6 411.6 L643.4 408.4 L632.8 404.2 L628.8 400.4 L626.4 408.6 L621.8 408.0 L619.4 410.2 L619.8 404.6 L613.0 399.8 L615.2 398.8 L618.2 401.0 L621.8 399.2 L622.6 396.8 L621.6 394.6 L621.4 397.2 L617.4 395.4 L620.2 395.4 L621.6 392.8 L621.8 393.8 L623.0 395.4 L622.4 390.4 L617.8 389.4 L622.8 382.6 L619.6 384.8 L612.2 384.2 L610.4 386.2 L608.6 384.2 L617.2 379.6 L614.8 374.6 L611.4 375.0 L608.8 372.2 L604.8 372.4 L601.6 368.4 L596.8 367.6 L597.6 362.0 L588.0 358.4 L580.8 359.4 L578.6 362.6 L557.6 358.2 L557.6 353.6 L555.2 350.0 L552.2 353.8 L550.2 353.4 L549.2 350.8 L551.2 344.6 L549.4 338.0 L543.8 338.6 L544.8 343.8 L540.8 346.8 L538.8 339.8 L533.4 336.0 L535.6 332.6 L530.0 327.4 L524.6 327.6 L518.2 322.6 L510.0 321.2 L508.8 325.8 L501.6 334.4 L497.0 335.2 L494.4 333.8 L488.8 343.4 L495.4 330.2 L494.4 322.0 L498.2 315.8 L497.6 311.0 L505.0 309.8 L501.6 307.6 L482.8 315.8 L481.2 322.4 L477.4 323.8 L475.8 326.8 L472.4 324.8 L466.2 326.2 L466.0 331.4 L462.2 331.4 L460.4 333.4 L461.8 333.8 L460.0 334.4 L457.4 331.8 L450.2 333.0 L450.2 330.2 L434.8 338.0 L431.8 337.6 L433.8 338.2 L432.2 340.6 L423.4 342.6 L420.2 338.0 L430.8 329.0 L432.0 326.0 L429.6 326.4 L435.2 318.6 L432.4 312.0 L435.6 310.8 L440.6 314.0 L444.2 313.2 L445.4 310.0 L442.2 307.6 L446.8 301.4 L442.2 295.8 L445.4 292.4 L441.0 291.6 L436.2 293.4 L433.0 291.2 L428.6 293.0 L427.0 289.4 L424.2 288.2 L418.0 292.2 L413.8 288.2 L413.4 284.2 L392.2 292.4 L372.4 294.4 L370.6 296.0 L366.0 294.8 L360.4 285.0 L360.4 280.0 L385.4 262.0 L386.8 256.6 L394.2 253.4 L398.6 254.4 L407.4 249.0 L407.8 245.8 L401.2 240.2 L400.6 236.2 L393.4 225.8 L390.6 225.6 L390.8 229.8 L385.0 227.2 L381.6 229.4 L382.8 234.6 L388.2 236.8 L385.4 240.2 L379.6 239.0 L377.6 243.6 L373.8 245.0 L371.4 244.6 L370.2 240.2 L365.0 240.0 L362.6 250.6 L358.0 246.8 L353.6 247.0 L354.2 252.2 L350.0 250.8 L350.6 249.2 L343.4 249.8 L339.0 252.4 L335.2 249.2 L324.6 249.8 L323.0 245.8 L324.4 244.4 L322.8 245.6 L321.8 244.4 L324.0 241.6 L321.2 243.8 L319.0 249.8 L328.6 252.8 L332.0 257.0 L328.4 261.2 L324.8 259.6 L317.6 269.6 L313.8 268.6 L311.4 270.6 L309.2 278.6 L304.4 284.0 L306.4 284.4 L305.8 286.2 L310.0 290.6 L317.0 291.0 L321.8 288.4 L334.2 286.8 L333.4 288.0 L336.4 288.6 L335.4 291.4 L337.6 292.6 L336.8 295.0 L339.0 299.2 L338.2 303.6 L334.6 305.4 L338.8 308.4 L345.4 308.6 L338.6 313.2 L341.0 314.2 L339.6 318.6 L341.8 321.8 L345.6 321.6 L343.6 327.8 L338.2 329.8 L339.8 333.2 L335.4 336.8 L335.2 343.2 L330.8 344.6 L328.6 343.4 L323.6 346.2 L321.8 352.6 L325.8 358.0 L328.2 359.0 L329.4 356.8 L334.0 357.2 L339.4 360.6 L341.4 365.4 L348.8 365.8 L350.4 368.6 L347.8 374.0 L351.4 376.2 L350.6 378.8 L348.2 380.6 L342.8 378.8 L340.6 381.0 L342.8 384.6 L347.2 382.2 L349.0 383.2 L348.0 390.8 L349.8 396.2 L345.4 397.6 L339.8 392.0 L335.8 392.0 L335.6 393.4 L332.8 391.6 L330.2 394.6 L329.0 404.0 L330.6 410.8 L334.6 410.8 L335.0 415.0 L339.6 417.0 L339.6 423.4 L343.4 424.2 L344.4 428.0 L332.6 429.8 L323.2 427.2 L321.0 428.2 L327.2 438.0 L326.2 441.8 L322.0 445.2 L322.8 450.8 L333.0 461.0 L337.6 474.8 L336.2 487.0 L344.8 496.2 L345.8 500.6 L350.2 501.0 L355.0 507.0 L368.4 507.8 L367.6 510.8 L363.6 512.8 L365.6 515.0 L373.0 517.0 L380.6 525.0 L382.8 530.4 L394.4 537.6 L398.8 544.4 L405.4 546.2 L414.8 556.0 L422.8 555.8 L424.4 558.4 L443.8 568.6 L444.4 571.8 L442.4 574.4 L443.8 578.4 L450.4 579.0 L454.4 583.6 L479.2 588.6 L476.8 588.6 L479.4 589.4 L476.8 593.0 L480.8 601.2 L490.2 602.6 L491.2 604.6 L495.4 602.6 L498.2 604.4 L501.0 603.0 L502.8 605.8 L512.4 606.2 L515.2 608.0 L513.2 608.8 L516.0 609.6 L514.6 611.0 L517.8 611.2 L519.4 613.8 L519.6 612.0 L521.6 612.8 L520.2 611.2 L525.0 611.8 L531.2 616.0 L530.8 615.0 L532.6 614.2 L533.2 616.6 L542.2 620.4 L542.8 620.2 L543.4 618.6 L544.6 616.6 L545.0 616.4 L543.6 620.2 L547.4 621.6 L550.8 620.6 L550.2 618.2 L552.6 618.8 L553.0 614.4 L555.6 616.0 L556.0 614.6 L558.0 619.4 L568.8 620.0 L574.6 627.2 L586.0 632.4 L598.6 629.8 L602.8 633.8 L620.2 632.6 L658.8 649.8 L671.2 647.2 L678.4 648.6 L682.4 647.2 L685.8 649.4 L691.2 646.0 L694.4 647.0 L701.4 642.2 L700.6 638.0 L702.8 641.0 L708.4 638.4 L707.4 636.8 L720.4 623.6 L708.4 634.0 L707.0 631.4 L714.4 624.4 L715.2 622.0 L715.4 618.0 L714.8 622.2 L705.2 612.2 L700.8 616.4 L709.8 626.0 L706.6 628.2 L691.2 615.4 L686.0 619.4 L684.4 607.4 L689.6 606.0 L691.6 603.6 L689.2 596.0 L685.8 598.2 L684.6 596.8 L686.4 592.0 L692.4 592.8 L699.4 590.4 L704.4 596.6Z"/><path class="land" d="M74.4 84.2 L73.8 90.2 L76.0 95.0 L69.6 101.8 L68.6 105.0 L72.6 111.4 L69.0 114.8 L75.8 114.4 L78.0 120.0 L71.0 121.0 L71.6 132.8 L64.8 140.2 L68.4 144.4 L79.0 148.2 L94.0 145.0 L100.4 147.8 L107.0 148.0 L109.8 153.2 L113.4 153.0 L114.6 156.2 L119.8 153.2 L121.4 154.6 L117.0 157.2 L119.0 161.0 L116.0 159.0 L112.0 159.8 L118.6 168.6 L124.2 169.0 L122.6 172.4 L124.2 175.0 L126.8 174.0 L130.0 176.4 L140.6 173.0 L157.0 179.0 L167.2 178.4 L182.2 180.6 L186.8 182.8 L186.8 188.6 L190.6 190.8 L196.4 189.6 L200.8 195.8 L205.2 191.4 L221.2 184.6 L217.8 183.2 L220.8 182.2 L219.0 176.0 L222.2 183.0 L233.4 186.2 L234.6 181.4 L244.4 182.4 L252.8 176.8 L254.6 178.8 L252.0 180.6 L254.6 180.8 L256.0 177.6 L264.8 174.6 L274.2 166.2 L268.4 169.0 L268.6 165.8 L266.2 168.6 L264.8 165.0 L268.4 162.2 L273.8 161.0 L273.8 163.8 L274.8 161.0 L279.8 160.8 L280.0 162.6 L283.8 163.2 L294.6 161.8 L299.4 162.8 L299.2 164.0 L300.0 162.6 L307.4 164.2 L309.2 163.2 L307.8 162.2 L310.4 162.0 L310.6 159.2 L320.2 159.0 L320.8 156.8 L322.8 157.6 L326.8 153.8 L332.4 154.2 L331.0 151.8 L333.0 152.4 L335.8 149.4 L334.8 142.8 L330.4 135.6 L311.2 117.4 L308.2 111.4 L303.6 110.2 L300.0 112.8 L295.8 109.8 L296.6 108.0 L291.8 104.2 L291.8 94.6 L287.4 90.0 L281.8 90.6 L272.4 95.4 L270.4 94.6 L268.0 90.0 L259.0 84.6 L257.4 79.2 L254.0 76.0 L250.0 76.8 L245.4 84.0 L237.6 84.8 L233.2 82.2 L230.4 77.8 L223.4 76.6 L220.8 74.4 L218.6 67.2 L211.4 59.2 L207.8 60.2 L204.8 57.0 L200.0 59.2 L198.4 63.2 L195.2 62.8 L194.8 53.4 L189.8 51.0 L184.4 52.4 L181.8 47.8 L183.6 44.2 L177.2 44.4 L176.8 47.6 L175.2 43.8 L174.0 45.0 L161.2 42.2 L155.6 39.4 L153.4 41.8 L146.4 39.6 L141.4 47.0 L142.8 43.2 L131.4 40.2 L130.0 44.6 L124.4 45.2 L120.2 43.2 L114.2 44.4 L113.0 47.6 L113.4 44.6 L95.4 48.0 L92.6 53.0 L87.0 57.2 L83.6 55.8 L77.0 57.8 L64.2 56.2 L62.2 57.6 L60.4 67.8 L63.2 73.6 L61.4 77.4 L67.2 80.2 L70.6 79.6 L74.4 84.2Z"/><path class="land" d="M322.0 177.8 L316.2 182.2 L313.4 179.6 L310.8 182.6 L314.4 185.4 L313.4 191.6 L319.2 199.8 L321.4 197.2 L321.6 199.8 L324.2 201.2 L322.2 206.2 L314.4 212.8 L326.4 211.0 L329.4 212.2 L333.8 210.6 L333.8 209.2 L338.6 210.6 L352.2 206.4 L355.6 207.4 L357.8 206.6 L361.4 201.0 L361.8 198.6 L355.2 189.8 L343.0 183.8 L343.6 179.4 L340.2 178.4 L340.6 177.0 L337.6 177.4 L339.8 181.0 L337.4 185.2 L335.8 184.8 L335.4 181.0 L329.0 177.8 L326.8 178.0 L327.2 179.8 L323.6 185.4 L322.0 177.8Z"/><text class="island-name" x="520" y="520">Malta</text><text class="island-name" x="95" y="132">Gozo</text><path class="ferry" d="M 668 440 C 712 418, 712 372, 650 344 S 470 262, 390 232 S 300 196, 272 172"/><path class="route" d="M655.5 445.6 C 600 400, 470 300, 329.8 268.7" style="--dur:2.1s;--delay:.5s"/><path class="route sea" d="M329.8 268.7 L 268.5 166.5" style="--dur:.9s;--delay:2.6s"/><path class="route" d="M268.5 166.5 L 206.7 109.9" style="--dur:.7s;--delay:3.5s"/><circle class="stop pop" cx="655.5" cy="445.6" r="8" style="--delay:.3s"/><circle class="stop kiosk pop" cx="329.8" cy="268.7" r="9" style="--delay:2.5s"/><circle class="stop kiosk pop" cx="268.5" cy="166.5" r="9" style="--delay:3.4s"/><circle class="stop pop" cx="206.7" cy="109.9" r="8" style="--delay:4.1s"/><g class="flyer" style="opacity:0"><circle class="halo" r="16"/><circle class="core" r="5.5"/></g><text class="lbl" x="673.5" y="475.6" text-anchor="start" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Valletta</text><text class="lbl" x="313.8" y="298.7" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Ras il-Qammieħ</text><text class="lbl sm" x="313.8" y="318.7" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">kiosk</text><text class="lbl" x="254.5" y="196.5" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">Mġarr</text><text class="lbl sm" x="254.5" y="214.5" text-anchor="end" fill="#e9e1d2" style="fill:#e9e1d2;paint-order:stroke;stroke:#0d2c44;stroke-width:5px;stroke-linejoin:round">kiosk</text><text class="lbl" x="210.7" y="89.9" text-anchor="middle" fill="#10273a" style="fill:#10273a;paint-order:stroke;stroke:#e6dac3;stroke-width:5px;stroke-linejoin:round">Xagħra</text><text class="island-name" x="370" y="202" style="font-size:12px;letter-spacing:.24em">Comino</text><g class="pop" style="--delay:1.6s"><rect class="segbg" x="458.0" y="316" width="84" height="26" rx="13"/><text class="seg" x="500" y="334.5" text-anchor="middle">18.9 km</text></g><g class="pop" style="--delay:3.0s"><rect class="segbg" x="144.0" y="244" width="112" height="26" rx="13"/><text class="seg" x="200" y="262.5" text-anchor="middle">6.6 km sea</text></g><g class="pop" style="--delay:3.9s"><rect class="segbg" x="160.0" y="142" width="72" height="26" rx="13"/><text class="seg" x="196" y="160.5" text-anchor="middle">4.5 km</text></g><text class="sealbl" x="600" y="268" transform="rotate(32 600 268)">fast ferry · 45 min</text><g transform="translate(95 520)"><circle r="34" fill="none" stroke="rgba(233,225,210,.25)"/><path d="M-22 -22 L14 14" stroke="#e9e1d2" stroke-width="2.5" stroke-linecap="round"/><path d="M14 14 L2 12 M14 14 L12 2" stroke="#e9e1d2" stroke-width="2.5" stroke-linecap="round" fill="none"/><text class="sealbl" x="48" y="-6">Prevailing wind NW</text><text class="sealbl" x="48" y="14">mean ~4.5 m/s</text></g><g transform="translate(95 620)"><path d="M0 0 H100" stroke="#e9e1d2" stroke-width="2"/><path d="M0 -6 V6 M100 -6 V6 M50 -4 V4" stroke="#e9e1d2" stroke-width="2"/><text class="sealbl" x="0" y="24">0</text><text class="sealbl" x="100" y="24" text-anchor="middle">5 km</text></g></svg></div>
+</section>
+
+<!-- 4 SPEED -->
+<section class="slide" id="s4" aria-label="Speed">
+  <div class="head">
+    <h2 class="rv">Door to door, the drone arrives first.</h2>
+    <p class="lede rv" style="transition-delay:.1s">St George's Square, Valletta to 19 Triq il-Knisja, Xagħra. Bars show the typical time; whiskers show best to worst.</p>
+  </div>
+  <div class="race" id="race">
+    <div class="lane ferry"><div class="who"><b>Fast ferry</b><span>walk, wait, 45 min crossing, taxi</span></div>
+      <div class="trackr"><div class="range" style="left:46.9%;width:53.1%"></div><div class="fill" style="--w:62.5%;--d:3.75s"><span class="t">≈ 1 h 40</span></div></div></div>
+    <div class="lane drone"><div class="who"><b>Drone, kiosk route</b><span>DJI Matrice 400, two battery swaps</span></div>
+      <div class="trackr"><div class="range" style="left:31.9%;width:30.6%"></div><div class="fill" style="--w:41.9%;--d:2.51s"><span class="t">≈ 67 min</span></div></div></div>
+    <div class="lane vtol"><div class="who"><b>Later: fixed-wing VTOL</b><span>Wingcopter 198 class, direct</span></div>
+      <div class="trackr"><div class="fill" style="--w:28.75%;--d:1.72s"><span class="t">≈ 46 min</span></div></div></div>
+    <div class="axis"><div></div><div class="ticks"><span style="left:0">0</span><span style="left:18.75%">30 min</span><span style="left:37.5%">1 h</span><span style="left:56.25%">1 h 30</span><span style="left:75%">2 h</span><span style="left:93.75%">2 h 30</span></div></div>
+  </div>
+  <div class="speed-row">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="clock" aria-live="off"><span>Elapsed</span><b id="clock">0:00</b><button class="btn" id="replay" type="button"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M10 6a4 4 0 1 1-1.2-2.85M10 1.5V4H7.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Replay</button></div>
+      <p class="note">All times are estimates. Ferry: best ~1 h 15, typical 1 h 30–1 h 50, worst ~2 h 40, including an average 30-minute wait for a sailing. Drone: best ~51 min, typical ~67 min, worst ~1 h 40 with hot battery swaps. VTOL: 22–30 min flight, ~46 min door to door. Sources [1][2][3][4].</p>
+    </div>
+    <table class="wind">
+      <caption>Flight time only, kiosk route</caption>
+      <tr><th>Headwind</th><th>Still</th><th>4.5 m/s</th><th>8 m/s</th></tr>
+      <tr><td>Matrice 400</td><td>37 min</td><td>47 min</td><td>68 min</td></tr>
+    </table>
+  </div>
+  <div class="foot" style="padding-top:10px"><span></span><span class="pg">04 / 09</span></div>
+</section>
+
+<!-- 5 WHY NOW -->
+<section class="slide tint" id="s5" aria-label="Why now">
+  <div class="head">
+    <h2 class="rv">Why now</h2>
+    <p class="lede rv" style="transition-delay:.1s">The aircraft work, the market has proved the model elsewhere, and the European rulebook says how to get approved.</p>
+  </div>
+  <div class="three">
+    <div class="rv" style="transition-delay:.15s">
+      <div class="big">780,000+<small>Meituan drone orders by end of 2025</small></div>
+      <p>Across 70 routes in China and abroad. In Hong Kong, a Meituan route to Ting Kok village cut a 1.5-hour <b>sea-and-hill delivery to 10 minutes</b>. Zipline passed <b>2.5 million</b> commercial deliveries by July 2026. [5][6]</p>
+    </div>
+    <div class="rv" style="transition-delay:.25s">
+      <div class="big">2018<small>Malta's Virtual Financial Assets Act</small></div>
+      <p>Malta has a record of moving early on new technology. Its regulator describes the 2018 crypto-asset framework as <b>the first to regulate the sector this holistically</b>. A small, well-defined drone route fits that habit. [7]</p>
+    </div>
+    <div class="rv" style="transition-delay:.35s">
+      <div class="big">Specific<small>EASA category for this kind of flight</small></div>
+      <p>EU rules (Regulation 2019/947) give a <b>defined approval path</b> for flights beyond visual line of sight: a SORA risk assessment, then an operational authorisation from Transport Malta. [8][9]</p>
+    </div>
+  </div>
+  <div class="foot"><span></span><span class="pg">05 / 09</span></div>
+</section>
+
+<!-- 6 BUDGET -->
+<section class="slide" id="s6" aria-label="The €20k pilot">
+  <div class="head">
+    <h2 class="rv">The €20k pilot</h2>
+  </div>
+  <div class="grid">
+    <table class="budget rv" style="transition-delay:.1s">
+      <tr class="grp"><td colspan="3">Hardware</td></tr>
+      <tr><td>DJI Matrice 400 <span class="sub">carries up to 6 kg</span></td><td class="bar"><i style="--w:100%"></i></td><td class="amt">€9,600–9,800</td></tr>
+      <tr><td>Spare battery pair</td><td class="bar"><i style="--w:32%"></i></td><td class="amt">€3,100</td></tr>
+      <tr><td>Battery charging station</td><td class="bar"><i style="--w:14%"></i></td><td class="amt">€1,350</td></tr>
+      <tr><td>Release mount <span class="sub">third party</span></td><td class="bar"><i style="--w:12.4%"></i></td><td class="amt">€1,200</td></tr>
+      <tr><td>4G cellular dongle <span class="sub">compatibility unconfirmed</span></td><td class="bar"><i style="--w:1.6%"></i></td><td class="amt">€149</td></tr>
+      <tr class="tbd"><td>Landing pads</td><td class="bar"><i style="--w:4%"></i></td><td class="amt">not yet priced</td></tr>
+      <tr class="grp"><td colspan="3">Permission to fly</td></tr>
+      <tr><td>SORA risk-assessment consultant <span class="sub">simple case</span></td><td class="bar"><i style="--w:40%"></i></td><td class="amt">€3,500–4,100</td></tr>
+      <tr><td>EASA A1/A3 + A2 certificates, operator registration</td><td class="bar"><i style="--w:.6%"></i></td><td class="amt">€45</td></tr>
+      <tr class="tbd"><td>Transport Malta Specific authorisation <span class="sub">fee not published; Ireland: €3,595</span></td><td class="bar"><i style="--w:37%"></i></td><td class="amt">to confirm</td></tr>
+      <tr class="tbd"><td>Insurance <span class="sub">liability from ~€21/yr; hull cover needs a quote</span></td><td class="bar"><i style="--w:3%"></i></td><td class="amt">to quote</td></tr>
+      <tr class="sum"><td>Committed estimate</td><td class="bar"></td><td class="amt">€18.9k–19.7k</td></tr>
+    </table>
+    <div class="pot rv" style="transition-delay:.2s">
+      <div class="meter" role="img" aria-label="Of €20k: about €15.4k hardware, about €3.8k SORA, €45 licences, about €0.7k left.">
+        <div style="flex:15.4;background:var(--sea-3)"></div><div style="flex:3.8;background:var(--sea)"></div><div style="flex:.08;background:var(--ink)"></div><div style="flex:.7;background:var(--accent)"></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--sea-3)"></i>Hardware ≈ €15.4k</span>
+        <span><i style="background:var(--sea)"></i>SORA consultant ≈ €3.5–4.1k</span>
+        <span><i style="background:var(--accent)"></i>Left over ≈ €0.3–1.1k</span>
+      </div>
+      <div class="callout">
+        <h3>€20k is tight, and we say so.</h3>
+        <p>The authorisation fee and insurance are not yet known. If needed, we drop the spare batteries and recharge at each kiosk instead. That frees about <b>€3.1k</b> and adds about <b>45 minutes per stop</b> during testing.</p>
+        <p>Test kiosks stay informal, for example in public parks, with the landowner's permission.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><p class="note">EU dealer prices, approximate, October 2026; recheck before buying. A complex over-sea BVLOS case could cost €15–60k in consultancy, which is why the pilot starts with the simplest route. Sources [3][8][9][10].</p><span class="pg">06 / 09</span></div>
+</section>
+
+<!-- 7 OBSTACLES -->
+<section class="slide dark" id="s7" aria-label="Obstacles">
+  <div class="head">
+    <h2 class="rv">What could stop us, and what we do about it</h2>
+  </div>
+  <div class="obs">
+    <div class="rv"><h3>Transport Malta Specific authorisation<br><span class="tag">MAIN RISK</span></h3><p>Hire the SORA consultant first. Apply with the simplest case: one short over-sea hop, away from crowds.</p></div>
+    <div class="rv" style="transition-delay:.06s"><h3>Restricted airspace around Valletta</h3><p>Launch from a permitted site. A courier carries the Valletta leg at first.</p></div>
+    <div class="rv" style="transition-delay:.12s"><h3>A ~10 kg drone over people</h3><p>Rural kiosk sites. Routes over sea and open land, not over parks in use or town centres.</p></div>
+    <div class="rv" style="transition-delay:.18s"><h3>Staffing kiosks for battery swaps</h3><p>One helper on each side during the pilot. <b>Automated docks later.</b></p></div>
+    <div class="rv" style="transition-delay:.24s"><h3>Wind and weather on the channel</h3><p>The north-west majjistral headwind is in the time budget. Fixed weather limits, with the ferry as fallback.</p></div>
+    <div class="rv" style="transition-delay:.3s"><h3>Rules on dropping cargo</h3><p>The Open category bans dropping anything, so <b>every package is landed</b> and handed over at the kiosk.</p></div>
+  </div>
+  <div class="foot"><span></span><span class="pg">07 / 09</span></div>
+</section>
+
+<!-- 8 ASK -->
+<section class="slide dark" id="s8" aria-label="The ask and roadmap" style="background:#0a2438">
+  <div class="top">
+    <div class="ask rv">€20<span>k</span></div>
+    <div class="head rv" style="margin-bottom:0;transition-delay:.1s">
+      <h2 style="max-width:16ch">Seed money for a pilot that earns the permit.</h2>
+      <p class="lede">It buys one aircraft, the risk assessment and the licences. The goal is a Transport Malta authorisation for the Ras il-Qammieħ to Mġarr hop, and from there, paying routes.</p>
+    </div>
+  </div>
+  <ol class="road rv" style="transition-delay:.2s">
+    <li><span class="when">Now</span><h3>€20k seed</h3><p>Buy the Matrice 400 kit, get EASA certificates and operator registration, hire the SORA consultant.</p></li>
+    <li><span class="when">Next</span><h3>Pilot</h3><p>Test flights between informal kiosks with landowner permission. Log times, wind and battery use.</p></li>
+    <li><span class="when">Then</span><h3>Specific authorisation</h3><p>Submit the SORA to Transport Malta for beyond-line-of-sight flights over the channel.</p></li>
+    <li><span class="when">Later</span><h3>Paying routes, then direct</h3><p>First paying customers on the kiosk route. Later, a fixed-wing VTOL flying Valletta to Xagħra direct (est. ~€150k).</p></li>
+  </ol>
+  <div class="foot"><p class="contact"><b>Matt Carpenter</b> · mattcarpenter.com</p><span class="pg">08 / 09</span></div>
+</section>
+
+<!-- 9 SOURCES -->
+<section class="slide" id="s9" aria-label="Sources and assumptions">
+  <div class="head" style="margin-bottom:28px"><h2 style="max-width:none">Sources &amp; assumptions</h2></div>
+  <ol class="src">
+    <li><b>Distances and map.</b> Straight-line distances between OpenStreetMap coordinates; coastline © OpenStreetMap contributors (ODbL). Wind: Malta annual mean ~4.5 m/s, prevailing NW, C. Galdies, University of Malta.</li>
+    <li><b>Fast ferry.</b> Gozo Highspeed timetable and fares, <a href="https://gozohighspeed.com">gozohighspeed.com</a>, checked 22–24 Oct 2026.</li>
+    <li><b>DJI Matrice 400.</b> <a href="https://enterprise.dji.com/matrice-400">enterprise.dji.com/matrice-400</a>. Prices from EU dealers, approximate.</li>
+    <li><b>Wingcopter 198.</b> 90 km/h standard cruise, 4.7 kg payload: <a href="https://wingcopter.com/wingcopter-198">wingcopter.com/wingcopter-198</a>; ITOCHU press release, 24 Jun 2024. ~€150k price is an estimate from one launch report.</li>
+    <li><b>Meituan.</b> 2025 annual results: 70 routes, 780,000+ cumulative drone orders, Ting Kok route. <a href="https://www.meituan.com/news/NN260326174005788">meituan.com/news/NN260326174005788</a></li>
+    <li><b>Zipline.</b> 2 million deliveries (press release, 21 Jan 2026); 2.5 million+ (CNBC, 14 Jul 2026). <a href="https://www.cnbc.com/2026/07/14/zipline-drone-delivery-tesla-uber-waymo-executives.html">cnbc.com</a></li>
+    <li><b>Malta VFA Act 2018.</b> MFSA, "Malta leading the way in the regulation of DLT and crypto assets". <a href="https://www.mfsa.mt/news-item/mfsa-malta-leading-the-way-in-the-regulation-of-distributed-ledger-technology-and-crypto-assets/">mfsa.mt</a></li>
+    <li><b>EASA.</b> Commission Implementing Regulation (EU) 2019/947, Open and Specific categories, SORA. <a href="https://www.easa.europa.eu/en/domains/drones-air-mobility">easa.europa.eu</a></li>
+    <li><b>Transport Malta CAD.</b> A1/A3 €10, A2 €10, operator registration €25/yr, <a href="https://tmcad.idronect.com">tmcad.idronect.com</a>. Specific authorisation fee not published; Irish Aviation Authority €3,595 used for comparison.</li>
+    <li><b>SORA consultancy and insurance.</b> Quotes from ~€3.5–4.1k (simple case) to €15–60k (complex over-sea BVLOS); liability insurance from ~€21/yr. Market research, 22–24 Oct 2026.</li>
+  </ol>
+  <div class="assume">
+    <p><b>Door-to-door estimates</b> include walking, queueing, an average 30-minute wait for a sailing, disembarking and a taxi (ferry), or hand-in, flight, two hot battery swaps and collection (drone).</p>
+    <p><b>Flight times</b> are modelled for the kiosk route in still air, 4.5 m/s and 8 m/s headwind. They have not yet been flown.</p>
+    <p><b>Budget</b> uses upper and lower dealer prices; landing pads, the authorisation fee and hull insurance are not included.</p>
+    <p><b>Package size</b> is a pilot design limit, well under the aircraft's 6 kg payload.</p>
+  </div>
+  <div class="foot"><span class="note">Research compiled 22–24 October 2026. Figures marked ≈ or ~ are estimates.</span><span class="pg">09 / 09</span></div>
+</section>
+</main>
+
+<script>
+(()=>{
+const deck=document.getElementById('deck');
+const slides=[...deck.querySelectorAll('.slide')];
+const dots=document.querySelector('.dots');
+const bar=document.querySelector('.progress');
+const hint=document.querySelector('.hint');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce) document.documentElement.classList.add('motion');
+// route lengths
+document.querySelectorAll('path.route').forEach(p=>{p.style.setProperty('--len',Math.ceil(p.getTotalLength())+'px')});
+slides.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',(i+1)+': '+s.getAttribute('aria-label'));b.onclick=()=>go(i);dots.appendChild(b)});
+let cur=0;
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));deck.scrollTo({top:slides[i].offsetTop,behavior:reduce?'auto':'smooth'})}
+function setCur(i){cur=i;[...dots.children].forEach((d,j)=>d.setAttribute('aria-current',j===i?'true':'false'));dots.classList.toggle('on-dark',slides[i].classList.contains('dark'));bar.style.width=((i+1)/slides.length*100)+'%';if(i>0)hint.style.opacity=0}
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=slides.indexOf(e.target);setCur(i);if(!e.target.classList.contains('in')){e.target.classList.add('in');e.target.dispatchEvent(new Event('enter'))}}})},{root:deck,threshold:.5});
+slides.forEach(s=>io.observe(s));
+setCur(0);
+addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const k=e.key;
+  if(['ArrowDown','ArrowRight','PageDown'].includes(k)||(k===' '&&!e.shiftKey)){e.preventDefault();go(cur+1)}
+  else if(['ArrowUp','ArrowLeft','PageUp'].includes(k)||(k===' '&&e.shiftKey)){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)}else if(k==='End'){e.preventDefault();go(slides.length-1)}});
+// drone flyers along routes
+function fly(svg,delay){
+  const legs=[...svg.querySelectorAll('path.route')];const drone=svg.querySelector('.flyer');if(!drone||reduce)return;
+  const total=legs.reduce((a,p)=>a+parseFloat(getComputedStyle(p).getPropertyValue('--dur')),0)*1000;
+  const t0=performance.now()+delay;
+  function step(now){let t=now-t0;if(t<0){requestAnimationFrame(step);return}
+    let acc=0;for(const p of legs){const d=parseFloat(getComputedStyle(p).getPropertyValue('--dur'))*1000;const dl=parseFloat(getComputedStyle(p).getPropertyValue('--delay'))*1000-delay;
+      if(t<=dl+d){const f=Math.max(0,Math.min(1,(t-dl)/d));const pt=p.getPointAtLength(f*p.getTotalLength());drone.setAttribute('transform',`translate(${pt.x} ${pt.y})`);drone.style.opacity=1;requestAnimationFrame(step);return}}
+    const last=legs[legs.length-1];const pt=last.getPointAtLength(last.getTotalLength());drone.setAttribute('transform',`translate(${pt.x} ${pt.y})`);}
+  requestAnimationFrame(step);
+}
+slides.forEach(s=>s.addEventListener('enter',()=>{const svg=s.querySelector('svg.map');if(svg)fly(svg,0)}));
+// race clock
+const clock=document.getElementById('clock');const s4=document.getElementById('s4');
+function runClock(){if(reduce){clock.textContent='1:40';return}const T=3750,M=100,t0=performance.now();
+  (function tick(n){const f=Math.min(1,(n-t0)/T);const m=Math.round(f*M);clock.textContent=Math.floor(m/60)+':'+String(m%60).padStart(2,'0');if(f<1)requestAnimationFrame(tick)})(t0)}
+s4.addEventListener('enter',runClock);
+document.getElementById('replay').onclick=()=>{s4.classList.remove('in');void s4.offsetWidth;requestAnimationFrame(()=>{s4.classList.add('in');runClock()})};
+const finish=()=>{slides.forEach(s=>s.classList.add('in'));clock.textContent='1:40'};
+addEventListener('beforeprint',finish);
+if(matchMedia('print').matches)finish();
+})();
+</script>
+</body>
+</html>

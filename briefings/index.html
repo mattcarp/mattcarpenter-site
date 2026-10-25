@@ -32,6 +32,39 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610251026">
+  <p class="meta"><time datetime="2026-10-25T10:26+0100">2026-10-25 &middot; 10:26 CET</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 25 Oct 2026</h2>
+  <div class="body">
+    <p><em>Today: no collection. Tomorrow: organic (white bag).</em></p>
+    <p><em>Ferry: reduced service, possible weather disruption. The operator&rsquo;s timetable lists only one sailing each way today (00:45, already gone), so there are no morning departures between 05:00 and 10:00 in either direction. Check gozohighspeed.com. Monday&rsquo;s list looks normal again, starting 05:45 Mġarr&rarr;Valletta.</em></p>
+    <p>A quiet Sunday, and the clocks went back overnight, so this is the first CET entry. One genuinely useful small speech model, a Maltese ASR result not covered here before, a deep dive on NVIDIA&rsquo;s hidden NPU, and a Rockchip chip worth tracking. No new Sotto Sound or Malta tech news.</p>
+    <h3>Maltese speech</h3>
+    <ul>
+      <li><a href="https://huggingface.co/BuzzASR/maltese">BuzzASR Maltese: a Whisper-large-v3 fine-tune with published Maltese numbers</a> &mdash; Not new (the model went up in September, alongside the <a href="https://arxiv.org/abs/2609.09554">BuzzASR paper</a>, Findings of EMNLP 2026), but it hasn&rsquo;t been covered here and it&rsquo;s the Maltese accuracy figure the watch list asks for. <strong>MIT licence.</strong> Trained on FLEURS plus Common Voice 25.0; the authors report 25.33% WER (6.15% CER) on FLEURS Maltese and 3.49% WER on Common Voice 25; zero-shot Whisper-large-v3 scores 24.17% CER on the same FLEURS set. The FLEURS figure is the honest one: Common Voice Maltese is read speech from a small sentence pool. Too big for the Orin next to Gemma (3.1 GB), but a useful teacher or baseline. <small>(web search; Hugging Face API)</small></li>
+      <li><strong>Watch list, no change:</strong> still no Voxtral&nbsp;3 weights on Hugging Face (Mistral&rsquo;s newest Voxtral upload is Voxtral-Mini-4B-Realtime-Arabic, 8 Oct) and no Maltese figures for it. vuci.mt and its licence page are byte-identical to the MALTA v0 baseline, and Vuci-Project&rsquo;s only repo was last pushed 2 Oct. Common Voice has no new release since v1.160.0 (21 Sep), only translation and dependency commits since Friday; the newest Maltese dataset is still <a href="https://mozilladatacollective.com/datasets/cmu62c12900n4o107ruq053ro">Scripted Speech 27.0</a> (17 Sep: 17.6 h, 8.76 h validated, 225 speakers, CC0). <small>(Hugging Face API, vuci.mt, GitHub API, Mozilla Data Collective)</small></li>
+    </ul>
+    <h3>Hank and voice AI</h3>
+    <ul>
+      <li><a href="https://huggingface.co/rajb3/kea-t">Kea-T: Parakeet-TDT-0.6B-v2 squeezed to ternary weights, 2,472 MB down to 180.8 MB</a> &mdash; 98% of the encoder is stored as &minus;1, 0 or +1 with one scale per row. The authors&rsquo; own scoring on the Open ASR Leaderboard test sets gives a 6.84% mean WER against 6.45% for the original; Common Voice degrades more (12.56% vs 8.50%). <strong>CC BY 4.0</strong>, English only. Catch: the simple loader rebuilds FP32 weights, so it saves download and disk, not memory; the speed and VRAM gains need their custom CUDA runtime, measured on an RTX 5090, not a Jetson. A 1-bit sibling, Kea-B, is 105.3 MB at 7.05%. Published 4 Oct, surfaced on X today. <small>(Hugging Face, <a href="https://x.com/lmoroney/status/2114185429230461168">X</a>)</small></li>
+    </ul>
+    <h3>Edge AI hardware</h3>
+    <ul>
+      <li><a href="https://www.xda-developers.com/nvidia-rtx-spark-npu-barely-mentions-spent-week-figuring-out/">XDA: the RTX Spark&rsquo;s NPU is an Orin-style DLA, and it tops out near 6 TOPS</a> &mdash; Adam Conway (24 Oct) got networks running on it through cuDLA and TensorRT 11.4 beta; cuDLA reports DLA hardware version 2, the generation in Jetson Orin. He measured about 5.2&ndash;6 TFLOPS FP16 and roughly 6 TOPS INT8 against the 50&ndash;55 TOPS NVIDIA quotes, and found the DGX Spark&rsquo;s boot log records <code>DLA_DIS = 0x1</code>. Useful reading on what DLA can and can&rsquo;t do for transformer work on Orin-family silicon. <small>(Google News, <a href="https://news.ycombinator.com/item?id=50220703">Hacker News</a>)</small></li>
+      <li><a href="https://linuxgizmos.com/rockchip-rk3668-targets-edge-ai-with-44-tops-npu-and-pcie-5-0/">Rockchip RK3668 respecced: 44 TOPS NPU, LPDDR6, up to 64 GB</a> &mdash; 6 nm, six Cortex-A725 plus two A520, NPU rated 44 TOPS sparse INT8 with INT4/FP4 and MoE support, up to 128 GB/s peak memory bandwidth per <a href="https://sbcwiki.com/docs/soc-manufacturers/rockchip/rk3668/">SBCwiki</a>. Engineering samples Q1 2027, no BSP yet, so a 2027 option for a cheaper Hank board, not today&rsquo;s. Replaces the 16 TOPS spec from July 2025. <small>(Google News, web search; 24 Oct)</small></li>
+      <li><a href="https://actu.epfl.ch/news/neural-chip-decodes-interactions-between-brain-r-2/">EPFL&rsquo;s LogSync implant decodes brain-region interactions on-chip in real time</a> &mdash; A roughly 4&times;2 mm neural chip aimed at closed-loop deep brain stimulation for psychiatric conditions; EU-origin research (23 Oct). <small>(<a href="https://news.ycombinator.com/item?id=50222525">Hacker News</a>, 105 points)</small></li>
+    </ul>
+    <h3>SDR</h3>
+    <ul>
+      <li><a href="https://missileer.watch">Missileer Watch: archive of US nuclear-forces Emergency Action Messages heard on 11175 kHz</a> &mdash; Recordings and decodes of the HF broadcasts, released as <strong>CC0</strong>, with times in UTC. Big HN thread (173 points, 115 comments, 24 Oct). <small>(<a href="https://news.ycombinator.com/item?id=50224422">Hacker News</a>)</small></li>
+    </ul>
+    <h3>AI agents</h3>
+    <ul>
+      <li><a href="https://github.com/thomasunise/argus">Argus: an open-source agentic security operations platform</a> &mdash; <strong>MIT</strong>, repo created 24 Oct (69 stars). It watches cloud, logins, code and devices and can respond on its own, with guardrails you set on what it may touch. Early, so treat the &ldquo;seconds, not hours&rdquo; claims as the author&rsquo;s. <small>(<a href="https://news.ycombinator.com/item?id=50225748">Hacker News</a>, 27 points; <a href="https://thomasunise.com/argus">project page</a>)</small></li>
+    </ul>
+    <p class="sources"><small><strong>Sources:</strong> Hacker News (Algolia) 154 hits, 4 used &middot; Google News RSS 772 hits, 2 used &middot; web search 4 queries, used to verify every item &middot; GitHub search 32 repos plus API checks, 1 used &middot; X (free reader) 1 call, 20 posts, 1 used &middot; Hugging Face API 3 checks &middot; Reddit (via web search): 10 threads, 0 used (all from September or already covered) &middot; vuci.mt fetched, unchanged &middot; Gozo Fast Ferry API worked, but listed only one sailing each way today &middot; Sources that failed: none.</small></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610250935">
   <p class="meta"><time datetime="2026-10-25T09:35+0100">2026-10-25 &middot; 09:35 CET</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 25 Oct 2026</h2>

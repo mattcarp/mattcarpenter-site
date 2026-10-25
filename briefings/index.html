@@ -32,6 +32,26 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610250903">
+  <p class="meta"><time datetime="2026-10-25T09:03+0100">2026-10-25 · 09:03 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Granite Speech 5.0 INT8 takes over as Hank&#x27;s ear on the Orin</h2>
+  <div class="body">
+    <p>Overcast in Malta, 69&deg;F (21&deg;C), feels 58&deg;F (14&deg;C), northwest wind at 35 km/h, no rain forecast. Ferry schedule quiet.</p>
+
+<p><strong>Granite Speech 5.0 TurboCTC INT8 is now the live ear on the Orin.</strong> Three commits landed between 21:22 and 21:45 last night. <code>f96fe1d</code> added the backend behind <code>HANK_STT=granite|moonshine</code>, <code>b6893be</code> turned it on in production, and <code>5bfa497</code> scored the conversation LoRA on rented GPU. The switch is <code>deploy/hank.service.d/81-stt-granite.conf</code>, and it overrides <code>HANK_ASR_ENGINE</code> while leaving the repo default alone. Numbers from the live swap on the Orin: FLEURS WER 6.85 percent, phone 8.68 percent, the fall set 120 of 120 clean on both clean and phone audio, zero false alarms. It is slower than what it replaced. About 1.09 s per short clip against Moonshine&rsquo;s 0.17 s. Idle MemAvailable went from 813 to 947 MB, and swap in use from 836 to 599 MB. Rollback is <code>HANK_STT=moonshine</code>.</p>
+
+<p><strong>The failure path is the interesting part of that commit.</strong> <code>scripts/hank_asr.py</code> falls back to Moonshine on load or warm-up failure, then to Whisper when memory is low, so a bad weight file cannot leave the loop deaf. The front end is torch-free (<code>scripts/hank_g5np.py</code>). Granite drops the &ldquo;m in &ldquo;Hank I&rsquo;m on the floor&rdquo;, so <code>fall.py</code> now matches &ldquo;Hank I on the floor&rdquo;, utterance-start only, with 12 look-alikes rejected. New tests cover the engine selection and the fall phrase.</p>
+
+<p><strong>The conversation LoRA was scored on a Vast A5000 in bf16, not on the Orin.</strong> Sixteen bench chats, base against adapter. On the six-pair set the stock-line reply rate went from 39 percent to 0 and invented details from 10 to 0, while asking back went from 1 of 6 to 3 of 6. Recall held at 7 of 8 both sides, and refer moved 2 of 5 to 3 of 5. On the three-pair set recall improved 3 of 8 to 5 of 8 and refer slipped 3 of 5 to 2 of 5. Validation loss went 6.57 to 0.585. Epoch 3 overfits, and the epoch 1 and 2 checkpoints were scored as well. GGUF LoRA conversion works and nothing is deployed. The run cost $0.16 and instance 57552000 is stopped, not destroyed.</p>
+
+<p><strong>Fleet.</strong> OpenRouter is at $10.79 (5167.20 credits, 5156.41 spent), down $5.28 in 24 hours. That is the biggest daily burn since the 402 outage and the first time the balance has sat under the $15 sentinel floor while jobs keep running. Credit Sentinel fired its early warning at 07:10 with a $10.87 read and will re-nag every four hours. The Nous probe still answers UNKNOWN:AuthError. Root disk 76 percent with 18 GB free, systemd journal 319 MB. Both quiet-fail jobs are still dead: granola wrote the empty-string SHA1 <code>da39a3ee</code> at 06:43, the mail state file at 07:00. Sotto Sound docs auto-sync and Weekly Research Digest are both parked on two consecutive 402s from 18 and 19 October, and Edge AI Hardware Watch is still at nine failures since 13 October. Cron Email Forwarder, Source Health and System Watchdog ran clean.</p>
+
+<p><strong>Voice path, since this job&rsquo;s audio depends on it.</strong> OpenAI answered <code>credit_balance_exhausted</code> and ElevenLabs answered <code>payment_issue</code> on a subscription with a failed invoice, so the first two providers that carried this briefing all month are both dry. edge-tts still 403&rsquo;d at 7.2.7. Upgrading to 7.3.1 fixed it, and the end-to-end check now synthesises cleanly. Gemini <code>gemini-2.5-flash-preview-tts</code> (voice Kore, 24 kHz PCM through ffmpeg) also works and produced a verified 962 KB mp3 as a spare.</p>
+
+<p><strong>Worth a look:</strong> <a href="https://github.com/rany2/edge-tts/pull/491">edge-tts PR 491</a>, which moved synthesis off <code>speech.platform.bing.com</code> to <code>api.msedgeservices.com</code>. That is the exact change that brought this briefing&rsquo;s voice back this morning, and it explains every 403 since 10 October.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610241035">
   <p class="meta"><time datetime="2026-10-24T10:35+0200">2026-10-24 &middot; 10:35 CEST</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 24 Oct 2026</h2>

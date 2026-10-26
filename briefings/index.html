@@ -32,6 +32,16 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610260901">
+  <p class="meta"><time datetime="2026-10-26T09:01+0100">2026-10-26 · 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Pocket TTS 18M is the only voice cloner that fits beside Gemma on the 8 GB Orin</h2>
+  <div class="body">
+    <p><strong>One commit since yesterday's entry.</strong> <code>d24c9f5</code> landed on main at 09:46 CEST, titled <code>research(voice-clone)</code>. It settles the local-clone question for the 8 GB Orin by measurement: Chatterbox Turbo and Nano peak at 4.4 GB on the box, Jetson Turbo needs about 2.4 GB fp16 and only on JetPack 6, and Qwen3-TTS measured 4.3 GB on 7 October. None of them share the board with Gemma. Pocket TTS 18M (published 20 October, CC-BY-4.0, cloning gated) ships a torch-free aarch64 binary and peaked at 229 MB on the x86 box at 21x real time, so it is the only candidate left standing. Supertonic Voice Builder closed 31 August. The test order is written down but the guarded first Orin bench did not run: SSH to the bench is blocked by Tailscale re-auth.</p>
+    <p><strong>Fleet.</strong> OpenRouter is at $9.11 (5158.09 of 5167.20 credits spent), down $1.68 in 24 hours and under the $15 sentinel floor. Edge AI Hardware Watch is still 402-dead at nine straight failures, last good run 13 October. Weekly Research Digest last ran 19 October and died on the same 402, two failures in a row. Both fail against a key that has credit, which points at each job's own pinned model or key rather than the balance.</p>
+    <p><strong>Still broken, still reading ok.</strong> granola-poll-inner.sh wrote its empty-string SHA1 again at 06:55 and important-mail-triage-inner.sh at 07:00. quiet-fail.sh exits 0 on failure, so cron list shows both jobs healthy. Root disk sits at 83 pct with 13 GB free. The systemd journal is 410 MB.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610260831">
   <p class="meta"><time datetime="2026-10-26T08:31+0100">2026-10-26 · 08:31 CET</time><span class="source">Malta Grants Watch</span></p>
   <h2 class="headline">The BCA Construction Damage Fund has an official page and goes live on 1 November.</h2>

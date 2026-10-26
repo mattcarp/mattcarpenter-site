@@ -32,6 +32,29 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610260931">
+  <p class="meta"><time datetime="2026-10-26T09:31+0100">2026-10-26 &middot; 09:31 CET</time><span class="source">Last 30 Days</span></p>
+  <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 26 Oct 2026</h2>
+  <div class="body">
+    <p><strong>Google shipped the local-first note-taker, and it runs entirely on the device.</strong> Google AI Edge Foresight is a free Mac app (out 6&ndash;8 October) that sits through Google Meet, Zoom or face-to-face conversations, transcribes with on-device EmbeddingGemma 2 and turns shorthand scribbles into finished notes &mdash; audio, transcripts and notes never leave the machine, and a Gemma-powered assistant answers questions over the transcripts and your own files. This is Granola&rsquo;s category, built by Google, with the privacy pitch already baked in. <a href="https://www.theverge.com/tech/1007985/google-ai-notetaking-app-transcribe-offline">The Verge</a> &middot; <a href="https://developers.google.com/edge/foresight">Google AI Edge Foresight</a> &middot; <a href="https://techcrunch.com/2026/10/08/google-releases-a-new-local-first-granola-competitor/">TechCrunch</a></p>
+
+    <p><strong>The 8 GB Orin Nano Super keeps proving itself as an always-on home brain, not a lab toy.</strong> An r/JetsonNano thread (24 October, 35 points, 19 comments) has the builder running ollama on a Jetson Nano for &ldquo;always on light local AI&rdquo;, and a self-designed carrier board driving a pair of 16 GB Orin NX modules as the machines his daily agents actually live on. Third-party carrier boards are the recurring theme &mdash; people want the module to fit the enclosure, not the other way round. <a href="https://www.reddit.com/r/JetsonNano/comments/1xdu1au/jetson_nano_in_a_home_lab/">r/JetsonNano</a></p>
+
+    <p><strong>Edge video analytics has grown a backend-swap layer, NPU included.</strong> A PR turning a single-camera detector into a multi-camera edge system brings it up on a Jetson Orin Nano Super with one inference interface over ONNX Runtime (CPU, CUDA, TensorRT EP), OpenVINO (CPU, GPU, NPU) and a native TensorRT backend, plus GPU pre-processing in a CUDA kernel. That is the abstraction an edge box needs once it runs more than one model. <a href="https://github.com/lehunghieu1503/cpp-realtime-video-analytics/pull/7">GitHub PR 7</a></p>
+
+    <p><strong>The cheap-board lane keeps shipping without NVIDIA.</strong> The daily embedded-AI tracker on 25 October is Orange Pi build-system, RKNN Toolkit 2 and RKNPU/M model-zoo releases on repeat &mdash; the toolchain to watch when a voice device has to land near &euro;100 rather than &euro;450. <a href="https://github.com/thanhtantran/agents-radar/issues/539">agents-radar, 25 Oct</a></p>
+
+    <p><strong>A Samsung TV teardown says the listening is on-device, and it borrows the soundbar&rsquo;s microphone when the TV has none.</strong> Posted to Hacker News on 24 October. Worth a read before you put a mic in a room: the always-listening layer is local, which changes the failure mode from &ldquo;who is listening&rdquo; to &ldquo;what does it do with what it heard&rdquo;. <a href="https://news.ycombinator.com/item?id=50218950">HN, 24 Oct</a></p>
+
+    <p><strong>Malta: Notey took $3M and made the island its European base.</strong> The Techstars 2023 company closed a seed led by Tivoli Ventures and co-led by Malta Venture Capital, including a $1M non-dilutive development grant from Malta Enterprise, and signed a distribution partnership with Telemach covering Southeast European households. <a href="https://natlawreview.com/press-releases/notey-closes-3m-seed-round-and-opens-its-european-operation-malta">Notey seed round</a></p>
+
+    <p><strong>Malta: quantum security moved in and local healthcare AI got backed.</strong> Belgian quantum-security and semiconductor firm iQrypto announced on 13 October that it is expanding to Malta with an applied-research hub; separately, EIF-backed Olea Venture Partners invested in Malta-founded healthcare AI company EBO, funding its push across Europe and into the US. <a href="https://whoswho.mt/en/belgian-quantum-tech-firm-iqrypto-expands-to-malta">iQrypto</a> &middot; <a href="https://whoswho.mt/en/olea-venture-partners-invests-in-malta-founded-healthcare-ai-company-ebo">Olea / EBO</a></p>
+
+    <p><strong>Malta: the AI Act now has a local face, and the money behind it is being counted.</strong> The Malta Independent (25 October) sets out that Malta has designated the Malta Digital Innovation Authority and other competent bodies for the EU AI Act&rsquo;s obligations; underneath sits Budget 2026&rsquo;s &euro;100 million for AI, blockchain, cybersecurity and immersive tech, with the government reporting 86% of Budget 2026 measures delivered and about 90% expected by year end. <a href="https://www.independent.com.mt/articles/2026-10-25/blogs-opinions/AI-protection-must-begin-within-the-system-6736293988">Malta Independent</a> &middot; <a href="https://www.maltabusinessjournal.com/articles/budget-2026-delivery-hits-86-percent-government-eyes-90-percent-year-end">Malta Business Journal</a></p>
+
+    <p class="sources"><small><strong>Sources:</strong> last30days engine (Reddit, Hacker News, GitHub, Perplexity Sonar) plus web search; X, TikTok and Instagram off. Reddit partial: Reddit search answered HTTP 403 (known server-IP block), so Reddit threads above come through the engine's cache and coverage is incomplete.</small></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610260901">
   <p class="meta"><time datetime="2026-10-26T09:01+0100">2026-10-26 · 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
   <h2 class="headline">Pocket TTS 18M is the only voice cloner that fits beside Gemma on the 8 GB Orin</h2>

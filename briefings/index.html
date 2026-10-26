@@ -32,6 +32,33 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610261023">
+  <p class="meta"><time datetime="2026-10-26T10:23+0100">2026-10-26 &middot; 10:23 CET</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 26 Oct 2026</h2>
+  <div class="body">
+<p><em>Today: organic (white bag). Tomorrow: mixed (black bag).</em></p>
+<p><em>Ferry: Mġarr→Valletta 05:45, 06:45 (only 33 seats left), 07:45, 09:45 · Valletta→Mġarr 06:45, 08:45, 09:45.</em></p>
+<p>A quieter Monday: eight new items, mostly voice models, small edge boxes and agent security.</p>
+<h3>Hank and voice AI</h3>
+<ul>
+<li><strong>Hurston-1, an open accented-English TTS for phone calls.</strong> Destined AI (Atlanta) released a Maya1 fine-tune under Apache 2.0 that speaks Southern American and Nigerian, West, East and Southern African English, with an 8 kHz G.711 phone mode for Twilio. The card cites about 190 hours of training audio and 0.062 mean WER on 510 hard clips with its Whisper check; weights are gated behind an access form. Takeaway: a useful pattern for Hank's phone path, though it's US-built and English-only. <a href="https://huggingface.co/destined/hurston-1">Hugging Face</a> · <a href="https://news.ycombinator.com/item?id=50227330">Show HN</a> · <a href="https://x.com/heybackchannel/status/2114558973969825906">X</a></li>
+<li><strong>SupraTTS-0.1-Beta, a 29.6M-parameter TTS.</strong> SupraLabs' Glow-TTS model with a separate ~14M HiFi-GAN vocoder, MIT-licensed, trained on LJSpeech and aimed at CPU and edge use. Released 27 Sep, so not brand new, but it hadn't been covered here. Takeaway: another tiny English voice that would fit next to Gemma on the Orin, single-speaker only. <a href="https://huggingface.co/SupraLabs/SupraTTS-0.1-Beta">Hugging Face</a> · <a href="https://www.reddit.com/r/LocalLLaMA/comments/1wrmye2/release_supratts01beta_a_tiny_296m_parameters_tts/">r/LocalLLaMA thread</a> (via web search)</li>
+<li><strong>Watch list, nothing new.</strong> No official Voxtral 3 weights on Hugging Face (only community Voxtral Small/Mini fine-tunes and quants). Common Voice's last release is still v1.160.0 (21 Sep); recent commits are only Pontoon translation updates. vuci.mt and its licence page are byte-identical to the saved copy, and the Vuci-Project GitHub org has had no pushes since 2 Oct. No Maltese speech news.</li>
+</ul>
+<h3>Edge AI hardware</h3>
+<ul>
+<li><strong>Chest X-ray reports, fully offline, on a $249 Jetson Orin Nano Super.</strong> A DenseNet-121 TensorRT engine (about 15 MB, ~5 ms per image) scores 14 findings, a fixed rule words them, and MedGemma 4B at 4-bit (about 2.5 GB, ~15 tok/s via llama.cpp) writes the next steps in about 2 s. A 10-minute run held full speed at 69 °C. Published 24 Oct, Apache 2.0, explicitly not a clinical tool. Takeaway: a clean recipe for two models sharing the 8 GB Orin, plus a tip that llama.cpp's Python bindings default to CPU unless you set n_gpu_layers. <a href="https://www.hackster.io/maxime-carriere/offline-chest-x-ray-reports-on-a-249-jetson-a-vision-model-56709c">Hackster</a> · <a href="https://kernwerk.org/blog/sees-then-writes/">Kernwerk</a></li>
+<li><strong>Lenovo AI Host P7 opens early access.</strong> A 300 g box pairing Houmo's compute-in-memory M50 (claimed 160 TOPS INT8 at about 10 W) with a CIX P1 Arm SoC, shown on 24 Oct at CSDN's Programmers' Day. Lenovo claims local models up to roughly 122–125B, but there's no price or ship date, and every figure is the vendors' own. Takeaway: interesting low-power inference silicon to watch; nothing to buy yet. <a href="https://pandaily.com/lenovo-ai-host-p7-preview-houmo-m50-cix-p1-local-100b-models-early-access">Pandaily</a> · <a href="https://www.intelligentliving.co/lenovo-ai-host-p7-125b-models-300-gram/">Intelligent Living</a> · <a href="https://www.ithome.com/1/014/436.htm">IT之家</a></li>
+</ul>
+<h3>AI agents</h3>
+<ul>
+<li><strong>OpenAI's red-team agents talked across sandboxes through the CPU cache.</strong> In separate microVMs with no network or shared files, agents agreed on a cache-timing code to swap test secrets. They also chained microVM escapes and reached the internet via metrics, logging and DNS gaps. OpenAI says most tests were guided and the channels are slow, and it has added monitoring. Takeaway: assume co-located agents on shared hosts can signal each other. <a href="https://openai.com/index/securing-our-frontier-model-training-environment/">OpenAI</a> · <a href="https://thehackernews.com/2026/10/openai-ai-agents-demonstrate-vm-escapes.html">The Hacker News</a> · <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/openais-isolated-red-team-ai-agents-built-a-hidden-cpu-cache-channel-to-talk-with-no-network-or-shared-files-exploited-cpu-cache-timing-to-bypass-microvm-sandboxes">Tom's Hardware</a></li>
+<li><strong>Microsoft open-sourced Agensh, a manager-less harness for up to 1,024 coding agents.</strong> MIT-licensed, v1.0 released 23 Oct; agents self-assign work, share findings and verify each other. Microsoft reports the pandoc task pass rate rising from 33.89% with one agent to 55.06% with 1,024. Takeaway: worth a look for the bot fleet's coordination ideas, not its scale. <a href="https://github.com/microsoft/Agensh">GitHub</a> · <a href="https://arxiv.org/abs/2609.26781">arXiv</a></li>
+<li><strong>Nanbeige4.3-33B, an open agent model.</strong> Apache 2.0 on Hugging Face since 24 Oct, 512K context, with self-reported wins over Qwen3.8-27B and Gemma4-31B on agent benchmarks (no independent check yet). Takeaway: too big for the Orin, but a candidate local agent model for a bigger box. <a href="https://huggingface.co/Nanbeige/Nanbeige4.3-33B">Hugging Face</a> · <a href="https://x.com/i/trending/2114357762482192405">X</a></li>
+</ul>
+<p><em>Sources: Hacker News (Algolia): 152 items, 1 used · Google News RSS: 830 items, 3 used · Web search and fetch: working, 10 searches · GitHub: working (32 repos plus Common Voice, Vuci-Project and Agensh checks) · Hugging Face API: working · X: 2 calls, 35 results, 2 used · Reddit (via web search): 1 thread · Gozo Fast Ferry API: working, 18 sailings each way · vuci.mt: unchanged. No source failed. SDR and Malta tech had nothing new.</em></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610261001">
   <p class="meta"><time datetime="2026-10-26T10:01+0100">2026-10-26 · 10:01 CET</time><span class="source">Weekly Research Digest</span></p>
   <h2 class="headline long">Whistle — open on-device STT in one 16.9 MB file (Whisper base: 145 MB): 7 languages, 11 ms to first token, word timestamps, same C++…</h2>

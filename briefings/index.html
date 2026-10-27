@@ -32,6 +32,36 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610271035">
+  <p class="meta"><time datetime="2026-10-27T10:35+0100">2026-10-27 &middot; 10:35 CET</time><span class="source">MC Briefings</span></p>
+  <h2 class="headline">Daily Briefing &mdash; 27 Oct 2026</h2>
+  <div class="body">
+<p><em>Today: mixed (black bag). Tomorrow: organic (white bag).</em></p>
+<p><em>Ferry: Mġarr→Valletta 05:45, 06:45 (only 4 seats left), 07:45, 09:45 · Valletta→Mġarr 06:45, 08:45, 09:45 (only 9 seats left).</em></p>
+<p>A quiet Tuesday: seven new items. Most of the past day's voice and edge news was already covered here.</p>
+<h3>Hank and voice AI</h3>
+<ul>
+<li><strong>oruk-loop-153M, a looped English speech recognizer, now has weights.</strong> Oruk distilled Qwen3-ASR-1.7B (2.04B stored parameters) into 153M by running one shared encoder block 24 times and one decoder block 28 times. Its card claims 7.12% mean WER (beam 4) on the seven English Open ASR Leaderboard sets, level with the 240M moonshine-streaming-medium, but those are Oruk's own harness numbers with checkpoints picked on the test sets, not a leaderboard submission. Licence is PolyForm small-business-or-noncommercial, so not Apache. Takeaway: a strong size point for an Orin STT slot, English only, and worth an independent test before trusting the figures. <a href="https://huggingface.co/oruk/oruk-loop-153M">Hugging Face</a> · <a href="https://x.com/nrol_ling/status/2114789060393021813">X</a></li>
+<li><strong>Hob, an open-source local alternative to Claude Cowork and ChatGPT.</strong> FrigadeHQ's MIT-licensed desktop app runs open-weight models such as Gemma and gpt-oss locally on Mac, Windows and Linux, offline. The repo dates from 14 Oct; the Show HN on 26 Oct reached 146 points. Takeaway: a reference for how a polished on-device assistant UI wraps local models. <a href="https://github.com/FrigadeHQ/hob">GitHub</a> · <a href="https://news.ycombinator.com/item?id=50246238">Hacker News</a></li>
+<li><strong>Watch list, nothing new.</strong> Still no Voxtral 3 weights on Hugging Face; Mistral's newest Voxtral repo is the Arabic realtime model from 8 Oct, and the 24 Oct reviews confirm all four Voxtral 3 models are API previews. Common Voice's last release is still v1.160.0 (21 Sep), with only Pontoon translation commits since. vuci.mt and its licence page are byte-identical to the saved copy, and the Vuci-Project GitHub org has had no pushes since 2 Oct. No Maltese speech news. <a href="https://9to5ai.tech/voxtral-3-mistral-speech-tts-voice-agents">9to5AI</a></li>
+</ul>
+<h3>Edge AI hardware</h3>
+<ul>
+<li><strong>OMRON is buying OnLogic for $675 million.</strong> The Japanese automation firm is taking 100% of the Vermont industrial-PC maker to push edge AI computing alongside its automation lines; OnLogic keeps its Vermont headquarters. Takeaway: rugged edge-box makers are being folded into industrial giants, which may mean fewer independent fanless options. <a href="https://www.therobotreport.com/omron-acquires-onlogic-address-edge-ai-applications/">The Robot Report</a></li>
+<li><strong>MYIR MYC-JR3576, an RK3576 module in standard SMARC 2.2 form.</strong> Octa-core Cortex-A72/A53 with a 6 TOPS NPU, up to 8 GB LPDDR5 and 64 GB eMMC, optional Wi-Fi 6E, on a 314-pin MXM edge connector, plus a dev board. Takeaway: a socketed, swappable Rockchip option that's far below Orin-class AI performance. <a href="https://www.cnx-software.com/2026/10/27/rockchip-rk3576-powered-smarc-2-2-system-on-module-and-development-board-target-edge-ai-applications/">CNX Software</a></li>
+</ul>
+<h3>SDR</h3>
+<ul>
+<li><strong>RF Watchkeeper schedules cheap SDRs across four monitoring jobs.</strong> Thomas Vikström's system runs on a Qualcomm Dragonwing IQ-9075 kit with an RTL-SDR Blog V4 and an RTL2832U dongle, and a scheduler shares the receivers between aviation voice, AIS ship traffic, 433 MHz sensors and METEOR weather-satellite passes. Takeaway: a ready pattern for time-sharing a couple of dongles instead of dedicating one per band. <a href="https://www.hackster.io/news/rf-watchkeeper-keeps-an-eye-on-the-airwaves-d50e74993a43">Hackster</a></li>
+</ul>
+<h3>AI agents</h3>
+<ul>
+<li><strong>A booby-trapped AGENTS.md in a Downloads folder tried to hijack a coding agent.</strong> Forever Security caught a file posing as engineering notes that told the agent to add a server to its config and install the malicious npm package function-color (part of the MALFEX campaign); it was stopped before any code ran. Takeaway: never start an agent with the Downloads folder as its working directory, and treat folder instruction files as untrusted input. <a href="https://thehackernews.com/2026/10/malicious-file-in-downloads-folder.html">The Hacker News</a> · <a href="https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/">BleepingComputer</a></li>
+<li><strong>Former GitHub CEO Thomas Dohmke launched Entire, a Git forge built for agent-written code.</strong> Its "Trails" replace pull requests with a dashboard of scores from AI reviewer agents, so teams can merge without reading every line. It launched 26 Oct, two days before GitHub Universe. Takeaway: a direct bet that agent output has outgrown human line-by-line review. <a href="https://www.geekwire.com/2026/former-github-ceo-launches-rival-platform-built-for-ai-coding-agents/">GeekWire</a></li>
+</ul>
+<p class="sources"><small>Sources: Hacker News (Algolia): 151 stories scanned, 2 used · Google News RSS: 702 headlines scanned, 6 used · GitHub: 32 repos scanned, plus Common Voice and Vuci-Project checks · X: 1 search, 20 posts, 1 used · Web search: 7 searches · Reddit (via web search): 10 threads, 0 new (all from Apr–Sep or already covered) · Hugging Face API: Voxtral, Mistral and Oruk checks · Gozo Fast Ferry API: 18 Mġarr→Valletta and 17 Valletta→Mġarr sailings · vuci.mt: unchanged · Global Sources (RaiderChip NPU story): blocked, HTTP 403 then 429 rate-limited on retry, so skipped. Waste schedule: wastecollection.mt.</small></p>
+  </div>
+</article>
 <article class="briefing" id="b-202610270934">
   <p class="meta"><time datetime="2026-10-27T09:34+0100">2026-10-27 &middot; 09:34 CET</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 27 Oct 2026</h2>

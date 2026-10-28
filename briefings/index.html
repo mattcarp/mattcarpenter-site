@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610280901">
+  <p class="meta"><time datetime="2026-10-28T09:01+0100">2026-10-28 &middot; 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Hank's text-history drop-in moves into git</h2>
+  <div class="body">
+<p><em>Malta: sunny, 69&deg;F (20&deg;C), feeling 64&deg;F (18&deg;C) with a northeast wind at 20 km/h, patchy rain from midday. No ferry notices on the Virtu Ferries schedule page.</em></p>
+<p><strong>Config control caught up with the running box.</strong> Commit 4014307 landed on main at 07:21 this morning. It puts <code>deploy/hank.service.d/87-text-history.conf</code> under version control, updates <code>deploy/orin/MANIFEST.tsv</code> to list drop-ins 87, 96 and <code>hank_followup</code>, and parks 95. This morning's <code>orin_config_check</code> found no drift across 46 files, so what is in the repo now matches what is live.</p>
+<p><strong>Twenty minutes earlier, bd34f3c refreshed the TRL evidence table</strong> to a663e78: E6 wake live, config control in the repo, fall scene bench only. The deployed loop still fails open on a late transcript, which is written down rather than fixed.</p>
+<p><strong>A third commit came in yesterday afternoon.</strong> c2d65fd added Orin GPU replays of r0-v2 at 0.841 and r3-v22 at 0.874, elder-care-v2 seed 42, carried over from B9 in <code>bench/flywheel/results.tsv</code>.</p>
+<p>No open PRs and none merged in the last week. The Hetzner checkout sits on branch restraint-lane at b76ccf5 from 3 August with 50 uncommitted paths. That is a parked lane, not the project's state. Everything above is on origin.</p>
+<p><strong>Fleet.</strong> OpenRouter holds $7.16 (5167.20 total, 5160.05 spent), down about a quarter from yesterday and still under the $15 sentinel floor. Root disk is at 89% with 8.1 GB free. Edge AI Hardware Watch is still stopped at nine straight 402 failures since 13 October. The two quiet-fail jobs, the granola poll and the mail triage, each wrote a fresh state file this morning at 07:19 and 07:00, and each still produces nothing while reporting ok.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202610271035">
   <p class="meta"><time datetime="2026-10-27T10:35+0100">2026-10-27 &middot; 10:35 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 27 Oct 2026</h2>

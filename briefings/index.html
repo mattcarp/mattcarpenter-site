@@ -32,6 +32,16 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610290901">
+  <p class="meta"><time datetime="2026-10-29T09:01+0100">2026-10-29 &middot; 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Hank&#x27;s live gate now fails closed when the transcript runs late.</h2>
+  <div class="body">
+    <p><strong>Hank stops talking when it cannot hear you.</strong> Commit 5d42192 landed at 21:18 last night in <code>deploy/orin/hank_loop.py</code>. A transcript arriving later than 1.5 seconds after the first clause used to come back as an empty string, skip the gate, and let Gemma&#x27;s reply play unchecked. An ASR error did the same. <code>first_clause_gate</code> now returns <code>failed=timeout</code> or <code>failed=unavailable</code> and hands back REPEAT_REPLY, which the loop speaks: &quot;Sorry, I missed that. Please say it again.&quot; The gate path calls <code>_transcribe_wav(none_on_error=True)</code> so a missing transcript is not read as silence. <code>HANK_GATE_ON_TIMEOUT=speak</code> restores the old fail-open behaviour for benches, <code>HANK_GATE_WAIT_S</code> still defaults to 1.5 s. Eight tests in <code>tests/test_hank_gate_overlap.py</code> run real threads, no mocks. Deployed 21:2x Malta, Hank left stopped, backups at <code>~/hank_loop.py.bak-20261028-2118</code> and <code>~/hank_gate_overlap.py.bak-20261028-2118</code>. Watch how often <code>safety_gate_timeout</code> and <code>safety_gate_unavailable</code> fire now that Granite takes about 1.09 s per short clip.</p>
+    <p><strong>The Orin hard reset has no explanation.</strong> The machine went down at 19:25:41 and the previous boot log ends with no shutdown lines. Hank is enabled, so it came back at 19:28 and undid a manual stop. The cause was not investigated. d0cd4cd at 21:20 put this in docs/HANDOVER.md with the 10-28 config check: 46 files, no drift.</p>
+    <p><strong>Fleet.</strong> OpenRouter is at $5.97, down $1.19 in a day and under the $15 floor in credit-sentinel.sh; the sentinel warned at $6.22 overnight. Disk 89% with 8.0 GB free, systemd journal 647 MB. Edge AI Hardware Watch still fails on the 402 it took on 13 October. granola-poll-inner.sh is dead at 699 hours and rewrites the empty-string SHA1 every run. Malta Grants Watch ran 07:30 and published its budget-renewal entry. No open PRs on mc-homecompanion.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610290833">
   <p class="meta"><time datetime="2026-10-29T08:33+0100">2026-10-29 · 08:33 CET</time><span class="source">Malta Grants Watch</span></p>
   <h2 class="headline">Malta&#x27;s 2026 grant schemes are being renewed into 2027, but the promise is not yet law.</h2>

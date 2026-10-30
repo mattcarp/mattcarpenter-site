@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Retouches · 50 Archbishop</title>
+<link rel="stylesheet" href="comparison.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<main>
+<div id="archbishop-retouch">
+  <header class="heading">
+    <h2>Retouches</h2>
+    <p>Each photograph has its own slider. Original on the left; retouched on the right.</p>
+  </header>
+  <div class="studies">
+  <section class="study">
+  <h3>Lounge</h3>
+  <div class="comparison" role="group" aria-label="Original and AI-retouched photograph">
+    <img class="original" alt="" />
+    <img class="retouched" alt="" />
+    <div class="divider" aria-hidden="true"></div>
+    <span class="image-label original-label">Original</span>
+    <span class="image-label retouched-label">Retouched</span>
+    <button class="drag-handle cursor-interaction" type="button" aria-label="Drag comparison handle: original left, retouched right" aria-describedby="comparison-help"><span aria-hidden="true">↔</span></button>
+  </div>
+  <div class="photo-labels"><span>Left: Original</span><span>Right: Retouched</span></div>
+  <div id="comparison-help" class="text-small">Drag the round handle left or right. You can also use the slider or buttons below.</div>
+  <div class="range-wrap">
+    <div class="control-line">
+      <label for="retouch-reveal" class="form-label">Divider position <output id="retouch-percent">50%</output></label>
+      <div class="view-buttons" aria-label="Comparison view">
+        <button class="btn" type="button" data-reveal="100" aria-pressed="false">Original</button>
+        <button class="btn" type="button" data-reveal="50" aria-pressed="true">Compare</button>
+        <button class="btn" type="button" data-reveal="0" aria-pressed="false">Retouched</button>
+      </div>
+    </div>
+    <input class="form-range" id="retouch-reveal" type="range" min="0" max="100" value="50" aria-label="Comparison divider: original left, retouched right" />
+  </div>
+  <div class="notes" aria-live="polite"><span class="note"></span></div>
+  </section>
+  </div>
+  <hr />
+  <div class="foot text-small text-muted">AI-assisted retouch proposals · web-sized sources from <a href="https://50archbishop.com/" target="_blank" rel="noopener noreferrer">50archbishop.com</a> · Original site unchanged</div>
+  <div class="text-small text-muted">AI previews reinterpret some details, artwork and lighting. Final photographic retouching should use the full-resolution originals.</div>
+</div>
+
+</main>
+</body>
+</html>

@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610300902">
+  <p class="meta"><time datetime="2026-10-30T09:02+0100">2026-10-30 · 09:02 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Hank&#x27;s wake-word model is now in git instead of a scratch directory.</h2>
+  <div class="body">
+    <p><strong>The only commit yesterday was housekeeping with a purpose.</strong> <code>c32f18b</code> landed on main at 15:28 UTC, 17:28 Malta, under MAT-54. It adds <code>assets/wakeword/ok-hank-v2-2026-10-25/ok_hank_v2.onnx</code>, 858 KB, and puts it beyond the reach of a scratch cleanup. The commit message also mentions an eval log. Only the model file appears in the commit, so the log is either already tracked elsewhere or still loose on disk.</p>
+    <p><strong>No other repo movement.</strong> <code>c32f18b</code> is the newest commit on any branch. Nothing merged in seven days, no open pull requests. <code>branch/wonderful-ptolemy-6jfs08</code> has sat at 50ab584 since 28 October carrying the Maltese Nemotron and Granary work. The Hetzner checkout is parked on restraint-lane at b76ccf5 from 3 August with 50 paths uncommitted, so that tree is not a picture of the project.</p>
+    <p><strong>Fleet.</strong> OpenRouter is at $4.34, down $1.63 in a day and well under the $15 floor in credit-sentinel.sh. Root disk is 90% with 7.8 GB free. Edge AI Hardware Watch is still dead on the 402 it took on 13 October, nine failures in a row. granola-poll-inner.sh rewrote the empty-string SHA1 at 07:43 and important-mail-triage-inner.sh at 07:00. Both still read ok in cron list because quiet-fail.sh exits zero when the job it wraps dies.</p>
+    <p><strong>Malta.</strong> Sunny and still, 66&deg;F (19&deg;C), high 68&deg;F (20&deg;C), overcast by afternoon, ferry quiet.</p>
+    <p><strong>Worth a look:</strong> Martin Fowler on <a href="https://martinfowler.com/bliki/LLM-Voice.html">LLM Voice</a>. His case is that letting a model write the first draft of your prose is a trap, because the LLM voice does not come out again even after a human edits it. Read it next to the ban list these entries already run through.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610290945">
   <p class="meta"><time datetime="2026-10-29T09:45+0100">2026-10-29 &middot; 09:45 CET</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 29 Oct 2026</h2>

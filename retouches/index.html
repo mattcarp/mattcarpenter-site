@@ -8,8 +8,9 @@
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
 <title>Retouches · 50 Archbishop</title>
-<link rel="stylesheet" href="comparison.css">
-<script src="app.js" defer></script>
+<link rel="stylesheet" href="comparison.css?v=editor1">
+<script src="app.js?v=editor1" defer></script>
+<script src="editor.js?v=editor1" defer></script>
 </head>
 <body>
 <main>
@@ -18,6 +19,45 @@
     <h2>Retouches</h2>
     <p>Each photograph has its own slider. Original on the left; retouched on the right.</p>
   </header>
+  <section class="editor" aria-labelledby="editor-heading">
+    <h3 id="editor-heading">Retouch your photograph</h3>
+    <p id="editor-access" class="text-muted" role="status">Open the private editing link to enable uploads and chat.</p>
+    <fieldset id="editor-controls" disabled>
+      <label class="form-label" for="photo-upload">Original photograph</label>
+      <input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" />
+      <p class="text-small text-muted">JPEG, PNG or WebP, up to 20 MB. Photos are prepared at up to 2,048 pixels for editing.</p>
+      <div id="upload-preview" hidden><img id="uploaded-original" alt="Your uploaded original photograph" /></div>
+      <label class="form-label" for="edit-request">Retouch instructions</label>
+      <textarea id="edit-request" rows="3" maxlength="2400">Gently balance the light, open the shadows and clean up the colour. Preserve the room, furnishings and artwork.</textarea>
+      <button id="create-retouch" class="btn" type="button" disabled>Retouch photo</button>
+      <p id="editor-status" role="status">Choose an original photograph to begin.</p>
+      <div id="edit-error" role="alert" hidden></div>
+      <div id="uploaded-result" hidden>
+        <div class="result-actions">
+          <label class="form-label" for="retouch-version">Show version <select id="retouch-version"></select></label>
+          <a id="download-retouch" class="btn" download="retouched-photo.jpg">Download retouch</a>
+        </div>
+        <div id="result-comparison"></div>
+      </div>
+      <section class="chat" aria-labelledby="chat-heading">
+        <h3 id="chat-heading">Talk about the retouch</h3>
+        <p class="text-small text-muted">Ask what could improve, or describe a specific change. Chat suggests edits; “Apply this edit” creates the next version.</p>
+        <ol id="retouch-conversation" aria-live="polite" aria-label="Retouch conversation"></ol>
+        <form id="chat-form">
+          <label class="form-label" for="chat-message">Your message</label>
+          <textarea id="chat-message" rows="2" maxlength="2000" placeholder="Could we keep the stone warmer, but make the sofa less yellow?"></textarea>
+          <button id="send-chat" class="btn" type="submit" disabled>Send message</button>
+        </form>
+        <div id="edit-proposal" hidden>
+          <p>Suggested edit</p>
+          <p id="proposed-edit"></p>
+          <button id="apply-proposal" class="btn" type="button">Apply this edit</button>
+        </div>
+      </section>
+    </fieldset>
+    <p class="text-small text-muted">Your photo and messages are sent to OpenAI when you request a retouch or chat reply. They are not saved on this website. Download versions you want to keep before closing this tab. AI edits can change fine details; check the result carefully.</p>
+  </section>
+  <h3 class="examples-heading">Apartment examples</h3>
   <div class="studies">
   <section class="study">
   <h3>Lounge</h3>

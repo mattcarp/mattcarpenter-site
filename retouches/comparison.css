@@ -62,3 +62,29 @@ hr { border:0; border-top:1px solid var(--mac-border); margin:32px 0; }
     #archbishop-retouch .foot { margin-top:24px; }
     #archbishop-retouch .view-buttons { display:flex; gap:8px; flex-wrap:wrap; }
     @media(max-width:440px) { #archbishop-retouch .heading { padding-right:0; } }
+
+.editor { margin:32px 0 64px; padding:24px 0; border-top:1px solid var(--mac-border); border-bottom:1px solid var(--mac-border); }
+.editor h3 { margin:0 0 16px; font-weight:300; }
+.editor fieldset { min-width:0; margin:0; padding:0; border:0; }
+.editor fieldset:disabled { opacity:0.6; }
+.editor .form-label { margin:16px 0 8px; }
+.editor textarea,.editor select { width:100%; max-width:100%; padding:16px; color:var(--mac-foreground); background:var(--mac-surface); border:1px solid var(--mac-border); border-radius:8px; font:inherit; font-size:16px; line-height:1.5; }
+.editor textarea { display:block; resize:vertical; margin-bottom:16px; }
+.editor input[type="file"] { display:block; max-width:100%; min-height:48px; padding:8px 0; }
+.editor input::file-selector-button { padding:8px 16px; margin-right:16px; background:var(--mac-surface); color:var(--mac-foreground); border:1px solid var(--mac-border); border-radius:8px; font:inherit; }
+.editor button:disabled { opacity:0.5; cursor:not-allowed; }
+#upload-preview { margin:24px 0; }
+#uploaded-original { display:block; max-height:400px; max-width:100%; width:auto; }
+#uploaded-result { margin:32px 0; }
+.result-actions { display:flex; align-items:end; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+.result-actions label { flex:1; min-width:160px; }
+.result-actions a { display:inline-flex; align-items:center; text-decoration:none; }
+.chat { margin-top:32px; }
+#retouch-conversation { list-style:none; margin:16px 0; padding:0; max-height:360px; overflow-y:auto; }
+#retouch-conversation li { margin:0 0 24px; }
+#retouch-conversation .speaker { color:var(--mac-muted); font-size:14px; }
+#retouch-conversation p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+#edit-proposal { margin-top:24px; padding-left:16px; border-left:2px solid var(--mac-border); }
+#edit-error { padding:16px; margin:16px 0; border:1px solid var(--mac-border); line-height:1.6; }
+.examples-heading { margin-bottom:32px; }
+[hidden] { display:none !important; }

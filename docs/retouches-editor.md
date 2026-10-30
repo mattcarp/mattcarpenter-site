@@ -1,0 +1,9 @@
+# Temporary retouching editor
+
+The existing scrolling photo comparisons stay on mattcarpenter.com/retouches. A private editing link adds a browser-local upload, an explicit retouch action, an original-versus-current slider, a download, and a chat area. Chat can propose a change; Apply this edit explicitly generates it.
+
+The GitHub Pages frontend calls a Cloudflare Worker. The OpenAI key is injected from Infisical into Worker secrets, never browser code. A random 256-bit access token, also stored in Infisical, is delivered in the private URL fragment. Only its hash is stored by the Worker. No accounts are needed. Noindex is retained but is not treated as access control.
+
+One Durable Object reserves shared daily usage atomically before provider requests: 12 edits and 60 chat messages, one edit at a time. Requests, prompts, chat history, image dimensions, output quality and image count are limited server-side. Failed and ambiguous requests consume their reservation. No uploads, results, chat or credentials are logged or persisted by this website; only usage counters are stored server-side. OpenAI processes submitted photos and chat; its retention controls still apply. Chat uses store:false.
+
+Validation must include a real upload-to-edit-to-slider round trip, real image-aware chat and a follow-up edit, unauthorized and malformed requests rejected before provider use, all existing comparisons preserved, Playwright interaction and responsive checks, and Semgrep. Missing provider access or quota must be reported plainly; no fake images, mock replies or silent provider downgrade.

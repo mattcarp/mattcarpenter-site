@@ -1,0 +1,15 @@
+{
+  "name": "mc-retouches-api",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": true,
+  "vars": {
+    "CHAT_MODEL": "gpt-5.4-mini",
+    "IMAGE_MODEL": "gpt-image-2",
+    "DAILY_EDITS": "12",
+    "DAILY_CHATS": "60"
+  },
+  "durable_objects": { "bindings": [{ "name": "USAGE", "class_name": "UsageGuard" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["UsageGuard"] }],
+  "observability": { "enabled": false }
+}

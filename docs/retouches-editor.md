@@ -1,6 +1,6 @@
 # Temporary retouching editor
 
-The existing scrolling photo comparisons stay on mattcarpenter.com/retouches. A private editing link adds a browser-local upload, an explicit retouch action, an original-versus-current slider, a download, and a chat area. Chat can propose a change; Apply this edit explicitly generates it.
+The existing scrolling photo comparisons stay on mattcarpenter.com/retouches. A private editing link adds a browser-local upload, a one-click Auto retouch, an original-versus-current slider, a download, and a chat area. Auto retouch always starts from the uploaded original and uses a server-owned preset: restrained exposure and white-balance correction, gentle shadow recovery and natural texture, preserving the scene and light states. The pencil opens optional custom instructions. Chat can propose a change; Apply this edit explicitly generates it.
 
 The GitHub Pages frontend calls a Cloudflare Worker. The OpenAI key is injected from Infisical into Worker secrets, never browser code. A random 256-bit access token, also stored in Infisical, is delivered in the private URL fragment. Only its hash is stored by the Worker. No accounts are needed. Noindex is retained but is not treated as access control.
 

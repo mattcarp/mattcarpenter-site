@@ -73,6 +73,8 @@ hr { border:0; border-top:1px solid var(--mac-border); margin:32px 0; }
 .editor input[type="file"] { display:block; max-width:100%; min-height:48px; padding:8px 0; }
 .editor input::file-selector-button { padding:8px 16px; margin-right:16px; background:var(--mac-surface); color:var(--mac-foreground); border:1px solid var(--mac-border); border-radius:8px; font:inherit; }
 .editor button:disabled { opacity:0.5; cursor:not-allowed; }
+.retouch-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:24px; }
+#auto-retouch { background:var(--mac-selected); }
 #upload-preview { margin:24px 0; }
 #uploaded-original { display:block; max-height:400px; max-width:100%; width:auto; }
 #uploaded-result { margin:32px 0; }

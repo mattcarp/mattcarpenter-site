@@ -8,9 +8,9 @@
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
 <title>Retouches · 50 Archbishop</title>
-<link rel="stylesheet" href="comparison.css?v=editor1">
-<script src="app.js?v=editor1" defer></script>
-<script src="editor.js?v=editor1" defer></script>
+<link rel="stylesheet" href="comparison.css?v=auto1">
+<script src="app.js?v=auto1" defer></script>
+<script src="editor.js?v=auto1" defer></script>
 </head>
 <body>
 <main>
@@ -27,9 +27,16 @@
       <input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" />
       <p class="text-small text-muted">JPEG, PNG or WebP, up to 20 MB. Photos are prepared at up to 2,048 pixels for editing.</p>
       <div id="upload-preview" hidden><img id="uploaded-original" alt="Your uploaded original photograph" /></div>
-      <label class="form-label" for="edit-request">Retouch instructions</label>
-      <textarea id="edit-request" rows="3" maxlength="2400">Gently balance the light, open the shadows and clean up the colour. Preserve the room, furnishings and artwork.</textarea>
-      <button id="create-retouch" class="btn" type="button" disabled>Retouch photo</button>
+      <div class="retouch-actions">
+        <button id="auto-retouch" class="btn" type="button" disabled>Auto retouch</button>
+        <button id="customize-retouch" class="btn" type="button" aria-expanded="false" aria-controls="custom-instructions"><span aria-hidden="true">&#9998;</span> Edit instructions</button>
+      </div>
+      <p class="text-small text-muted">Start with balanced light, natural colour and gentle shadow recovery, like the examples below. Then refine it in chat.</p>
+      <div id="custom-instructions" hidden>
+        <label class="form-label" for="edit-request">Retouch instructions</label>
+        <textarea id="edit-request" rows="3" maxlength="2400">Gently balance the light, open the shadows and clean up the colour. Preserve the room, furnishings and artwork.</textarea>
+        <button id="create-retouch" class="btn" type="button" disabled>Retouch photo</button>
+      </div>
       <p id="editor-status" role="status">Choose an original photograph to begin.</p>
       <div id="edit-error" role="alert" hidden></div>
       <div id="uploaded-result" hidden>
@@ -86,7 +93,7 @@
   </section>
   </div>
   <hr />
-  <div class="foot text-small text-muted">AI-assisted retouch proposals · web-sized sources from <a href="https://50archbishop.com/" target="_blank" rel="noopener noreferrer">50archbishop.com</a> · Original site unchanged</div>
+  <div class="foot text-small text-muted">AI-assisted retouch proposals · web-sized sources from <a href="https://50archbishop.com/" target="_blank" rel="noopener noreferrer">50archbishop.com</a> · Original source files preserved</div>
   <div class="text-small text-muted">AI previews reinterpret some details, artwork and lighting. Final photographic retouching should use the full-resolution originals.</div>
 </div>
 

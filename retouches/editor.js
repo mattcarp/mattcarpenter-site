@@ -14,6 +14,8 @@
     get('photo-upload').disabled=state.busy
     get('edit-request').disabled=state.busy
     get('create-retouch').disabled=state.busy || !state.original
+    get('auto-retouch').disabled=state.busy || !state.original
+    get('customize-retouch').disabled=state.busy
     get('send-chat').disabled=state.busy || !state.original
     get('apply-proposal').disabled=state.busy
     get('chat-message').disabled=state.busy
@@ -136,16 +138,17 @@
     get('download-retouch').download=`retouch-${index+1}.jpg`
     state.comparison(version.image,state.ratio)
   }
-  async function retouch(prompt) {
+  async function retouch(prompt,{auto=false}={}) {
     if (!state.original) return error('Choose an original photograph first.')
-    if (!prompt.trim()) return error('Describe the changes you would like.')
+    if (!auto && !prompt?.trim()) return error('Describe the changes you would like.')
+    const description=auto?'Auto retouch: balanced light, natural colour and gentle shadow recovery.':prompt
     await busy('Retouching your photograph.',async()=>{
-      const result=await request('edit',{original:state.original,current:state.current,prompt})
+      const result=await request('edit',{original:state.original,current:auto?null:state.current,...(auto?{mode:'auto'}:{mode:'manual',prompt})})
       if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(result.image || '')) throw new Error('The service did not return a valid photograph.')
-      state.versions.push({image:result.image,prompt})
+      state.versions.push({image:result.image,prompt:description,mode:auto?'auto':'manual'})
       const option=document.createElement('option')
       option.value=String(state.versions.length-1)
-      option.textContent=`Version ${state.versions.length}`
+      option.textContent=`Version ${state.versions.length}${auto?' · Auto':''}`
       get('retouch-version').append(option)
       if (!state.comparison) state.comparison=buildComparison()
       showVersion(state.versions.length-1)
@@ -153,7 +156,7 @@
       get('upload-preview').hidden=true
       get('edit-proposal').hidden=true
       state.proposal=null
-      addMessage('user',`Retouch requested: ${prompt}`)
+      addMessage('user',auto?description:`Retouch requested: ${description}`)
       addMessage('assistant',`Version ${state.versions.length} is ready. Compare it with your original above, or ask for another adjustment.`)
       get('editor-status').textContent=`Version ${state.versions.length} is ready. ${result.remainingEdits} shared retouches remain today.`
     })
@@ -177,10 +180,17 @@
       get('edit-proposal').hidden=true
       get('uploaded-original').src=state.original
       get('upload-preview').hidden=false
-      get('editor-status').textContent='Original loaded. Describe the changes, then press Retouch photo, or start with a question in chat.'
+      get('editor-status').textContent='Original loaded. Press Auto retouch to start, write specific instructions, or ask a question in chat.'
     })
   })
   get('create-retouch').addEventListener('click',()=>retouch(get('edit-request').value))
+  get('auto-retouch').addEventListener('click',()=>retouch(null,{auto:true}))
+  get('customize-retouch').addEventListener('click',()=>{
+    const expanded=get('customize-retouch').getAttribute('aria-expanded')!=='true'
+    get('customize-retouch').setAttribute('aria-expanded',String(expanded))
+    get('custom-instructions').hidden=!expanded
+    if(expanded)get('edit-request').focus()
+  })
   get('apply-proposal').addEventListener('click',()=>{ if(state.proposal)retouch(state.proposal) })
   get('retouch-version').addEventListener('change',()=>showVersion(Number(get('retouch-version').value)))
   get('chat-form').addEventListener('submit',async event=>{

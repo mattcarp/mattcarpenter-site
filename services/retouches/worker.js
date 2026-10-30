@@ -1,5 +1,6 @@
 const BODY_LIMIT = 8_500_000
 const IMAGE_LIMIT = 3_000_000
+const AUTO_RETOUCH = 'Apply a restrained professional photographic retouch. Balance exposure and gently open muddy shadows so materials and furnishings are readable. Neutralise unwanted yellow-green or cyan colour casts, keep whites clean, and preserve the natural warmth of stone, timber and skin. Control bright highlights and glass glare without flattening the light. Recover subtle texture and detail with gentle noise reduction. Keep the photographed mood and time of day. Preserve the exact framing, camera perspective, architectural geometry, all furniture, plants, objects, artwork and faces. Keep lamps in their original on/off state. Do not redesign, remove clutter or invent details. Avoid heavy saturation, orange grading, HDR halos and smooth plastic textures.'
 const encoder = new TextEncoder()
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex, nofollow, noarchive'}})
 class InputError extends Error {}
@@ -112,8 +113,11 @@ async function provider(path, env, body, isJson) {
 
 async function edit(body, env) {
   const original=image(body.original)
-  const current=body.current ? image(body.current) : null
-  if (typeof body.prompt!=='string' || !body.prompt.trim() || body.prompt.length>2400) throw new InputError('Describe the retouch in fewer than 2,400 characters.')
+  if (body.mode!==undefined && !['auto','manual'].includes(body.mode)) throw new InputError('Choose auto retouch or write specific instructions.')
+  const auto=body.mode==='auto'
+  const current=!auto && body.current ? image(body.current) : null
+  const prompt=auto?AUTO_RETOUCH:body.prompt
+  if (typeof prompt!=='string' || !prompt.trim() || prompt.length>2400) throw new InputError('Describe the retouch in fewer than 2,400 characters.')
   const reserved=await quota(env,'edit')
   if (!reserved.ok) return reserved
   const form=new FormData()
@@ -123,7 +127,7 @@ async function edit(body, env) {
   form.set('output_format','jpeg')
   const scale=1536/Math.max(original.width,original.height)
   form.set('size',`${Math.round(original.width*scale/16)*16}x${Math.round(original.height*scale/16)*16}`)
-  form.set('prompt',`Retouch this photograph. ${current?'Image 1 is the current edit to adjust; image 2 is the original reference for the room, objects and composition.':'Image 1 is the original photograph to edit.'} Preserve the camera viewpoint, framing, architectural geometry, objects, faces if any, and artwork unless the user explicitly requests a change. Keep believable photographic texture; avoid HDR halos and plastic surfaces. Change only what the user requests. User instruction: ${body.prompt.trim()}`)
+  form.set('prompt',`Retouch this photograph. ${current?'Image 1 is the current edit to adjust; image 2 is the original reference for the room, objects and composition.':'Image 1 is the original photograph to edit.'} Preserve the camera viewpoint, framing, architectural geometry, objects, faces if any, and artwork unless the user explicitly requests a change. Keep believable photographic texture; avoid HDR halos and plastic surfaces. Change only what the user requests. User instruction: ${prompt.trim()}`)
   form.append('image[]',new Blob([(current || original).bytes],{type:'image/jpeg'}),'edit-target.jpg')
   if (current) form.append('image[]',new Blob([original.bytes],{type:'image/jpeg'}),'original-reference.jpg')
   let shouldRelease=false
@@ -133,7 +137,7 @@ async function edit(body, env) {
     if (result.error) return result.error
     const encoded=result.data?.data?.[0]?.b64_json
     if (!encoded) return json({error:'The image service returned no photograph. Your original has not changed.',code:'no_image'},502)
-    return json({image:`data:image/jpeg;base64,${encoded}`,reply:'Your retouch is ready. Compare it with the original using the slider.',...await reserved.json()})
+    return json({image:`data:image/jpeg;base64,${encoded}`,mode:auto?'auto':'manual',reply:'Your retouch is ready. Compare it with the original using the slider.',...await reserved.json()})
   } finally { if(shouldRelease)await quota(env,'edit',true) }
 }
 

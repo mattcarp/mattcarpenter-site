@@ -32,6 +32,21 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202610310901">
+  <p class="meta"><time datetime="2026-10-31T09:01+0100">2026-10-31 &middot; 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Both voice clones landed level on Matt&#x27;s voice. The fine-tune pilot fell below both.</h2>
+  <div class="body">
+    <p><strong>A full night of voice A/B work on a rented 3090 is the newest thing in the repo.</strong> Five commits landed on main between 22:17 and 23:29 on 30 October. <code>32b2f1d</code> added the A/B prompt set and the dataset review. <code>52c8d77</code> added the Stage B audition runner with blind codes and a self-stop watchdog. <code>6877694</code> rendered the first 16 clips per engine and shipped the blind set builder and WER scorer. <code>c028c7d</code> scored speaker similarity. <code>78d9364</code> recorded a failed flash-attn build. The Vast instance was 58451133, an RTX 3090 24 GB in Germany at $0.266/h. Spend for the night came to about $0.25.</p>
+    <p><strong>The numbers.</strong> Qwen3-TTS 1.7B Base rendered 16 of 16 clips, 7.26 s median per sentence, RTF 1.65, 4.34 GB peak GPU memory, mean WER 0.057. Chatterbox Turbo rendered 16 of 16, 1.63 s median, RTF 0.40, 3.15 GB peak, mean WER 0.079. Speaker similarity to Matt: Qwen 0.889, Chatterbox 0.894, real Matt against real Matt 0.948. Both clones sit just below the real range and level with each other. Blind listening has not happened yet. Most of the WER is the scorer, not the voice: Whisper writes "nine forty-five" as 9.45 and hears "M&#x0121;arr" as Magar. Setting those aside, Qwen has no other error and Chatterbox has three.</p>
+    <p><strong>Memory is the result that matters for the Orin.</strong> 4.34 GB and 3.15 GB are remote GPU peaks, not board numbers, but neither engine leaves room for Gemma beside it on 8 GB. The October Orin trial of the 0.6B CustomVoice model already failed live eligibility on memory.</p>
+    <p><strong>The fine-tune pilot is the baseline the new recording has to beat.</strong> 50 rows, 6.53 minutes of the September session, batch 2, lr 2e-5, three epochs on the same 3090. Training took 42 seconds and loss went 13.18 to 7.37. Rendered similarity came out 0.852 mean, 0.717 minimum. Reference cloning scores 0.889, so the pilot came out <em>less</em> like Matt. Six and a half minutes of tired narration does not teach a voice. Two fixes went into <code>scripts/voice_ab/ft/run_ft.sh</code>: SDPA instead of the hard-coded flash attention, and a local snapshot path for <code>--init_model_path</code>.</p>
+    <p><strong>flash-attn did not build.</strong> The image ships CUDA toolkit 12.4, <code>qwen-tts</code> pulls torch 2.15 built for CUDA 13.2, and no prebuilt wheel matches. Qwen's speed is therefore measured with SDPA attention only. Re-timing it needs a CUDA 13 image.</p>
+    <p><strong>Repo state.</strong> No open pull requests and nothing merged in seven days. <code>branch/wonderful-ptolemy-6jfs08</code> sits at 50ab584 from 28 October carrying the Maltese Nemotron and Granary work. The Hetzner checkout is still parked on restraint-lane at b76ccf5 from 3 August with 50 uncommitted paths, so nothing on that tree describes the project.</p>
+    <p><strong>Fleet.</strong> OpenRouter is down to $1.65 (5167.20 credits, 5165.55 spent), from $4.34 yesterday, under both the $15 warn floor and the $2 alert floor. The sentinel warned at 08:18 CET and repeats every four hours. Edge AI Hardware Watch is still paused with nine straight 402s from 13 October. <code>granola-poll-inner.sh</code> wrote the empty-string SHA1 again at 00:50. <code>important-mail-triage-inner.sh</code> has not rewritten its state file since 12:00 on 30 October. Root disk is 90% with 7.3 GB free and the journal is 876 MB.</p>
+    <p><strong>Malta.</strong> Sunny and still, 66&deg;F (19&deg;C), high 68&deg;F (20&deg;C), patchy rain from midday. Ferry quiet.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202610300936">
   <p class="meta"><time datetime="2026-10-30T09:36+0100">2026-10-30 &middot; 09:36 CET</time><span class="source">Last 30 Days</span></p>
   <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 30 Oct 2026</h2>

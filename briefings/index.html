@@ -10,6 +10,11 @@
 <meta name="theme-color" content="#08090b">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/mc.css">
+<link rel="alternate" type="application/rss+xml" title="Mattie's Briefs" href="/briefings/feed.xml">
+<style>
+  .why { display:block; margin-top:.25em; font-size:.85em; color:#a8aeb8; font-style:italic; }
+  ul.verdicts { margin-top:.4em; }
+</style>
 </head>
 <body>
 <main>
@@ -38,6 +43,23 @@
   <div class="body">
 <p><em>Today: organic (white bag). Tomorrow: mixed (black bag).</em></p>
 <p><em>Ferry today: the operator's booking feed lists no sailings at all for today, in either direction, though yesterday it showed 17 and 16. That may mean today's service is off, so check gozohighspeed.com before you travel. Tomorrow: Mġarr→Valletta 05:45, 06:45, 07:45, 09:45 · Valletta→Mġarr 06:45, 08:45, 09:45 (17 and 16 sailings, all 260+ seats free).</em></p>
+<h3>Yesterday&rsquo;s verdicts</h3>
+<ul class="verdicts">
+<li><strong>MC CTO dropped</strong> <a href="https://www.techpowerup.com/354268/biostar-introduces-the-edgecomp-ms-u320-fanless-edge-ai-system">Biostar&#x27;s fanless EdgeComp MS-U320 puts Intel&#x27;s Wildcat Lake into a...</a> &mdash; hardware option belongs to Hank.</li>
+<li><strong>MC CTO dropped</strong> <a href="https://mistral.ai/news/mistral-large-4-oss/">Mistral released the open weights for Large 4 (&quot;Le Chonk&quot;), a...</a> &mdash; too big to self-host.</li>
+<li><strong>MC CTO dropped</strong> <a href="https://www.stereolabs.com/blog/stereolabs-launches-zed-box-2-series-for-physical-ai-and-vision-in-production-robots">Stereolabs launched the ZED Box 2, a fanless Jetson Orin NX box only 55...</a> &mdash; camera-robotics box, no use in CTO lane.</li>
+<li><strong>MC CTO dropped</strong> <a href="https://www.theregister.com/personal-tech/2026/10/27/apple-takes-powerful-m6-chip-to-the-macbook-pro-imac/5305797">Apple&#x27;s M6 reaches the 14-inch MacBook Pro and iMac early next month</a> &mdash; not a tech item CTO owns.</li>
+<li><strong>MC CTO dropped</strong> <a href="https://www.infoq.com/news/2026/10/aws-ai-agents-linux-kernel-cves/">AWS uses an AI agent to triage Linux kernel CVEs, but humans still sign off</a> &mdash; one Ubuntu server.</li>
+<li><strong>MC Hank kept</strong> <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B">Nvidia&#x27;s Nemotron 3.5 Transcribe is open weights and lists Maltese,...</a> &mdash; offline Maltese labelling teacher (16.41% FLEURS WER, OpenMDW-1.1).</li>
+<li><strong>MC Hank dropped</strong> <a href="https://github.com/anomalyco/hex/releases">Hex 3.0, an MIT-licensed local dictation app, shipped on 31 Oct with...</a> &mdash; desktop dictation app, mc-dictum lane.</li>
+<li><strong>MC Hank kept</strong> <a href="https://voicearena.com/turing-tts">A new benchmark asks whether listeners can tell an AI voice from a...</a> &mdash; borrow its blind real-vs-TTS protocol as yardstick for Hank&#x27;s voice.</li>
+<li><strong>MC Hank dropped</strong> <a href="https://www.androidauthority.com/google-gemini-live-offline-mode-teardown-3730033/">Google is building an offline mode for Gemini Live</a> &mdash; teardown strings only, no date or device list.</li>
+<li><strong>MC Hank dropped</strong> <a href="https://www.electronicsbrief.com/articles/aetina-palm-sized-in-vehicle-edge-ai-systems-858cc9a3">Aetina launched palm-sized in-vehicle boxes on Jetson Orin Nano and...</a> &mdash; Orin already on JetPack 7.2.1 with MAXN_SUPER.</li>
+<li><strong>MC Hank kept</strong> <a href="https://huggingface.co/LiquidAI/LFM3-Audio-2B">Liquid AI&#x27;s LFM3-Audio-2B is out as open weights, and it&#x27;s already in...</a> &mdash; no Maltese, no Jetson numbers, no room beside Gemma.</li>
+<li><strong>MC Hank dropped</strong> <a href="https://siliconangle.com/2026/10/27/edge-sound-raises-2m-to-help-physical-ai-make-sense-of-audio/">Edge Sound Research raised $2M to pull useful sounds out of noisy audio...</a> &mdash; funding news for a sports-broadcast product, no SDK.</li>
+<li><strong>MC Hank kept</strong> <a href="https://huggingface.co/moondream/parakeet-ultra">Parakeet Ultra, a 0.6B model, posts a 14.92% Maltese FLEURS word error...</a> &mdash; drop-in for Maltese path (same arch/tokenizer as Parakeet).</li>
+<li><strong>MC Wichita kept</strong> <a href="https://www.rtl-sdr.com/falconsdr-an-open-source-rtl-sdr-scanner-and-recorder-with-automatic-whisper-transcription/">FalconSDR is a GPLv3 RTL-SDR scanner and recorder that can transcribe...</a> &mdash; GPLv3 and a week old, so rewrite ideas in own code: recency boost, record only real transmissions, SNR score, airband Whisper.</li>
+</ul>
 <p>Ten items. SDR gets the most room today with four new tools, and there are two new edge chips and boxes. AI agents is kept to two items. Nothing new on Malta tech, Sotto Sound or Maltese speech data.</p>
 <h3>Hank and on-device voice AI</h3>
 <p><strong>Nvidia's Reachy Mini Jetson Assistant runs a full voice loop on an Orin Nano 8GB, with first audio in 1.07 s.</strong> The stack is Silero VAD, faster-whisper STT, a llama.cpp LLM (Gemma 3 1B for voice-only, Gemma 4 E2B for vision) and Kokoro TTS on the GPU. Nvidia's median warm timings are 444 ms for STT, 206 ms to the first LLM token and 595 ms for TTS, but they leave out mic capture and speaker playback. This isn't new: the JetPack 7.2 port landed on 9 Sep and the last push was 6 Oct. It hasn't been in a briefing, though, and it's Apache-2.0 and the closest public reference to Hank's own pipeline. <a href="https://github.com/NVIDIA-AI-IOT/reachy-mini-jetson-assistant">GitHub</a> &middot; <a href="https://www.jetson-ai-lab.com/tutorials/reachy-mini-jetson-assistant/">Jetson AI Lab</a></p>

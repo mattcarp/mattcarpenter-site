@@ -7,8 +7,8 @@
 <meta name="description" content="Election night 2026: three forecast engines against the network calls, for the Senate and the House.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
-  <script type="module" crossorigin src="/midterms/assets/index-DbErYzJ3.js"></script>
-  <link rel="stylesheet" crossorigin href="/midterms/assets/index-BUBdSOmP.css">
+  <script type="module" crossorigin src="/midterms/assets/index-BdR61xRO.js"></script>
+  <link rel="stylesheet" crossorigin href="/midterms/assets/index-Csf1XVTl.css">
 </head>
 <body>
 <main class="wrap">
@@ -77,6 +77,7 @@
     <div class="engines">
       <div><span>Alpha · needle</span><span class="mono" id="p-alpha">–</span></div>
       <div><span>Beta · white tick</span><span class="mono" id="p-beta">–</span></div>
+      <div><span>Ensemble</span><span class="mono" id="p-ensemble">–</span></div>
       <div><span>Gamma · networks</span><span class="mono" id="p-gamma">–</span></div>
     </div>
   </section>
@@ -91,6 +92,21 @@
 <section class="calls" aria-labelledby="calls-h">
   <h2 id="calls-h" class="label small">Latest calls</h2>
   <div id="calls" class="calls-list"></div>
+</section>
+
+<section class="panel explain" aria-labelledby="explain-h">
+  <div class="head">
+    <h2 id="explain-h" class="label">How the forecast works</h2>
+    <nav aria-label="Engine" class="tabs" id="explain-tabs">
+      <button type="button" data-engine="ensemble" aria-pressed="true">Ensemble</button>
+      <button type="button" data-engine="alpha" aria-pressed="false">Alpha</button>
+      <button type="button" data-engine="beta" aria-pressed="false">Beta</button>
+      <button type="button" data-engine="gamma" aria-pressed="false">Gamma</button>
+      <button type="button" data-engine="tv" aria-pressed="false">TV desks</button>
+    </nav>
+  </div>
+  <div id="explain-body" class="explain-body"></div>
+  <p class="sub">Chances of control come from 4,000 simulated nights per engine. Polling misses are assumed to run the same way across states, as they did in 2016, 2020 and 2024, so one surprise tends to bring others.</p>
 </section>
 
 </main>

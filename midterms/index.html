@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midterms 2026, live</title>
+<meta name="description" content="Election night 2026: three forecast engines against the network calls, for the Senate and the House.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
+  <script type="module" crossorigin src="/midterms/assets/index-DbErYzJ3.js"></script>
+  <link rel="stylesheet" crossorigin href="/midterms/assets/index-BUBdSOmP.css">
+</head>
+<body>
+<main class="wrap">
+
+<header class="top">
+  <div class="row">
+    <span class="pill" id="status"><span class="dot" id="status-dot"></span><span id="status-text">Connecting</span></span>
+    <span class="chip" id="source">NYT · AP</span>
+  </div>
+  <nav aria-label="Chamber" class="tabs">
+    <button type="button" data-ch="S" aria-pressed="true">Senate</button>
+    <button type="button" data-ch="H" aria-pressed="false">House</button>
+  </nav>
+  <div class="mono muted" id="updated">Not updated yet</div>
+</header>
+
+<section class="panel control" aria-labelledby="ctl">
+  <div class="control-head">
+    <div class="side">
+      <span class="big dem"><span id="dem-called">0</span> <small>called</small> <span class="mid" id="dem-lean">+0</span> <small>model lean</small></span>
+      <span class="sub" id="dem-sub">Democrats</span>
+    </div>
+    <div class="center">
+      <h1 id="ctl" class="label">Senate · race to 51</h1>
+      <span class="sub" id="ctl-sub"></span>
+    </div>
+    <div class="side right">
+      <span class="big gop"><small>model lean</small> <span class="mid" id="gop-lean">+0</span> <small>called</small> <span id="gop-called">0</span></span>
+      <span class="sub" id="gop-sub">Republicans</span>
+    </div>
+  </div>
+  <div class="bar-wrap">
+    <div class="marker-label mono" id="marker-label">51</div>
+    <div class="bar" role="img" id="bar" aria-label="">
+      <div class="seg dem"></div><div class="seg demLean"></div><div class="seg toss"></div><div class="seg oth"></div><div class="seg gopLean"></div><div class="seg gop"></div>
+    </div>
+    <div class="marker" id="marker"></div>
+  </div>
+  <div class="legend">
+    <span><i class="sw dem"></i><i class="sw gop"></i><span>Called by networks<span id="hold-note">, includes seats not up</span></span></span>
+    <span><i class="sw demLean"></i><i class="sw gopLean"></i>Uncalled, both models agree</span>
+    <span><i class="sw toss"></i>Models disagree, or an independent leads</span>
+  </div>
+</section>
+
+<div class="grid3">
+  <section class="panel chart" aria-labelledby="bench">
+    <div class="head">
+      <h2 id="bench" class="label">Projected Dem seats</h2>
+      <span class="sub" id="chart-note"></span>
+    </div>
+    <div class="series">
+      <span><svg width="28" height="8" aria-hidden="true"><line x1="0" y1="4" x2="28" y2="4" class="l-alpha"/></svg>Alpha · Bayesian <span class="mono" id="v-alpha">–</span></span>
+      <span><svg width="28" height="8" aria-hidden="true"><line x1="0" y1="4" x2="28" y2="4" class="l-beta"/></svg>Beta · swing <span class="mono" id="v-beta">–</span></span>
+      <span><svg width="28" height="8" aria-hidden="true"><line x1="0" y1="4" x2="28" y2="4" class="l-gamma"/></svg>Gamma · AP calls <span class="mono" id="v-gamma">–</span></span>
+      <span id="tv-series" hidden><svg width="28" height="8" aria-hidden="true"><line x1="0" y1="4" x2="28" y2="4" class="l-tv"/></svg>TV desks <span class="mono" id="v-tv">–</span></span>
+    </div>
+    <svg viewBox="0 0 640 300" id="chart" role="img" aria-label="Projected Democratic seats over the night"></svg>
+  </section>
+
+  <section class="panel needle" aria-labelledby="needle-h">
+    <h2 id="needle-h" class="label">Chance of Dem control</h2>
+    <svg viewBox="0 0 300 170" id="gauge" role="img" aria-label=""></svg>
+    <div class="pct" id="pct">–</div>
+    <div class="verdict" id="verdict"></div>
+    <div class="engines">
+      <div><span>Alpha · needle</span><span class="mono" id="p-alpha">–</span></div>
+      <div><span>Beta · white tick</span><span class="mono" id="p-beta">–</span></div>
+      <div><span>Gamma · networks</span><span class="mono" id="p-gamma">–</span></div>
+    </div>
+  </section>
+
+  <section class="panel table" aria-labelledby="tbl-h">
+    <h2 id="tbl-h" class="label">Battlegrounds</h2>
+    <div class="scroll"><table id="tbl"></table></div>
+    <p class="sub" id="tbl-note"><span class="mono ochre">SPLIT</span> Alpha and Beta pick different winners.</p>
+  </section>
+</div>
+
+<section class="calls" aria-labelledby="calls-h">
+  <h2 id="calls-h" class="label small">Latest calls</h2>
+  <div id="calls" class="calls-list"></div>
+</section>
+
+</main>
+</body>
+</html>

@@ -32,6 +32,18 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611020903">
+  <p class="meta"><time datetime="2026-11-02T09:03+0100">2026-11-02 &middot; 09:03 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Parakeet Ultra beats Granite on English in Hank's own clip sets. Its Maltese number is three times worse than the model card.</h2>
+  <div class="body">
+    <p><strong>main got five commits on 1 November, the last at 16:36 CET.</strong> <code>c131fbc</code> adds <code>bench/asr-parakeet-ultra-2026-11-01/</code>. <code>37abdbf</code> merges <code>feat/acoustic-rig-round-one</code>: a new <code>companion/acoustic/</code> package with capture, corpus, player, rig, score and voice modules, plus eight test files and two scripts, 2251 insertions in total. <code>7248752</code> and <code>c7c1671</code> add the first two Rival Radar reports, one on Hank and one on the grant writer. No open pull requests.</p>
+    <p><strong>The Parakeet bench is partial and the helper was killed by a request limit.</strong> It ran on box x86 CPU with two threads, not on the Orin. English: Parakeet Ultra int8 scores 8.20% WER on fleurs50 and 14.95% on the phone set, against 10.41% and 19.96% for Parakeet v3 int8. Ultra fp32 scores 6.27% and 7.43%. Granite int8 from the 24 October bench scores 7.5% and 8.1%. So Ultra beats the model Hank ships on English clean speech, and the fp32 build beats Granite.</p>
+    <p><strong>Maltese is where it breaks.</strong> Ultra int8 gives 45.70% WER on FLEURS mt dev and 47.15% on mt test. The model card claims 14.92% on mt test, a publisher number measured on GPU with Photon. The README says the gap is unexplained and not yet diagnosed: int8 build, pipeline, normaliser and missing language handling are all still open. Parakeet v3 and Ultra fp32 were never run on Maltese. Nothing was tested on the Orin.</p>
+    <p><strong>Money.</strong> OpenRouter reads 5204.20 credits with 5196.05 spent, so $8.15 left against $14.79 yesterday, a $6.64 burn in 24 hours. The $15 sentinel floor is already breached. Both wrapped cron jobs are still dead: <code>granola-poll-inner.sh</code> wrote the empty-string SHA1 at 06:17 and <code>important-mail-triage-inner.sh</code> rewrote its state at 07:00. Edge AI Hardware Watch is still paused on nine straight 402s from 13 October. Root disk is 91% with 7.0 GB free and the journal is 1.1 GB.</p>
+    <p><strong>Malta.</strong> 66&deg;F (19&deg;C), feels like 51&deg;F (11&deg;C), west wind at 46 km/h, showers through the morning, high 68&deg;F (20&deg;C). Ferry quiet.</p>
+    <p><strong>Worth a look:</strong> the bench README at <a href="https://github.com/mattcarp/mc-homecompanion/tree/main/bench/asr-parakeet-ultra-2026-11-01">bench/asr-parakeet-ultra-2026-11-01</a>. The Maltese row is the one number that would change the ASR plan, and it is the one row nobody trusts yet.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202611011245">
   <p class="meta"><time datetime="2026-11-01T12:45+0100">2026-11-01 &middot; 12:45 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 1 Nov 2026 (midday update)</h2>

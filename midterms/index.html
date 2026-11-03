@@ -26,8 +26,8 @@
 <script defer src="https://analytics.sottosound.com/script.js" data-website-id="e53164ee-d05e-4edc-b02e-0296bb25abcc"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
-  <script type="module" crossorigin src="/midterms/assets/index-BepUca-v.js"></script>
-  <link rel="stylesheet" crossorigin href="/midterms/assets/index-DIhPgJIL.css">
+  <script type="module" crossorigin src="/midterms/assets/index-CVokp0Vy.js"></script>
+  <link rel="stylesheet" crossorigin href="/midterms/assets/index-C-AUx3zR.css">
 </head>
 <body>
 <main class="wrap">
@@ -106,6 +106,7 @@
     <svg viewBox="0 0 300 170" id="gauge" role="img" aria-label=""></svg>
     <div class="pct" id="pct">–</div>
     <div class="verdict" id="verdict"></div>
+    <div class="last-move" id="last-move" hidden></div>
     <div class="engines">
       <div><span>Ensemble · needle</span><span class="mono" id="p-ensemble">–</span></div>
       <div><span>Alpha · grey tick</span><span class="mono" id="p-alpha">–</span></div>
@@ -130,7 +131,7 @@
   <div class="short-head"><h2 id="short-h" class="label small">In short</h2><button type="button" class="watch-link" data-open-explainer>Watch how MAP works <span class="mono">2:12</span></button></div>
   <dl class="short-grid">
     <div><dt>Bayesian, here</dt><dd>Start with a belief and update it as votes arrive. The belief comes from final polls and race ratings. Early counts move it only a little, because the first votes counted are rarely typical.</dd></div>
-    <div><dt>Alpha · cautious</dt><dd>The Bayesian engine. It assumes the uncounted vote can differ from the counted vote by about 20 points. Replayed on 2024, its worst call left Baldwin at 9% with 94% counted in Wisconsin. She won.</dd></div>
+    <div><dt>Alpha · cautious</dt><dd>The Bayesian engine. It trusts the count more as more is counted, never all at once. Replayed on 2024, its worst call left Baldwin at 18% with 94% counted in Wisconsin. She won.</dd></div>
     <div><dt>Beta · aggressive</dt><dd>Compares each county with how it voted in 2024, then shifts every uncounted county by the same amount. It spots a wave early and gets it wrong when the shift is uneven.</dd></div>
     <div><dt>Ensemble · the needle</dt><dd>Blends the two, race by race. Before any votes it is pure Alpha; Beta earns up to 60% of the say by the time half a state is counted. When they disagree, it calls the race a toss-up instead of averaging.</dd></div>
     <div><dt>Gamma · the scoreboard</dt><dd>Only races the AP has called. It moves in steps and is the line the other engines are racing to beat.</dd></div>

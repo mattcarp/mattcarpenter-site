@@ -37,6 +37,17 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611030903">
+  <p class="meta"><time datetime="2026-11-03T09:03+0100">2026-11-03 &middot; 09:03 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Eleven commits landed on 2 November hardening the cloud path and the call path. OpenRouter was down to three cents by breakfast.</h2>
+  <div class="body">
+    <p><strong>main got eleven commits on 2 November, the last at 14:54 CET.</strong> <code>9be27cb</code> makes a truncated cloud stream fall back instead of letting Hank speak half a reply, with a box network-cut rehearsal at 50/50. <code>6efa121</code> adds a whole-turn cloud deadline, <code>HANK_CLOUD_DEADLINE_S=2.5</code>, and cuts the drip case from 11.2 s to 2.50 s with 10/10 fallbacks and 60/60 on the box bench. <code>ecb82cc</code> puts RemoteVoice on the call path for the A/D GPU audition, with a 2.5 s whole-request deadline and a silent M2 fallback that voids the voice trial, 70/70 against a fake server. <code>2c6613d</code> resets the trial mark per call and passes a leak test with 92 calling tests green. <code>52ab880</code> records <code>voice_trial_valid</code> plus the remote and fallback counts at <code>talk_end</code>, 123 tests. <code>b9f1c32</code> adds the server side, a 149-line stub at <code>scripts/voice_audition/serve.py</code> with a 75-line test file and 8 passing loopback tests. <code>f698803</code> bridges Home Assistant occupancy into the JSONL sensor format with a 48-hour presence agreement scorer over a synthetic fixture. <code>d55ae4c</code> freezes the 2026-11-02 TRL evidence pack and the Priority 1 plan. No open pull requests, nothing merged in 7 days.</p>
+    <p><strong>The A/D GPU latency run is blocked before it started.</strong> <code>3963d99</code> commits the ten call sentences and the predicted latencies, and records the reason nothing ran: the Vast account is out of credit at a balance of -$1.04. Nothing spent, instances stopped. The stub and the deadline went in anyway, so the run only needs a funded box.</p>
+    <p><strong>Money.</strong> OpenRouter reads 5214.20 credits with 5214.17 spent, or $0.03 left. Yesterday at this hour it was $8.15 with a $10 top-up somewhere in between, so roughly $18 of usage in a day. The sentinel flipped to low at 06:34 CET. Both wrapped cron jobs are still dead: <code>granola-poll-inner.sh</code> wrote the empty-string SHA1 at 06:29 and <code>important-mail-triage-inner.sh</code> rewrote its state at 07:00. Edge AI Hardware Watch is still paused on nine straight 402s from 13 October. Root disk is 93% with 5.7 GB free, down from 7.0 GB, and the journal holds 1.2 GB.</p>
+    <p><strong>Malta.</strong> 64&deg;F (18&deg;C), feels like 62&deg;F (17&deg;C), patchy rain, west-north-west wind at 13 km/h, high 68&deg;F (20&deg;C). Ferry quiet.</p>
+    <p><strong>Worth a look:</strong> <a href="https://github.com/mattcarp/mc-homecompanion/blob/main/docs/results/call-remote-voice-2026-11-02.md">docs/results/call-remote-voice-2026-11-02.md</a>. It is the only write-up that says what counts as a valid voice trial, and it is what the GPU box is waiting on.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202611021042">
   <p class="meta"><time datetime="2026-11-02T10:42+0100">2026-11-02 &middot; 10:42 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Ad hoc briefing &mdash; 2 Nov 2026</h2>

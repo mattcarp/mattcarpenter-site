@@ -26,8 +26,8 @@
 <script defer src="https://analytics.sottosound.com/script.js" data-website-id="e53164ee-d05e-4edc-b02e-0296bb25abcc"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
-  <script type="module" crossorigin src="/midterms/assets/index-B3jDIquq.js"></script>
-  <link rel="stylesheet" crossorigin href="/midterms/assets/index-C-AUx3zR.css">
+  <script type="module" crossorigin src="/midterms/assets/index-vVhKuqmC.js"></script>
+  <link rel="stylesheet" crossorigin href="/midterms/assets/index-j0bFslqT.css">
 </head>
 <body>
 <main class="wrap">
@@ -116,7 +116,7 @@
   </section>
 
   <section class="panel table" aria-labelledby="tbl-h">
-    <h2 id="tbl-h" class="label">Battlegrounds</h2>
+    <div class="head"><h2 id="tbl-h" class="label">Battlegrounds</h2><label class="sub picker-label">Drill into <select id="state-picker" aria-label="Open a state"><option value="">a state…</option></select></label></div>
     <div class="scroll"><table id="tbl"></table></div>
     <p class="sub" id="tbl-note"><span class="mono ochre">SPLIT</span> Alpha and Beta pick different winners.</p>
   </section>
@@ -169,6 +169,7 @@ P(control) = share of nights with Dems at 51 Senate (of 20,000) or 218 House sea
   </ol>
 </section>
 
+<dialog id="state-view" class="state-dialog" aria-label="State view"><div id="state-body"></div></dialog>
 <dialog id="explainer" class="explainer-dialog" aria-label="How MAP works, video">
   <video id="explainer-video" controls playsinline preload="none" poster="/midterms/explainer-poster.jpg"></video>
   <form method="dialog"><button class="explainer-close">Close</button></form>

@@ -122,7 +122,7 @@
   <div class="short-head"><h2 id="short-h" class="label small">In short</h2><button type="button" class="watch-link" data-open-explainer>Watch how MAP works <span class="mono">2:12</span></button></div>
   <dl class="short-grid">
     <div><dt>Bayesian, here</dt><dd>Start with a belief and update it as votes arrive. The belief comes from final polls and race ratings. Early counts move it only a little, because the first votes counted are rarely typical.</dd></div>
-    <div><dt>Alpha · cautious</dt><dd>The Bayesian engine. It assumes the uncounted vote can differ from the counted vote by about 20 points. Replayed on 2024, it never put an eventual winner below 16%.</dd></div>
+    <div><dt>Alpha · cautious</dt><dd>The Bayesian engine. It assumes the uncounted vote can differ from the counted vote by about 20 points. Replayed on 2024, its worst call left Baldwin at 9% with 94% counted in Wisconsin. She won.</dd></div>
     <div><dt>Beta · aggressive</dt><dd>Compares each county with how it voted in 2024, then shifts every uncounted county by the same amount. It spots a wave early and gets it wrong when the shift is uneven.</dd></div>
     <div><dt>Ensemble · the needle</dt><dd>Blends the two, race by race. Before any votes it is pure Alpha; Beta earns up to 60% of the say by the time half a state is counted. When they disagree, it calls the race a toss-up instead of averaging.</dd></div>
     <div><dt>Gamma · the scoreboard</dt><dd>Only races the AP has called. It moves in steps and is the line the other engines are racing to beat.</dd></div>

@@ -26,7 +26,7 @@
 <script defer src="https://analytics.sottosound.com/script.js" data-website-id="e53164ee-d05e-4edc-b02e-0296bb25abcc"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
-  <script type="module" crossorigin src="/midterms/assets/index-DuhCZeJ1.js"></script>
+  <script type="module" crossorigin src="/midterms/assets/index-BepUca-v.js"></script>
   <link rel="stylesheet" crossorigin href="/midterms/assets/index-DIhPgJIL.css">
 </head>
 <body>
@@ -135,7 +135,7 @@
     <div><dt>Ensemble · the needle</dt><dd>Blends the two, race by race. Before any votes it is pure Alpha; Beta earns up to 60% of the say by the time half a state is counted. When they disagree, it calls the race a toss-up instead of averaging.</dd></div>
     <div><dt>Gamma · the scoreboard</dt><dd>Only races the AP has called. It moves in steps and is the line the other engines are racing to beat.</dd></div>
     <div><dt>TV desks</dt><dd>Gemini reads race-call graphics off live network broadcasts. A call counts only when two frames, or two networks, agree.</dd></div>
-    <div><dt>Chance of control</dt><dd>4,000 simulated nights, each with one polling miss shared by every state. The percentage is the share of nights the Democrats reach 51 Senate or 218 House seats.</dd></div>
+    <div><dt>Chance of control</dt><dd>20,000 simulated nights for the Senate, 4,000 for the House, each with one polling miss shared by every state. The percentage is the share of nights the Democrats reach 51 Senate or 218 House seats.</dd></div>
   </dl>
 </section>
 
@@ -153,9 +153,9 @@
   <div id="explain-body" class="explain-body"></div>
   <div class="explain-control">
     <h3 class="explain-name small">From races to control</h3>
-    <p>Chances of control come from 4,000 simulated nights per engine. Polling misses run the same way across states, as they did in 2016, 2020 and 2024, so each night draws one national error z shared by every race and one local error per race <a href="#ref-5">[5]</a>. The headline is a probability with a range, not a call <a href="#ref-6">[6]</a>.</p>
+    <p>Chances of control come from 20,000 simulated nights per engine for the Senate and 4,000 for the House, drawn in a fixed race order so the answer cannot depend on which feed is live. Polling misses run the same way across states, as they did in 2016, 2020 and 2024, so each night draws one national error z shared by every race and one local error per race <a href="#ref-5">[5]</a>. The headline is a probability with a range, not a call <a href="#ref-6">[6]</a>.</p>
     <pre class="explain-math mono">error_i = σ_i · (ρ·z + √(1 − ρ²)·ε_i)     ρ = 0.5, so two races' errors correlate at ρ² = 0.25
-P(control) = share of 4,000 nights with Dems at 51 Senate or 218 House seats</pre>
+P(control) = share of nights with Dems at 51 Senate (of 20,000) or 218 House seats (of 4,000)</pre>
   </div>
   <h3 class="explain-name small" id="refs-h">References</h3>
   <ol class="refs" aria-labelledby="refs-h">

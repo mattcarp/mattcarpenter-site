@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Content Security Policy: only these hosts may run code or receive data. The hash pins the PostHog loader below;
-     edit that script and the hash must be recomputed (the e2e suite fails on any CSP violation). -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-CrLWBsq6CFu/Ar4cc/Jrn75baFkZ+aaey2hijaIP0po=' https://us-assets.i.posthog.com; connect-src 'self' https://static01.nyt.com https://politics.api.cnn.io https://us.i.posthog.com https://us-assets.i.posthog.com http://localhost:* http://127.0.0.1:*; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- Content Security Policy: only these hosts may run code or receive data. There is no inline script; keep it that way
+     (the e2e suite fails on any CSP violation). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://analytics.sottosound.com; connect-src 'self' https://static01.nyt.com https://politics.api.cnn.io https://analytics.sottosound.com http://localhost:* http://127.0.0.1:*; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MAP · Matt's Armageddon Projection</title>
@@ -22,15 +22,11 @@
 <meta property="og:image:alt" content="MAP, Matt's Armageddon Projection: a forecast needle and the Senate seat bar, live on election night.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0a0a">
-<!-- PostHog (project shared with the other apps; the phc_ key is PostHog's public browser key). Cookieless: persistence 'memory'. -->
-<script>
-!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-posthog.init('phc_rwyTVRv46gjRF8QPTAfeKUVgKdHAxAM8hPK7KS5BXsGL', { api_host: 'https://us.i.posthog.com', persistence: 'memory', person_profiles: 'identified_only', capture_pageview: true, capture_pageleave: true, disable_session_recording: true, disable_surveys: true });
-posthog.register({ site: 'midterms' });
-</script>
+<!-- Visit counts: Mattie's self-hosted, cookieless Umami (analytics.sottosound.com on Hetzner), the same instance as the homepage. -->
+<script defer src="https://analytics.sottosound.com/script.js" data-website-id="e53164ee-d05e-4edc-b02e-0296bb25abcc"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
-  <script type="module" crossorigin src="/midterms/assets/index-j_QCipbs.js"></script>
+  <script type="module" crossorigin src="/midterms/assets/index-DuhCZeJ1.js"></script>
   <link rel="stylesheet" crossorigin href="/midterms/assets/index-DIhPgJIL.css">
 </head>
 <body>

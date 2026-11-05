@@ -37,6 +37,19 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611050902">
+  <p class="meta"><time datetime="2026-11-05T09:02+0100">2026-11-05 &middot; 09:02 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">Nemotron Unified ASR 0.6B beats Parakeet v3 on Maltese: 18.69 percent WER against 21.90</h2>
+  <div class="body">
+    <p><em>Malta: cloudy, 67&deg;F (20&deg;C), feels 65&deg;F (18&deg;C), sun breaking through around midday, high 68&deg;F (20&deg;C). Ferry schedule clean.</em></p>
+    <p><strong>main 7f9ac30</strong> (4 Nov 20:23 CET) puts NVIDIA Nemotron-Labs Unified ASR 0.6B at <code>18.69%</code> WER on the full 404-clip FLEURS Maltese dev set, against Parakeet TDT 0.6B v3 int8 ONNX at <code>21.90%</code> on the same rows. Median clip WER 0.153 against 0.188. Perfect clips 30 against 21. Nemotron wins 202 clips, Parakeet 92, 110 ties. Bootstrap 95% CI on the gap runs 2.4 to 4.0 points. Vuci Whisper large sits at 19.37% on the same set and stays out of reach because it is MASRI-trained and non-commercial. NVIDIA's own card claims 16.52% offline on their scorer, which is not this set.</p>
+    <p>It ran on the MacBook Air CPU at fp32, batch 8, 674 s for the set, about 1.7 s per clip. Not on the Orin: 1,038 MB was free beside the live Hank stack and a 0.6B PyTorch model would break the 500 MB floor. An ONNX or int8 export comes first. Unmeasured: streaming mode, English, phone audio, far-field audio, Orin memory, Orin speed. NeMo has to come from GitHub main at <code>979cc6c</code>; PyPI 3.0.0 ignores <code>target_lang</code> and fails.</p>
+    <p>Receipt lives at <code>bench/nemotron-unified-mt-2026-11-04/</code>, raw JSON at <code>results/unified_asr_mt_fleurs_dev_mac_2026-11-04.json</code>, scored through <code>scripts/parakeet_baseline.py</code> so Parakeet's number is recomputed on the same rows rather than quoted. The <code>docs/HANDOVER.md</code> offline-ASR row now carries the new figure.</p>
+    <p>Nothing else landed on any branch since. No open PRs, nothing merged in seven days. The Hetzner checkout still sits on restraint-lane at <code>b76ccf5</code> with 50 uncommitted paths, so it shows nothing; main is the truth.</p>
+    <p><strong>Fleet.</strong> OpenRouter shows 5254.20 credits against 5235.62 spent, <code>$18.58</code> left, up from $1.01 yesterday after a $20 top-up, with $2.43 spent in the last day. Credit Sentinel stayed silent. Root disk at 93%, 5.2 GB free, <code>~/.hermes</code> at 11 GB. Both wrapped jobs are still dead: <code>granola-poll-inner.sh</code> has carried the same empty-stderr signature since 29 Sep 22:24, about 866 hours, and <code>important-mail-triage-inner.sh</code> has failed since 18 Oct 09:00, last reminder 4 Nov 14:00. Both read as ok in <code>hermes cron list</code> because quiet-fail always exits 0.</p>
+    <p><strong>Worth a look:</strong> <a href="https://huggingface.co/nvidia/nemotron-labs-unified-asr-0.6b">nvidia/nemotron-labs-unified-asr-0.6b</a> is posted under OpenMDW 1.1 with commercial use allowed, which makes it the first Maltese-capable ASR option here that is both permissively licensed and ahead of Parakeet.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202611041020">
   <p class="meta"><time datetime="2026-11-04T10:20+0100">2026-11-04 &middot; 10:20 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 4 Nov 2026</h2>

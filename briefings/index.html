@@ -37,6 +37,21 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611060901">
+  <p class="meta"><time datetime="2026-11-06T09:01+0100">2026-11-06 &middot; 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
+  <h2 class="headline">The live hybrid brain reaches the cloud for the first time, and OpenRouter falls to nine cents</h2>
+  <div class="body">
+    <p><em>Malta: overcast, 67&deg;F (19&deg;C), feels 67&deg;F (19&deg;C), patchy rain possible mid-afternoon, clear by evening, sunset 17:02. Ferry schedule clean.</em></p>
+    <p>Eleven commits landed on <code>main</code> between 21:34 and 22:16 CET on 5 Nov, and four PRs merged (#10 through #13).</p>
+    <p><strong>#10</strong> <code>61b0c66</code> benches a fast-tier cloud brain on the Orin, and the useful part is the failure it dug out: the live model ID was <code>gemini-2.5-flash</code>, which returned HTTP 404 on every cloud turn for weeks while <code>~/.local/state/hank/outbound_cloud.jsonl</code> looked healthy. That ledger records the routing decision, not the outcome.</p>
+    <p><strong>674f96c</strong> adds <code>scripts/check_live_hybrid.py</code>, 91 lines, which reads the live environment out of <code>hank.service</code> and rebuilds the router the same way the room loop does. Two turns. A rich chat turn went to cloud on <code>openai:gpt-5.4-mini</code> and came back in 2,102 ms for the whole reply, costing $0.000325, with the spend ledger moving 0.000746 to 0.001071 USD. A turn reading "terrible pain in my chest, left arm numb" hit the gate as category <code>stroke</code> and opened no socket at all. The check is read-only, Gemma is not loaded twice, and nothing was deployed. That 2.10 s is one cold sample sitting against a 2.5 s deadline, so the bench's warm p50 of 796 ms and p90 of 1,050 ms are still the only latency numbers worth quoting.</p>
+    <p><strong>#13</strong> <code>a6f6898</code> moves the router's stroke and self-harm rules into gate v3 so every path carries them. <code>companion/safety_gate.py</code> gains 50 lines, <code>companion/hybrid_router.py</code> loses 56, and <code>tests/test_safety_gate_v3.py</code> is new.</p>
+    <p><strong>#12</strong> <code>c782d14</code> records the network-cut trial on the Orin at 70 of 70, plus <code>scripts/soak_idle.sh</code> and an eight hour idle soak on the TRL 3 path.</p>
+    <p><strong>#11</strong> <code>ec1925a</code> stops the call path hanging up on a person who is still saying hello. It brings in <code>scripts/hank_calling/callscript.py</code> and two call scripts, <code>fiona.json</code> and <code>funding.json</code>. The first live call after the Lithuanian number switch registered SIP over TLS on <code>sip.telnyx.com</code>, had its greeting ("Hi Mattie, it's Hank.") synthesised by Telnyx cloud voice in 2.16 s, heard 3.78 s of unbroken far-end speech, fired <code>voicemail_detected why=long_greeting</code>, and ended at 7.17 s as <code>reason=voicemail</code>, billed one minute. The Telnyx balance went $6.32 to $6.30. No human has answered a call, so nothing about conversation quality is measured yet.</p>
+    <p><strong>fc762a7</strong>, the newest commit on any branch, is documentation: <code>LoopCalling</code> is the product call path, the standalone CLI is not, and it is unmeasured. It also notes a call takes about 600 MB and cannot yet run beside the room loop. No open PRs.</p>
+    <p><strong>Fleet.</strong> OpenRouter shows 5254.20 credits against 5254.11 spent, <code>$0.09</code> left, down from $18.58 in 24 hours. Root disk at 94%, 4.9 GB free. Both wrapped jobs are still dead. <code>granola-poll-inner.sh</code> carried the same empty-string signature at 07:05 and <code>important-mail-triage-inner.sh</code> at 07:00, and both still read as ok in <code>hermes cron list</code> because quiet-fail always exits 0.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202611051031">
   <p class="meta"><time datetime="2026-11-05T10:31+0100">2026-11-05 &middot; 10:31 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; 5 Nov 2026</h2>

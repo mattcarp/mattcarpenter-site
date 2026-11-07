@@ -37,6 +37,20 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611070932">
+  <p class="meta"><time datetime="2026-11-07T09:32+0100">2026-11-07 &middot; 09:32 CET</time><span class="source">Last 30 Days</span></p>
+  <h2 class="headline">Edge AI &amp; Voice Digest &mdash; 7 Nov 2026</h2>
+  <div class="body">
+    <p><strong><a href="https://www.reddit.com/r/JetsonNano/comments/1xbudnx/i_turned_my_jetson_orin_nano_into_personal_jarvis/">An Orin Nano turned into a hands-and-voice assistant</a></strong> &mdash; faster-whisper base.en plus gemma3 4B in CUDA llama.cpp plus Kokoro TTS, all on the board. Reported numbers: ~1.1s speech recognition, 15-17 tok/s generation, first spoken words 3-4.5s after he stops talking. That latency figure is the same gap Hank is measuring.</p>
+    <p><strong><a href="https://www.reddit.com/r/JetsonNano/comments/1xlp735/mtp_on_vs_off_on_jetson_agx_orin_199x_decode_159x/">Speculative decoding buys 1.99x decode on Jetson AGX Orin</a></strong> &mdash; same board, same clip, one flag different: MTP on versus off gave 1.99x decode and 1.59x end-to-end on a fully on-device crowd-monitoring agent (YOLO11n + ByteTrack feeding a local Qwen3.5-4B). Free speed if the runtime supports it.</p>
+    <p><strong><a href="https://www.reddit.com/r/JetsonNano/comments/1xnkjoe/can_a_16gb_jetson_orin_nx_drive_a_browser_and_a/">A 16GB Orin NX drives a browser and a whiteboard with two small models</a></strong> &mdash; reComputer J4012 on JetPack 6.2.1 and 40W. No cloud call and no screenshots sent to a vision model; page state is handed over as text. The 16GB tier is doing real agentic work now.</p>
+    <p><strong><a href="https://www.nordicsemi.com/Nordic-news/2026/11/Nordic-brings-edge-AI-to-battery-powered-WiFi-devices-20-times-lower-standby-power-with-nRF71-Series">Nordic puts Wi-Fi, BLE, Thread and on-device AI on one chip</a></strong> &mdash; the nRF71 claims 20x lower standby power, aimed at battery-powered edge devices. The low end of the edge stack is absorbing inference the way MCUs absorbed radios.</p>
+    <p><strong><a href="https://huggingface.co/blog/qvac/transcribepsy-250m">Tether ships a 254M on-device speech recogniser</a></strong> &mdash; QVAC TranscribePsy transcribes 10 minutes of audio in 1.65s on an iPhone 17 Pro Max, multilingual, no cloud. A Parakeet-class ASR small enough for phone and robot duty, which is exactly the shape a local voice product needs.</p>
+    <p><strong><a href="https://www.reddit.com/r/EdgeAI_Hardware/comments/1x8ca7e/llms_on_small_hardware_11_open_builds_from_a/">Eleven open builds running LLMs from ESP32 to Jetson</a></strong> &mdash; repo-backed, builder-measured speeds, from a 260K-param TinyStories model at 19 tok/s on an ESP32-S3 up to Gemma 4 on a Jetson. The best single reference for what actually runs where.</p>
+    <p><strong><a href="https://thebusinesspicture.com/2026/10/30/maltas-public-sector-turns-to-microsofts-copilot-ai-platform-to-ease-government-services">Malta commits EUR 4M to put Copilot on 8,000 public officers' laptops</a></strong> &mdash; an MITA-led, two-year rollout with a Government Copilot Centre of Excellence. No independent outcome metrics published yet, which is the part worth watching.</p>
+    <p><strong><a href="https://maltabusinessreport.com/malta-venture-capital-invests-in-14-firms">Malta Venture Capital has put over EUR 4m into 14 companies</a></strong> &mdash; figures given by PM Robert Abela on 18 Oct. Malta is still small on the European map (EUR 28M equity raised across 18 startups, 6 exits, per Tech.eu to 31 Oct), but a local fund writing cheques at that rate is a change from grants alone.</p>
+  </div>
+</article>
 <article class="briefing" id="b-202611070901">
   <p class="meta"><time datetime="2026-11-07T09:01+0100">2026-11-07 &middot; 09:01 CET</time><span class="source">Daily Hank Briefing</span></p>
   <h2 class="headline">Hank&rsquo;s cloud brain answers in 1.3 seconds, and the 2.5 second deadline throws away one reply in ten</h2>

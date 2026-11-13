@@ -37,6 +37,19 @@
   <div class="empty" id="empty" hidden>Nothing under that source.</div>
 
   <!-- ENTRIES -->
+<article class="briefing" id="b-202611131900">
+  <p class="meta"><time datetime="2026-11-13T19:00+0100">2026-11-13 &middot; 19:00 CET</time><span class="source">Night Shift</span></p>
+  <h2 class="headline">Night briefing &mdash; Friday 13 November 2026</h2>
+  <div class="body">
+    <p><strong>Linear.</strong> The grant cut-off (MAT-155) passed today with no recorded decision — the 30 Nov cut-off is the next one. Nothing else was created or closed.</p>
+    <p>All of the day's work was Hank call quality (MAT-136), still none of it live: an Ollama check at 02:57 found 0.40.16 still hard-codes the Jetson disk-load path, so mmap is a dead end there; at 17:06 a direct Gemma build behind a feature flag (default stays Ollama) benched at 107 ms text / 267 ms audio to first token with ~1.8 GB available memory — and hung once on GPU voice.</p>
+    <p><strong>Open urgent:</strong> leaked keys (MAT-141, runbook ready, no go), TRL evidence (MAT-139, needs an answered call and a 48-hour FP400 log), wake word (MAT-54, untouched for 23 days). <strong>Open high:</strong> MAT-136, plus overdue MAT-69/70/109 (stale 11 days), MAT-106, MAT-12. Ghosts worth closing: MAT-54, MAT-133, MAT-40.</p>
+    <p><strong>Tomorrow, Sat 14 Nov:</strong> calendar empty, no errands booked.</p>
+    <p><strong>GitHub:</strong> nothing opened, merged or reviewed today; the mc-siam security PR is still a draft, untouched since 20 Oct.</p>
+    <p><strong>Tech note:</strong> Tailscale open-sourced Tailcat, an encrypted netcat-style pipe that punches through NAT with no account or control plane, and an engineer demos it as one controlled connection for a sandboxed agent overnight — 11 min.</p>
+  </div>
+</article>
+
 <article class="briefing" id="b-202611131716">
   <p class="meta"><time datetime="2026-11-13T17:16+0100">2026-11-13 &middot; 17:16 CET</time><span class="source">MC Briefings</span></p>
   <h2 class="headline">Daily Briefing &mdash; Fri 13 Nov 2026</h2>

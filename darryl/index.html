@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Darryl — an alternative</title>
+<title>[NAME], an alternative</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="A part-time path from behind the bar at The Pub into security work. Study a few hours a week, keep the job, start with kit you already have.">
 <style>
@@ -159,7 +159,7 @@
 <main>
 
   <div class="mast">
-    <h1>DARRYL<span>/</span></h1>
+    <h1>[NAME]<span>/</span></h1>
     <div class="s">VALLETTA<br>15 NOV 2026</div>
   </div>
   <div class="sub">an alternative, on the side — security work</div>
@@ -211,13 +211,12 @@
     <div class="scene s5"><svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="320" height="180" fill="#06070a"/><rect x="146" y="52" width="26" height="76" fill="#0c1419"/><polygon points="146,52 160,58 160,122 146,128" fill="#6ee7b7" opacity=".85"/></svg></div>
 
     <div class="cap c1">The Pub. Archbishop Street.</div>
-    <div class="cap c2">Fifteen years behind the bar.</div>
+    <div class="cap c2">Behind the bar, you read people every night.</div>
     <div class="cap c3">You already read people for a living.</div>
     <div class="cap c4">Curiosity. Patience. The nerve to report it.</div>
-    <div class="namecard c5"><div class="nm">DARRYL</div><div class="u">mattcarpenter.com/darryl</div></div>
+    <div class="namecard c5"><div class="nm">[NAME]</div><div class="u">mattcarpenter.com/darryl</div></div>
 
     <button class="replay" onclick="document.getElementById('film').querySelectorAll('.scene,.cap,.namecard').forEach(function(e){e.style.animation='none';e.offsetHeight;e.style.animation=''})">replay</button>
-    <button class="playbtn" id="playbtn"><span class="tri">&#9658;</span> play with sound</button>
   </div>
 
   <!-- INTRO -->
@@ -225,7 +224,7 @@
 
   <h2>Why you</h2>
   <div class="grid3">
-    <div class="cell"><div class="n">01</div><h3>You read people</h3><p>Fifteen years clocking who's trouble and who's about to walk the bill. Security is reading a system the same way.</p></div>
+    <div class="cell"><div class="n">01</div><h3>You read people</h3><p>Every shift you clock who's trouble and who's about to walk the bill. Security is reading a system the same way.</p></div>
     <div class="cell"><div class="n">02</div><h3>Rugby taught phases</h3><p>You think in attack and defence, in finding the gap before the line closes. Red team and blue team is that, with keyboards.</p></div>
     <div class="cell"><div class="n">03</div><h3>You can grind</h3><p>A double shift on your feet is stamina most people lack. This work rewards patience over genius.</p></div>
   </div>
@@ -286,48 +285,5 @@
   <footer>mattcarpenter.com/darryl · a quiet nudge, no pressure</footer>
 
 </main>
-<script>
-(function(){
-  var film=document.getElementById('film'), btn=document.getElementById('playbtn');
-  var ctx, master, pad2, started=false, LOOP=40, nb;
-  function noise(){ var b=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate), d=b.getChannelData(0);
-    for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; return b; }
-  function whoosh(t){ var s=ctx.createBufferSource(); s.buffer=nb; s.loop=true;
-    var bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=0.7;
-    var g=ctx.createGain(); g.gain.value=0; s.connect(bp); bp.connect(g); g.connect(master);
-    bp.frequency.setValueAtTime(260,t); bp.frequency.exponentialRampToValueAtTime(1900,t+0.5); bp.frequency.exponentialRampToValueAtTime(380,t+1.1);
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.11,t+0.3); g.gain.linearRampToValueAtTime(0,t+1.1);
-    s.start(t); s.stop(t+1.25); }
-  function blip(t,f){ var o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f;
-    var g=ctx.createGain(); g.gain.value=0; o.connect(g); g.connect(master);
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.045,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.28);
-    o.start(t); o.stop(t+0.32); }
-  function buildBed(){
-    master=ctx.createGain(); master.gain.value=0.9; master.connect(ctx.destination);
-    var lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=680;
-    var pg=ctx.createGain(); pg.gain.value=0.085; lp.connect(pg); pg.connect(master);
-    [55,55.4,82.5].forEach(function(f){ var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f; o.connect(lp); o.start(); });
-    var lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=0.17;
-    var lg=ctx.createGain(); lg.gain.value=0.028; lfo.connect(lg); lg.connect(pg.gain); lfo.start();
-    pad2=ctx.createGain(); pad2.gain.value=0; var lp2=ctx.createBiquadFilter(); lp2.type='lowpass'; lp2.frequency.value=1500; lp2.connect(pad2); pad2.connect(master);
-    [220,277.2,329.6].forEach(function(f){ var o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f; o.connect(lp2); o.start(); });
-  }
-  function cycle(t0){
-    whoosh(t0+7); whoosh(t0+15); whoosh(t0+22); whoosh(t0+32);
-    blip(t0+8,700); blip(t0+21,560);
-    pad2.gain.cancelScheduledValues(t0+21);
-    pad2.gain.setValueAtTime(0,t0+22); pad2.gain.linearRampToValueAtTime(0.055,t0+34); pad2.gain.linearRampToValueAtTime(0,t0+39.5);
-  }
-  function restart(){ film.querySelectorAll('.scene,.cap,.namecard').forEach(function(e){ e.style.animation='none'; e.offsetHeight; e.style.animation=''; }); }
-  function start(){ if(started) return; started=true;
-    try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); nb=noise(); buildBed();
-      var t0=ctx.currentTime+0.05; cycle(t0); restart();
-      setInterval(function(){ cycle(ctx.currentTime+0.02); restart(); }, LOOP*1000);
-      btn.style.display='none';
-    }catch(e){ btn.textContent='sound unavailable'; }
-  }
-  if(btn) btn.addEventListener('click', start);
-})();
-</script>
 </body>
 </html>

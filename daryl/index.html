@@ -6,315 +6,271 @@
 <title>Darryl — an alternative</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="A part-time path from behind the bar at The Pub into security work. Study a few hours a week, keep the job, start with kit you already have.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Tokens and base from the MC house system — canonical at /mc.css */
   :root{
-    --bg:#0b0b0d; --panel:#141418; --panel-2:#1b1b21; --panel-3:#23232b;
-    --line:rgba(236,231,221,.10); --line-2:rgba(236,231,221,.18);
-    --ink:#ece7dd; --dim:#9a948a; --faint:#696459;
-    --ochre:#deac67; --ochre-hi:#ecc688; --cobalt:#5c93df; --terra:#d07f58; --walnut:#9a7450;
-    --serif:'Cormorant Garamond',Georgia,serif;
-    --sans:'Inter',-apple-system,system-ui,sans-serif;
-    --mono:ui-monospace,'SF Mono',Menlo,monospace;
+    --bg:#08090b; --panel:#0f1114; --panel-2:#12151a;
+    --line:#1e2228; --line-2:#2a3038;
+    --ink:#e8ecf0; --dim:#8a929b; --faint:#585f68;
+    --ac-green:#6ee7b7; --ac-amber:#f5c451; --ac-blue:#7aa7ff; --ac-orange:#ff8f4a; --ac-red:#ef4444;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --sans:ui-sans-serif,-apple-system,"SF Pro Text",Inter,system-ui,sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);font:300 15.5px/1.65 var(--sans);
-       -webkit-font-smoothing:antialiased;padding:0 0 64px}
-  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
-  a{color:var(--ochre);text-decoration:none;border-bottom:1px solid var(--line-2)}
-  a:hover{border-color:var(--ochre)}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);
+       -webkit-font-smoothing:antialiased;padding:22px 16px 56px}
+  main{max-width:660px;margin:0 auto}
+  a{color:var(--ac-blue);text-decoration:none;border-bottom:1px solid var(--line-2)}
+  a:hover{border-color:var(--ac-blue)}
   b,strong{font-weight:500;color:var(--ink)}
-  .k{font:500 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ochre)}
-  h2{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
-     margin:0 0 20px;display:flex;align-items:center;gap:12px}
-  h2::after{content:'';flex:1;height:1px;background:var(--line)}
-  section{margin-top:52px}
-  p{color:#cdc8bd;max-width:64ch}
-  p+p{margin-top:13px}
+  p{color:#c3cad2;font-weight:300;margin:0 0 12px;max-width:62ch}
 
-  /* ============ FILM HERO ============ */
-  .film{position:relative;height:100svh;min-height:520px;overflow:hidden;background:#07070a;
-        border-bottom:1px solid var(--line)}
+  /* masthead */
+  .mast{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+        padding-bottom:12px;border-bottom:1px solid var(--line)}
+  h1{font:700 13px/1 var(--mono);letter-spacing:.22em}
+  h1 span{color:var(--ac-orange);margin:0 .04em}
+  .mast .s{font:500 10px/1.4 var(--mono);color:var(--faint);letter-spacing:.06em;text-align:right;white-space:nowrap}
+  .sub{font:400 11px/1.4 var(--mono);color:var(--faint);letter-spacing:.03em;margin-top:7px}
+
+  /* section label */
+  h2{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ac-amber);
+     display:flex;align-items:center;gap:12px;margin:34px 0 14px}
+  h2::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  /* film panel */
+  .film{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;
+        aspect-ratio:16/9;background:#06070a;margin:16px 0 6px}
   .scene{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
   .scene svg{width:100%;height:100%;display:block}
-  .ov{position:absolute;left:0;right:0;padding:0 8vw;z-index:5;color:#fff;opacity:0;
-      font-family:var(--serif);font-style:italic;line-height:1.25;
-      text-shadow:0 2px 22px rgba(0,0,0,.7);will-change:opacity,transform}
-  .vig{position:absolute;inset:0;z-index:4;pointer-events:none;
-       background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(0,0,0,.55))}
-  .grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
-         background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-  .replay{position:absolute;bottom:18px;right:18px;z-index:6;font:500 10px/1 var(--mono);
-          letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:rgba(0,0,0,.4);
-          border:1px solid var(--line-2);border-radius:999px;padding:9px 14px;cursor:pointer}
+  .cap{position:absolute;left:14px;bottom:14px;right:14px;z-index:5;opacity:0;
+       font:500 11px/1.45 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#eef2f6}
+  .cap::before{content:'';display:inline-block;width:6px;height:6px;margin-right:9px;
+               background:var(--ac-amber);vertical-align:middle;transform:translateY(-1px)}
+  .namecard{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;
+            align-items:center;justify-content:center;gap:12px;opacity:0}
+  .namecard .nm{font:700 clamp(22px,7vw,40px)/1 var(--mono);letter-spacing:.14em;color:var(--ink)}
+  .namecard .u{font:500 10px/1 var(--mono);letter-spacing:.18em;color:var(--ac-orange)}
+  .replay{position:absolute;bottom:12px;right:12px;z-index:6;font:500 9.5px/1 var(--mono);
+          letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:rgba(8,9,11,.6);
+          border:1px solid var(--line-2);border-radius:6px;padding:7px 11px;cursor:pointer}
   .replay:hover{color:var(--ink)}
-  .scrollcue{position:absolute;left:0;right:0;bottom:20px;z-index:6;text-align:center;
-             font:500 10px/1.5 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--faint);
-             opacity:0;animation:cueIn 1s 38s forwards}
-  @keyframes cueIn{to{opacity:1}}
+  .filmcap{font:400 10.5px/1.4 var(--mono);color:var(--faint);letter-spacing:.04em;margin:0 0 4px}
 
-  /* total loop 40s. windows: s1 0-7 s2 7-15 s3 15-22 s4 22-32 s5 32-40 */
-  .s1{animation:s1 40s infinite}  @keyframes s1{0%{opacity:0;transform:scale(1.12)}3%{opacity:1}15%{opacity:1;transform:scale(1.04)}19%{opacity:0}100%{opacity:0}}
-  .s2{animation:s2 40s infinite}  @keyframes s2{0%,16%{opacity:0;transform:scale(1.14) translateY(4%)}20%{opacity:1}35%{opacity:1;transform:scale(1.02) translateY(0)}39%{opacity:0}100%{opacity:0}}
-  .s3{animation:s3 40s infinite}  @keyframes s3{0%,36%{opacity:0;transform:scale(1.12)}40%{opacity:1}52%{opacity:1;transform:scale(1.03)}57%{opacity:0}100%{opacity:0}}
-  .s4{animation:s4 40s infinite}  @keyframes s4{0%,54%{opacity:0;transform:scale(1.1)}58%{opacity:1}78%{opacity:1;transform:scale(1.04)}82%{opacity:0}100%{opacity:0}}
-  .s5{animation:s5 40s infinite}  @keyframes s5{0%,80%{opacity:0;transform:scale(1.06)}85%{opacity:1}100%{opacity:1}}
+  /* loop 40s · windows s1 0-7 s2 7-15 s3 15-22 s4 22-32 s5 32-40 */
+  .s1{animation:s1 40s infinite}@keyframes s1{0%{opacity:0;transform:scale(1.08)}3%{opacity:1}16%{opacity:1;transform:scale(1.02)}19%{opacity:0}100%{opacity:0}}
+  .s2{animation:s2 40s infinite}@keyframes s2{0%,16%{opacity:0;transform:scale(1.1)}20%{opacity:1}35%{opacity:1;transform:scale(1.01)}39%{opacity:0}100%{opacity:0}}
+  .s3{animation:s3 40s infinite}@keyframes s3{0%,36%{opacity:0;transform:scale(1.08)}40%{opacity:1}52%{opacity:1;transform:scale(1.02)}57%{opacity:0}100%{opacity:0}}
+  .s4{animation:s4 40s infinite}@keyframes s4{0%,54%{opacity:0;transform:scale(1.06)}58%{opacity:1}78%{opacity:1;transform:scale(1.02)}82%{opacity:0}100%{opacity:0}}
+  .s5{animation:s5 40s infinite}@keyframes s5{0%,80%{opacity:0}85%{opacity:1}100%{opacity:1}}
+  .c1{animation:c1 40s infinite}@keyframes c1{0%,4%{opacity:0}8%{opacity:1}16%{opacity:1}19%{opacity:0}100%{opacity:0}}
+  .c2{animation:c2 40s infinite}@keyframes c2{0%,21%{opacity:0}25%{opacity:1}35%{opacity:1}38%{opacity:0}100%{opacity:0}}
+  .c3{animation:c3 40s infinite}@keyframes c3{0%,41%{opacity:0}45%{opacity:1}52%{opacity:1}56%{opacity:0}100%{opacity:0}}
+  .c4{animation:c4 40s infinite}@keyframes c4{0%,59%{opacity:0}64%{opacity:1}78%{opacity:1}81%{opacity:0}100%{opacity:0}}
+  .c5{animation:c5 40s infinite}@keyframes c5{0%,83%{opacity:0}89%{opacity:1}100%{opacity:1}}
+  @media(prefers-reduced-motion:reduce){.scene,.cap,.namecard{animation:none!important}.s5{opacity:1}.c5{opacity:1}}
 
-  .o1{animation:o1 40s infinite}  @keyframes o1{0%,4%{opacity:0}8%{opacity:1;transform:translateY(0)}15%{opacity:1}18%{opacity:0}100%{opacity:0}}
-  .o2{animation:o2 40s infinite}  @keyframes o2{0%,21%{opacity:0;transform:translateY(12px)}25%{opacity:1;transform:translateY(0)}34%{opacity:1}38%{opacity:0}100%{opacity:0}}
-  .o3{animation:o3 40s infinite}  @keyframes o3{0%,41%{opacity:0;transform:translateY(12px)}45%{opacity:1;transform:translateY(0)}52%{opacity:1}56%{opacity:0}100%{opacity:0}}
-  .o4{animation:o4 40s infinite}  @keyframes o4{0%,59%{opacity:0;transform:translateY(12px)}64%{opacity:1;transform:translateY(0)}78%{opacity:1}81%{opacity:0}100%{opacity:0}}
-  .o5{animation:o5 40s infinite}  @keyframes o5{0%,84%{opacity:0;transform:translateY(14px)}90%{opacity:1;transform:translateY(0)}100%{opacity:1}}
-  .o5b{animation:o5b 40s infinite} @keyframes o5b{0%,88%{opacity:0}94%{opacity:1}100%{opacity:1}}
+  /* why-you */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(max-width:600px){.grid3{grid-template-columns:1fr}}
+  .cell{border:1px solid var(--line);border-radius:8px;padding:15px;background:var(--panel)}
+  .cell .n{font:700 9px/1 var(--mono);letter-spacing:.12em;color:var(--faint)}
+  .cell h3{font:500 14px/1.3 var(--sans);margin:9px 0 6px;color:var(--ink)}
+  .cell p{font-size:13px;color:var(--dim);margin:0}
 
-  .ov.mid{top:42%;text-align:center;font-size:clamp(1.4rem,5.2vw,2.6rem)}
-  .ov.low{bottom:16%;font-size:clamp(1.15rem,4.4vw,2rem)}
-  .name{top:36%;text-align:center}
-  .name .nm{font-weight:500;font-style:normal;font-size:clamp(3rem,13vw,6rem);letter-spacing:-.01em;color:var(--ink)}
-  .name .u{display:block;font-family:var(--mono);font-style:normal;font-size:clamp(.72rem,2.6vw,.95rem);
-           letter-spacing:.2em;color:var(--ochre);margin-top:18px}
+  /* rule */
+  .rule{border:1px solid var(--line);border-left:2px solid var(--ac-red);border-radius:8px;
+        background:var(--panel);padding:18px}
+  .rule .lbl{font:700 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ac-red)}
+  .rule p.big{font:400 16.5px/1.4 var(--sans);color:var(--ink);margin:11px 0 0;max-width:40ch}
+  .rule p.fine{font-size:13px;color:var(--dim);margin:12px 0 0}
 
-  @media(prefers-reduced-motion:reduce){
-    .scene,.ov{animation:none!important}
-    .s5{opacity:1} .o5,.o5b{opacity:1} .scrollcue{opacity:1;animation:none}
-  }
-
-  /* ============ PLAN ============ */
-  .intro{padding:54px 0 0}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  @media(max-width:620px){.grid3{grid-template-columns:1fr}}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
-  .card .n{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-  .card h3{font:400 20px/1.25 var(--serif);margin:12px 0 8px;color:var(--ink)}
-  .card p{font-size:14px;color:var(--dim);max-width:none}
-
-  .rule{background:linear-gradient(180deg,var(--panel-2),var(--panel));
-        border:1px solid var(--line-2);border-left:3px solid var(--terra);border-radius:14px;padding:24px}
-  .rule .k{color:var(--terra)}
-  .rule p.big{font-family:var(--serif);font-size:clamp(1.3rem,3.6vw,1.7rem);line-height:1.35;
-              color:var(--ink);margin:14px 0 0;max-width:34ch}
-  .rule .fine{font-size:13.5px;color:var(--dim);margin-top:14px;max-width:62ch}
-
+  /* roadmap */
   .road{display:flex;flex-direction:column}
-  .ph{position:relative;padding:0 0 26px 30px;border-left:1px solid var(--line-2)}
+  .ph{position:relative;padding:0 0 22px 26px;border-left:1px solid var(--line-2)}
   .ph:last-child{border-left-color:transparent;padding-bottom:0}
-  .ph::before{content:'';position:absolute;left:-6.5px;top:3px;width:12px;height:12px;border-radius:50%;
-              background:var(--bg);border:2px solid var(--ochre)}
-  .ph.done::before{background:var(--ochre)}
-  .ph .when{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ochre)}
-  .ph h3{font:500 19px/1.3 var(--sans);margin:9px 0 6px}
-  .ph p{font-size:14px;color:var(--dim);max-width:60ch}
-  .ph .ms{display:inline-block;margin-top:11px;font:500 11.5px/1.4 var(--mono);color:var(--cobalt);
-          background:rgba(92,147,223,.10);border:1px solid rgba(92,147,223,.28);border-radius:7px;padding:5px 10px}
-  .ph .ms::before{content:'milestone — ';color:var(--faint)}
+  .ph::before{content:'';position:absolute;left:-5px;top:4px;width:9px;height:9px;border-radius:50%;
+              background:var(--bg);border:1.5px solid var(--ac-amber)}
+  .ph.done::before{background:var(--ac-amber)}
+  .ph .when{font:700 9.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ac-amber)}
+  .ph h3{font:500 15px/1.3 var(--sans);margin:7px 0 5px}
+  .ph p{font-size:13px;color:var(--dim);margin:0;max-width:58ch}
+  .ph .ms{display:inline-block;margin-top:9px;font:500 10.5px/1.4 var(--mono);color:var(--ac-blue);
+          border:1px solid var(--line-2);border-radius:6px;padding:5px 9px;letter-spacing:.04em}
+  .ph .ms::before{content:'MILESTONE  ';color:var(--faint)}
 
-  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media(max-width:620px){.lanes{grid-template-columns:1fr}}
-  .lane{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--panel)}
-  .lane.blue{border-top:2px solid var(--cobalt)} .lane.red{border-top:2px solid var(--terra)}
-  .lane .tag{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
-  .lane.blue .tag{color:var(--cobalt)} .lane.red .tag{color:var(--terra)}
-  .lane h3{font:400 23px/1.2 var(--serif);margin:10px 0 8px}
-  .lane p{font-size:14px;color:var(--dim);max-width:none}
-  .lane ul{list-style:none;margin:12px 0 0}
-  .lane li{font-size:13.5px;color:var(--dim);padding:5px 0 5px 16px;position:relative;line-height:1.5}
-  .lane li::before{content:'';position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%}
-  .lane.blue li::before{background:var(--cobalt)} .lane.red li::before{background:var(--terra)}
-  .sport{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,3vw,1.35rem);
-         color:var(--ink);text-align:center;margin:18px auto 0;max-width:40ch;line-height:1.4}
+  /* lanes */
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:600px){.lanes{grid-template-columns:1fr}}
+  .lane{border:1px solid var(--line);border-top-width:2px;border-radius:8px;padding:17px;background:var(--panel)}
+  .lane.blue{border-top-color:var(--ac-blue)}.lane.red{border-top-color:var(--ac-orange)}
+  .lane .tag{font:700 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+  .lane.blue .tag{color:var(--ac-blue)}.lane.red .tag{color:var(--ac-orange)}
+  .lane h3{font:500 16px/1.2 var(--sans);margin:9px 0 6px}
+  .lane p{font-size:13px;color:var(--dim);margin:0}
+  .lane ul{list-style:none;margin:10px 0 0}
+  .lane li{font-size:12.5px;color:var(--dim);padding:4px 0 4px 15px;position:relative;line-height:1.5}
+  .lane li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:5px}
+  .lane.blue li::before{background:var(--ac-blue)}.lane.red li::before{background:var(--ac-orange)}
+  .sport{font:400 13px/1.5 var(--sans);color:var(--dim);text-align:center;margin:14px auto 0;max-width:52ch}
+  .sport b{color:var(--ink);font-weight:500}
 
-  .ladder{display:flex;flex-direction:column;gap:8px}
-  .rung{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
-        background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-  .rung .step{font:500 11px/1 var(--mono);color:var(--faint);letter-spacing:.1em}
-  .rung h3{font:500 16px/1.3 var(--sans)}
-  .rung p{font-size:13px;color:var(--dim);margin-top:3px;max-width:none}
-  .rung .state{font:500 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;white-space:nowrap}
-  .have{color:#8fd3a8;background:rgba(80,200,120,.12);border:1px solid rgba(80,200,120,.3)}
-  .next{color:var(--ochre);background:rgba(222,172,103,.12);border:1px solid rgba(222,172,103,.3)}
-  .later{color:var(--dim);background:var(--panel-3);border:1px solid var(--line-2)}
-  @media(max-width:520px){.rung{grid-template-columns:1fr auto;gap:8px}.rung .step{grid-column:1/-1}}
+  /* ladder */
+  .ladder{display:flex;flex-direction:column;gap:6px}
+  .rung{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+        border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:var(--panel)}
+  .rung .step{font:700 10px/1 var(--mono);color:var(--faint);letter-spacing:.1em}
+  .rung h3{font:500 14px/1.3 var(--sans)}
+  .rung p{font-size:12px;color:var(--dim);margin:2px 0 0}
+  .rung .state{font:700 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:999px;white-space:nowrap;border:1px solid var(--line-2)}
+  .have{color:var(--ac-green);border-color:rgba(110,231,183,.35)}
+  .next{color:var(--ac-amber);border-color:rgba(245,196,81,.35)}
+  .later{color:var(--dim)}
+  @media(max-width:520px){.rung{grid-template-columns:1fr auto;gap:7px}.rung .step{grid-column:1/-1}}
 
-  .jobs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media(max-width:620px){.jobs{grid-template-columns:1fr}}
-  .job{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .job h3{font:500 15px/1.3 var(--sans);margin-bottom:6px}
-  .job h3 span{color:var(--ochre)}
-  .job p{font-size:13.5px;color:var(--dim);max-width:none}
+  /* jobs */
+  .jobs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:600px){.jobs{grid-template-columns:1fr}}
+  .job{border:1px solid var(--line);border-radius:8px;padding:15px;background:var(--panel)}
+  .job h3{font:600 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ac-orange);margin-bottom:7px}
+  .job p{font-size:12.5px;color:var(--dim);margin:0}
 
-  .real{width:100%;border-collapse:collapse;font-size:14px}
-  .real td{padding:12px 4px;border-top:1px solid var(--line);vertical-align:top;color:var(--dim)}
+  /* cost table */
+  table.real{width:100%;border-collapse:collapse;font-size:13px}
+  .real td{padding:11px 4px;border-top:1px solid var(--line);vertical-align:top;color:var(--dim)}
   .real tr:first-child td{border-top:0}
-  .real td:first-child{color:var(--ink);font-weight:500;width:34%}
-  .ph-note{font-size:12.5px;color:var(--faint);margin-top:12px;font-style:italic}
+  .real td:first-child{color:var(--ink);font-weight:500;width:32%}
+  .note{font:400 11.5px/1.5 var(--mono);color:var(--faint);margin-top:11px;letter-spacing:.02em}
 
-  .close{margin-top:56px;padding:40px 0 0;border-top:1px solid var(--line);text-align:center}
-  .close p{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,3.8vw,1.8rem);line-height:1.4;color:var(--ink);margin:0 auto;max-width:28ch}
-  .close .sig{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:24px}
-  footer{margin-top:40px;text-align:center;font:500 10px/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  /* close */
+  .close{margin-top:40px;padding-top:16px;border-top:1px solid var(--line)}
+  .close p{font-size:15px;color:var(--ink);font-weight:300;max-width:46ch}
+  .close .sig{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:14px}
+  footer{margin-top:28px;padding-top:12px;border-top:1px solid var(--line);
+         font:500 9.5px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
 </style>
 </head>
 <body>
+<main>
 
-<!-- ============ FILM ============ -->
-<div class="film" id="film">
-  <!-- S1 The Pub, door opens inward -->
-  <div class="scene s1">
-    <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs><linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3526"/><stop offset="1" stop-color="#241a12"/></linearGradient>
-      <radialGradient id="glow" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#f6c87a" stop-opacity=".9"/><stop offset="1" stop-color="#f6c87a" stop-opacity="0"/></radialGradient></defs>
-      <rect width="320" height="180" fill="url(#d1)"/>
-      <g stroke="#5a4634" stroke-width="1" opacity=".45"><line x1="0" y1="46" x2="320" y2="46"/><line x1="0" y1="96" x2="320" y2="96"/><line x1="64" y1="0" x2="64" y2="46"/><line x1="150" y1="46" x2="150" y2="96"/><line x1="250" y1="0" x2="250" y2="46"/></g>
-      <!-- doorway, door swung INWARD (into the dark interior) -->
-      <rect x="120" y="58" width="80" height="112" fill="#120c08"/>
-      <polygon points="120,58 120,170 150,160 150,68" fill="#2c1f15"/>
-      <path d="M120,58 L150,68 L150,160 L120,170" fill="none" stroke="#6a4a2c" stroke-width="1"/>
-      <rect x="150" y="66" width="50" height="100" fill="url(#glow)" opacity=".7"/>
-      <ellipse cx="170" cy="170" rx="70" ry="9" fill="#f6c87a" opacity=".16"/>
-      <text x="160" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="12" letter-spacing="3" fill="#caa36a" opacity=".85">THE PUB</text>
-    </svg>
+  <div class="mast">
+    <h1>DARRYL<span>/</span></h1>
+    <div class="s">VALLETTA<br>15 NOV 2026</div>
   </div>
-  <!-- S2 up the street -->
-  <div class="scene s2">
-    <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs><linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d98a4a"/><stop offset=".5" stop-color="#8a5a3a"/><stop offset="1" stop-color="#2e2017"/></linearGradient></defs>
-      <rect width="320" height="180" fill="url(#sky2)"/>
-      <polygon points="0,0 120,40 120,180 0,180" fill="#3b2a1d"/>
-      <polygon points="320,0 200,40 200,180 320,180" fill="#2f2116"/>
-      <g fill="#f6c87a" opacity=".85"><rect x="22" y="60" width="12" height="18"/><rect x="22" y="96" width="12" height="18"/><rect x="60" y="72" width="12" height="18"/><rect x="286" y="60" width="12" height="18"/><rect x="286" y="98" width="12" height="18"/><rect x="250" y="74" width="12" height="18"/></g>
-      <path d="M120,56 Q160,70 200,56" stroke="#d8cbb0" stroke-width="1" fill="none"/>
-      <g fill="#e9e0cf" opacity=".8"><rect x="140" y="60" width="7" height="12"/><rect x="156" y="62" width="7" height="12"/><rect x="172" y="60" width="7" height="12"/></g>
-      <polygon points="120,180 200,180 170,70 150,70" fill="#1a120c"/>
-      <circle cx="160" cy="80" r="3" fill="#ffe6b0"/>
-    </svg>
-  </div>
-  <!-- S3 out over harbour -->
-  <div class="scene s3">
-    <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3a05a"/><stop offset=".55" stop-color="#9a6a4a"/><stop offset="1" stop-color="#3a4a5a"/></linearGradient></defs>
-      <rect width="320" height="180" fill="url(#sky3)"/>
-      <rect y="120" width="320" height="60" fill="#2a3c4c"/>
-      <g stroke="#6a8aa0" stroke-width="1" opacity=".5"><line x1="0" y1="132" x2="320" y2="132"/><line x1="0" y1="146" x2="320" y2="146"/><line x1="0" y1="162" x2="320" y2="162"/></g>
-      <polygon points="0,120 0,96 40,96 48,104 110,104 118,96 170,96 178,104 240,104 248,96 320,96 320,120" fill="#5a4636"/>
-      <g fill="#f6c87a" opacity=".8"><rect x="30" y="100" width="4" height="6"/><rect x="90" y="100" width="4" height="6"/><rect x="200" y="100" width="4" height="6"/></g>
-      <ellipse cx="240" cy="128" rx="60" ry="6" fill="#f6c87a" opacity=".4"/><circle cx="240" cy="118" r="10" fill="#ffd98a" opacity=".85"/>
-    </svg>
-  </div>
-  <!-- S4 into the work -->
-  <div class="scene s4">
-    <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs><radialGradient id="n4" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#132132"/><stop offset="1" stop-color="#070c12"/></radialGradient></defs>
-      <rect width="320" height="180" fill="url(#n4)"/>
-      <g fill="none" stroke="#58c6b0" stroke-width="1.2"><circle cx="70" cy="70" r="14" opacity=".9"/><circle cx="70" cy="70" r="26" opacity=".55"/><circle cx="70" cy="70" r="40" opacity=".28"/></g>
-      <circle cx="70" cy="70" r="3" fill="#58c6b0"/>
-      <g stroke="#7aa7ff" stroke-width="1" opacity=".75"><line x1="180" y1="50" x2="230" y2="80"/><line x1="230" y1="80" x2="210" y2="130"/><line x1="230" y1="80" x2="280" y2="60"/><line x1="210" y1="130" x2="260" y2="120"/><line x1="180" y1="50" x2="150" y2="95"/><line x1="150" y1="95" x2="210" y2="130"/></g>
-      <g fill="#7aa7ff"><circle cx="180" cy="50" r="3.5"/><circle cx="230" cy="80" r="4.5"/><circle cx="210" cy="130" r="3.5"/><circle cx="280" cy="60" r="3"/><circle cx="260" cy="120" r="3"/><circle cx="150" cy="95" r="3"/></g>
-      <g transform="translate(150,95)"><rect x="-13" y="0" width="26" height="20" rx="3" fill="none" stroke="#f0b64a" stroke-width="1.6"/><path d="M-7,0 V-7 a7,7 0 0 1 14,0 V0" fill="none" stroke="#f0b64a" stroke-width="1.6"/><circle cx="0" cy="9" r="2.4" fill="#f0b64a"/></g>
-    </svg>
-  </div>
-  <!-- S5 name card -->
-  <div class="scene s5">
-    <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <rect width="320" height="180" fill="#07070a"/>
-      <rect x="146" y="52" width="28" height="76" fill="#0e1a26"/>
-      <polygon points="146,52 162,58 162,122 146,128" fill="#58c6b0" opacity=".9"/>
-      <ellipse cx="156" cy="130" rx="40" ry="5" fill="#58c6b0" opacity=".16"/>
-    </svg>
+  <div class="sub">an alternative, on the side — security work</div>
+
+  <!-- FILM -->
+  <p class="filmcap" style="margin-top:18px">// the pitch, in forty seconds</p>
+  <div class="film" id="film">
+    <div class="scene s1">
+      <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="180" fill="#1c140d"/>
+        <g stroke="#3a2c1e" stroke-width="1"><line x1="0" y1="46" x2="320" y2="46"/><line x1="0" y1="96" x2="320" y2="96"/><line x1="64" y1="0" x2="64" y2="46"/><line x1="150" y1="46" x2="150" y2="96"/><line x1="250" y1="0" x2="250" y2="46"/></g>
+        <rect x="120" y="58" width="80" height="112" fill="#0c0905"/>
+        <polygon points="120,58 120,170 150,160 150,68" fill="#241a10"/>
+        <path d="M120,58 L150,68 L150,160 L120,170" fill="none" stroke="#5a4428" stroke-width="1"/>
+        <rect x="150" y="70" width="48" height="94" fill="#f5c451" opacity=".22"/>
+        <text x="160" y="38" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="4" fill="#9a7e4a">THE PUB</text>
+      </svg>
+    </div>
+    <div class="scene s2">
+      <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="180" fill="#241812"/>
+        <polygon points="0,0 120,40 120,180 0,180" fill="#1c130d"/>
+        <polygon points="320,0 200,40 200,180 320,180" fill="#17100a"/>
+        <g fill="#f5c451" opacity=".7"><rect x="22" y="60" width="11" height="17"/><rect x="22" y="96" width="11" height="17"/><rect x="60" y="72" width="11" height="17"/><rect x="286" y="60" width="11" height="17"/><rect x="286" y="98" width="11" height="17"/><rect x="250" y="74" width="11" height="17"/></g>
+        <polygon points="120,180 200,180 170,70 150,70" fill="#0d0906"/>
+        <circle cx="160" cy="80" r="3" fill="#f5c451"/>
+      </svg>
+    </div>
+    <div class="scene s3">
+      <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="180" fill="#243038"/>
+        <rect y="118" width="320" height="62" fill="#161f26"/>
+        <g stroke="#2e3e48" stroke-width="1"><line x1="0" y1="132" x2="320" y2="132"/><line x1="0" y1="148" x2="320" y2="148"/><line x1="0" y1="164" x2="320" y2="164"/></g>
+        <polygon points="0,118 0,94 40,94 48,102 110,102 118,94 170,94 178,102 240,102 248,94 320,94 320,118" fill="#39302a"/>
+        <g fill="#f5c451" opacity=".6"><rect x="30" y="98" width="4" height="6"/><rect x="90" y="98" width="4" height="6"/><rect x="200" y="98" width="4" height="6"/></g>
+        <circle cx="240" cy="116" r="9" fill="#f5c451" opacity=".55"/>
+      </svg>
+    </div>
+    <div class="scene s4">
+      <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="180" fill="#0a1016"/>
+        <g fill="none" stroke="#6ee7b7" stroke-width="1.2"><circle cx="70" cy="70" r="13" opacity=".9"/><circle cx="70" cy="70" r="25" opacity=".5"/><circle cx="70" cy="70" r="39" opacity=".24"/></g>
+        <circle cx="70" cy="70" r="3" fill="#6ee7b7"/>
+        <g stroke="#7aa7ff" stroke-width="1" opacity=".8"><line x1="180" y1="50" x2="230" y2="80"/><line x1="230" y1="80" x2="210" y2="130"/><line x1="230" y1="80" x2="280" y2="60"/><line x1="210" y1="130" x2="260" y2="120"/><line x1="180" y1="50" x2="150" y2="95"/><line x1="150" y1="95" x2="210" y2="130"/></g>
+        <g fill="#7aa7ff"><circle cx="180" cy="50" r="3.5"/><circle cx="230" cy="80" r="4.5"/><circle cx="210" cy="130" r="3.5"/><circle cx="280" cy="60" r="3"/><circle cx="260" cy="120" r="3"/><circle cx="150" cy="95" r="3"/></g>
+        <g transform="translate(150,95)"><rect x="-12" y="0" width="24" height="18" rx="2" fill="none" stroke="#f5c451" stroke-width="1.5"/><path d="M-6,0 V-6 a6,6 0 0 1 12,0 V0" fill="none" stroke="#f5c451" stroke-width="1.5"/><circle cx="0" cy="8" r="2.2" fill="#f5c451"/></g>
+      </svg>
+    </div>
+    <div class="scene s5"><svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="320" height="180" fill="#06070a"/><rect x="146" y="52" width="26" height="76" fill="#0c1419"/><polygon points="146,52 160,58 160,122 146,128" fill="#6ee7b7" opacity=".85"/></svg></div>
+
+    <div class="cap c1">The Pub. Archbishop Street.</div>
+    <div class="cap c2">Fifteen years behind the bar.</div>
+    <div class="cap c3">You already read people for a living.</div>
+    <div class="cap c4">Curiosity. Patience. The nerve to report it.</div>
+    <div class="namecard c5"><div class="nm">DARRYL</div><div class="u">mattcarpenter.com/darryl</div></div>
+
+    <button class="replay" onclick="document.getElementById('film').querySelectorAll('.scene,.cap,.namecard').forEach(function(e){e.style.animation='none';e.offsetHeight;e.style.animation=''})">replay</button>
   </div>
 
-  <div class="vig"></div>
-  <div class="grain"></div>
+  <!-- INTRO -->
+  <p style="margin-top:20px">This is not "quit The Pub and gamble." It's a part-time path into <b>security work</b>: finding the weak points in systems before the wrong people do, and getting paid to say what you found. Start this week, with a device already in the post to you, and never miss a shift.</p>
 
-  <div class="ov low o1">The Pub. Archbishop Street.</div>
-  <div class="ov low o2">Fifteen years behind the bar.</div>
-  <div class="ov mid o3">Everything you learned<br>reading people still counts.</div>
-  <div class="ov low o4">Curiosity. Patience.<br>The nerve to say what you found.</div>
-  <div class="ov name o5"><span class="nm">Darryl.</span><span class="u o5b">mattcarpenter.com/darryl</span></div>
+  <h2>Why you</h2>
+  <div class="grid3">
+    <div class="cell"><div class="n">01</div><h3>You read people</h3><p>Fifteen years clocking who's trouble and who's about to walk the bill. Security is reading a system the same way.</p></div>
+    <div class="cell"><div class="n">02</div><h3>Rugby taught phases</h3><p>You think in attack and defence, in finding the gap before the line closes. Red team and blue team is that, with keyboards.</p></div>
+    <div class="cell"><div class="n">03</div><h3>You can grind</h3><p>A double shift on your feet is stamina most people lack. This work rewards patience over genius.</p></div>
+  </div>
 
-  <div class="scrollcue">scroll ↓</div>
-  <button class="replay" onclick="var f=document.getElementById('film');f.querySelectorAll('.scene,.ov').forEach(function(e){e.style.animation='none';e.offsetHeight;e.style.animation=''});">replay</button>
-</div>
+  <h2>The one rule</h2>
+  <div class="rule">
+    <div class="lbl">Non-negotiable</div>
+    <p class="big">Only test what's yours, or what someone invited you to test in writing.</p>
+    <p class="fine">Everything else is a crime, however good your intentions. Malta learned this hard: in 2022 some students found a flaw in a local app, reported it to help, and got arrested. The law has since moved to <a href="https://www.independent.com.mt/articles/2024-09-11/local-news/Public-consultation-launched-for-national-policy-regulating-ethical-hackers-6736264069">protect researchers</a> who follow a company's published rules. The platforms below hand you that written permission from day one.</p>
+  </div>
 
-<!-- ============ PLAN ============ -->
-<div class="wrap">
+  <h2>The first six months</h2>
+  <p style="margin-bottom:16px">A few hours a week, most of it free, all of it while you keep working. Nobody checks a certificate at the door here. They check whether you can do it.</p>
+  <div class="road">
+    <div class="ph done"><div class="when">Weeks 1–2 · does this grab me?</div><h3>Poke at it, cost nothing</h3><p>Free account on <a href="https://tryhackme.com">TryHackMe</a>, intro rooms on your phone between shifts. Flash <b>Bruce</b> onto the Cardputer Matt's sending and feel radio, NFC and signals as real things.</p><span class="ms">you finish the first room and want the next</span></div>
+    <div class="ph"><div class="when">Weeks 3–8 · foundations</div><h3>How systems talk</h3><p>Networking basics, a little Linux, how a request becomes a response. Thirty minutes a day beats a three-hour binge once a month.</p><span class="ms">you solve a machine with no walkthrough</span></div>
+    <div class="ph"><div class="when">Weeks 9–16 · pick a lane</div><h3>Defend, or probe</h3><p>Choose blue team or red team and go deep on one. Aim at an entry cert like <a href="https://www.comptia.org/certifications/security">Security+</a>, or straight at practice if you'd rather prove it by doing.</p><span class="ms">a cert booked, or your first writeup online</span></div>
+    <div class="ph"><div class="when">Weeks 17–24 · prove it</div><h3>Real targets, real permission</h3><p>Practice on <a href="https://www.hackthebox.com">Hack The Box</a>, then a live program on <a href="https://www.intigriti.com">Intigriti</a> where companies pay you to find flaws inside a set scope. Write up everything.</p><span class="ms">first valid finding, or first interview — Flipper One as the reward</span></div>
+  </div>
 
-  <section class="intro">
-    <div class="k">For Darryl · Valletta</div>
-    <p style="font-family:var(--serif);font-size:clamp(1.5rem,5vw,2.3rem);font-weight:500;line-height:1.12;color:var(--ink);margin:14px 0 20px;max-width:18ch">An alternative, on the side.</p>
-    <p>This is not "quit The Pub and gamble." It's a part-time path into <b>security work</b>: finding the weak points in systems before the wrong people do, and getting paid to say what you found. You can start this week, with a device already on its way to you, and never miss a shift.</p>
-    <p>Here's why I think it suits you in particular, what the first six months actually look like, the gear, and where the real jobs are in Malta.</p>
-  </section>
+  <h2>The two lanes</h2>
+  <div class="lanes">
+    <div class="lane blue"><div class="tag">Blue · defence</div><h3>You hold the line</h3><p>Watch the system, spot the intrusion, shut it down. Steady, in demand, the bulk of the jobs.</p><ul><li>Monitor and respond to threats</li><li>Harden systems so they hold</li><li>Last-orders calm, applied to an incident</li></ul></div>
+    <div class="lane red"><div class="tag">Red · offence</div><h3>You find the gap</h3><p>Probe a system you're hired to probe, find the way in before a criminal does, report it. Where the bounty money lives.</p><ul><li>Test apps and networks on request</li><li>Think like the opposition, legally</li><li>Paid per flaw you find and prove</li></ul></div>
+  </div>
+  <p class="sport">It's a contact sport. <b>Offence probes, defence holds</b>, and you study the other side's phases before they run them.</p>
 
-  <section>
-    <h2>Why you, specifically</h2>
-    <div class="grid3">
-      <div class="card"><div class="n">01</div><h3>You read people for a living</h3><p>Fifteen years clocking who's trouble, who's lying, who's about to leave without paying. Security is reading a system the same way. That instinct is the job.</p></div>
-      <div class="card"><div class="n">02</div><h3>Rugby taught you phases</h3><p>You already think in attack and defence, in finding the gap in a line before it closes. Red team and blue team is that, with keyboards.</p></div>
-      <div class="card"><div class="n">03</div><h3>You can grind</h3><p>A double shift on your feet is stamina most people don't have. This work rewards patience more than genius. You've got the patience.</p></div>
-    </div>
-  </section>
+  <h2>Your kit, as a ladder</h2>
+  <div class="ladder">
+    <div class="rung"><div class="step">01</div><div><h3>M5Stack Cardputer + Bruce</h3><p>Pocket computer for radio, NFC and embedded tinkering. Your first month's playground.</p></div><div class="state have">on its way</div></div>
+    <div class="rung"><div class="step">02</div><div><h3>LilyGO T-Embed (CC1101)</h3><p>A bigger board with real antennas when you go deeper. Cheap.</p></div><div class="state next">when ready</div></div>
+    <div class="rung"><div class="step">03</div><div><h3>Flipper One</h3><p>The one you already want. By the time it ships, you'll know what to do with it.</p></div><div class="state later">the reward</div></div>
+  </div>
+  <p class="note">// Flipper One is pre-order only, no ship date, ~$379 when its campaign runs. You don't need it to start.</p>
 
-  <section>
-    <h2>The one rule</h2>
-    <div class="rule">
-      <div class="k">Non-negotiable</div>
-      <p class="big">Only test what's yours, or what someone has invited you to test in writing.</p>
-      <p class="fine">Everything else is a crime, however good your intentions. Malta learned this the hard way: in 2022 some students found a flaw in a local app, reported it to be helpful, and got arrested. The law has since moved to <a href="https://www.independent.com.mt/articles/2024-09-11/local-news/Public-consultation-launched-for-national-policy-regulating-ethical-hackers-6736264069">protect researchers</a> who follow a company's published rules. Follow the rules and you're a professional. Skip them and you're the cautionary tale. The platforms below give you written permission from day one, so you never have to guess.</p>
-    </div>
-  </section>
+  <h2>Where the work is, in Malta</h2>
+  <div class="jobs">
+    <div class="job"><h3>iGaming</h3><p>The island's biggest employer, every operator regulated to the teeth on security and fraud. Steady demand.</p></div>
+    <div class="job"><h3>Fintech &amp; blockchain</h3><p>Malta leaned hard into financial tech. MFSA-regulated firms need security people, and pay for them.</p></div>
+    <div class="job"><h3>Bug bounty, anywhere</h3><p>No Maltese employer needed. Programs pay per finding, from your couch, in your own hours.</p></div>
+    <div class="job"><h3>Legal tailwind</h3><p>Malta is building legal cover for researchers who follow the rules. The field is opening here.</p></div>
+  </div>
 
-  <section>
-    <h2>The first six months</h2>
-    <p style="margin-bottom:26px">A few hours a week, most of it free, all of it while you keep working. Nobody checks a certificate at the door of this field. They check whether you can do it.</p>
-    <div class="road">
-      <div class="ph done"><div class="when">Weeks 1–2 · does this even grab me?</div><h3>Poke at it, cost nothing</h3><p>Make a free account on <a href="https://tryhackme.com">TryHackMe</a> and do the intro rooms on your phone between shifts. Flash <b>Bruce</b> onto the Cardputer Matt's sending you and feel radio, NFC and signals as real things you can touch, not theory.</p><span class="ms">You finish the first room and genuinely want the next one.</span></div>
-      <div class="ph"><div class="when">Weeks 3–8 · foundations</div><h3>How systems actually talk</h3><p>Networking basics, a bit of Linux, how a request becomes a response. This is the boring-but-everything layer. TryHackMe's beginner path walks you through it. Thirty minutes a day beats a three-hour binge once a month.</p><span class="ms">You solve a machine start to finish without a walkthrough.</span></div>
-      <div class="ph"><div class="when">Weeks 9–16 · pick a lane</div><h3>Defend, or probe</h3><p>Choose blue team (protect and watch) or red team (test and break, with permission). Go deep on one. Aim at a recognised entry cert like <a href="https://www.comptia.org/certifications/security">CompTIA Security+</a> if you want a badge employers recognise, or straight at practice if you'd rather prove it by doing.</p><span class="ms">A cert booked, or your first written-up challenge online.</span></div>
-      <div class="ph"><div class="when">Weeks 17–24 · prove it in the open</div><h3>Real targets, real permission</h3><p>Practice on <a href="https://www.hackthebox.com">Hack The Box</a>, then try a live program on <a href="https://www.intigriti.com">Intigriti</a> (European, Malta-friendly) where companies pay you to find flaws inside a set scope. Write up everything you do. Those writeups are your CV in this field.</p><span class="ms">Your first valid finding, or your first interview. And the Flipper One as your reward.</span></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>The two lanes, up close</h2>
-    <div class="lanes">
-      <div class="lane blue"><div class="tag">Blue team · defence</div><h3>You hold the line</h3><p>Watch the system, spot the intrusion, shut it down. Steady, in-demand, the bulk of the actual jobs.</p><ul><li>Monitoring and responding to threats</li><li>Hardening systems so they don't fall over</li><li>The calm under pressure of a last-orders rush, applied to an incident</li></ul></div>
-      <div class="lane red"><div class="tag">Red team · offence</div><h3>You find the gap first</h3><p>Probe a system you're hired to probe, find the way in before a criminal does, report it. Flashier, and where the bug-bounty money lives.</p><ul><li>Testing apps and networks on request</li><li>Thinking like the opposition, legally</li><li>Getting paid per flaw you find and prove</li></ul></div>
-    </div>
-    <p class="sport">It's a contact sport. Offence probes, defence holds, and you study the other side's phases before they run them.</p>
-  </section>
-
-  <section>
-    <h2>Your kit, as a ladder</h2>
-    <div class="ladder">
-      <div class="rung"><div class="step">STEP 1</div><div><h3>M5Stack Cardputer + Bruce</h3><p>A pocket computer for radio, NFC and embedded tinkering. Your whole first month's playground.</p></div><div class="state have">on its way to you</div></div>
-      <div class="rung"><div class="step">STEP 2</div><div><h3>LilyGO T-Embed (CC1101)</h3><p>A bigger board with real antennas when you want to go deeper. The "I'm serious now" purchase, and it's cheap.</p></div><div class="state next">when you're ready</div></div>
-      <div class="rung"><div class="step">STEP 3</div><div><h3>Flipper One</h3><p>The one you already want. By the time it ships, you'll actually know what to do with it. Earn it at the six-month mark.</p></div><div class="state later">the reward</div></div>
-    </div>
-    <p class="ph-note">Flipper One is pre-order only right now, no ship date yet, roughly $379 when its campaign runs. You don't need it to start. That's the point.</p>
-  </section>
-
-  <section>
-    <h2>Where the work is, in Malta</h2>
-    <div class="jobs">
-      <div class="job"><h3><span>iGaming</span></h3><p>The island's biggest employer, and every operator is regulated to the teeth on security and fraud. Steady demand for people who can defend systems and pass audits.</p></div>
-      <div class="job"><h3><span>Fintech &amp; blockchain</span></h3><p>Malta leaned hard into financial tech. MFSA-regulated firms need security people, and the pay reflects it.</p></div>
-      <div class="job"><h3><span>Bug bounty, from anywhere</span></h3><p>You don't need a Maltese employer at all. Programs on Intigriti and others pay per finding, from your couch, in your own hours.</p></div>
-      <div class="job"><h3><span>The legal tailwind</span></h3><p>Malta is actively building legal cover for researchers who follow the rules. The field is opening here, not closing.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>The honest cost</h2>
-    <table class="real">
-      <tr><td>Money to start</td><td>Near zero. TryHackMe and Hack The Box have free tiers; the Cardputer is already covered. A paid plan later is about the price of a few pints a month.</td></tr>
-      <tr><td>Time</td><td>Three to five hours a week. Phone rooms on breaks, a longer session on a day off.</td></tr>
-      <tr><td>The job</td><td>You keep it. This runs alongside, not instead. Walk away any time with nothing lost but some evenings.</td></tr>
-      <tr><td>First income</td><td>A first bounty or a junior role is realistic inside a year at this pace, faster if it grabs you.</td></tr>
-    </table>
-    <p class="ph-note">The numbers above are honest ranges, not promises. The only thing I'd promise is that the first room is free and takes twenty minutes.</p>
-  </section>
+  <h2>The honest cost</h2>
+  <table class="real">
+    <tr><td>Money to start</td><td>Near zero. TryHackMe and Hack The Box have free tiers; the Cardputer is covered. A paid plan later costs a few pints a month.</td></tr>
+    <tr><td>Time</td><td>Three to five hours a week. Phone rooms on breaks, a longer session on a day off.</td></tr>
+    <tr><td>The job</td><td>You keep it. This runs alongside, not instead. Walk away any time, nothing lost but some evenings.</td></tr>
+    <tr><td>First income</td><td>A first bounty or junior role is realistic inside a year at this pace, faster if it grabs you.</td></tr>
+  </table>
+  <p class="note">// honest ranges, not promises. the only promise: the first room is free and takes twenty minutes.</p>
 
   <div class="close">
     <p>The door opens inward. Most people never pull it. This is just me holding it for a second.</p>
@@ -323,6 +279,6 @@
 
   <footer>mattcarpenter.com/darryl · a quiet nudge, no pressure</footer>
 
-</div>
+</main>
 </body>
 </html>

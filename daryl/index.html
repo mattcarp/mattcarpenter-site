@@ -55,6 +55,11 @@
           letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:rgba(8,9,11,.6);
           border:1px solid var(--line-2);border-radius:6px;padding:7px 11px;cursor:pointer}
   .replay:hover{color:var(--ink)}
+  .playbtn{position:absolute;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;
+           gap:10px;background:rgba(6,7,10,.5);color:var(--ink);border:0;cursor:pointer;
+           font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+  .playbtn .tri{color:var(--ac-amber);font-size:15px;transform:translateY(-1px)}
+  .playbtn:hover{background:rgba(6,7,10,.35)}
   .filmcap{font:400 10.5px/1.4 var(--mono);color:var(--faint);letter-spacing:.04em;margin:0 0 4px}
 
   /* loop 40s · windows s1 0-7 s2 7-15 s3 15-22 s4 22-32 s5 32-40 */
@@ -212,6 +217,7 @@
     <div class="namecard c5"><div class="nm">DARRYL</div><div class="u">mattcarpenter.com/darryl</div></div>
 
     <button class="replay" onclick="document.getElementById('film').querySelectorAll('.scene,.cap,.namecard').forEach(function(e){e.style.animation='none';e.offsetHeight;e.style.animation=''})">replay</button>
+    <button class="playbtn" id="playbtn"><span class="tri">&#9658;</span> play with sound</button>
   </div>
 
   <!-- INTRO -->
@@ -280,5 +286,48 @@
   <footer>mattcarpenter.com/darryl · a quiet nudge, no pressure</footer>
 
 </main>
+<script>
+(function(){
+  var film=document.getElementById('film'), btn=document.getElementById('playbtn');
+  var ctx, master, pad2, started=false, LOOP=40, nb;
+  function noise(){ var b=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate), d=b.getChannelData(0);
+    for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1; return b; }
+  function whoosh(t){ var s=ctx.createBufferSource(); s.buffer=nb; s.loop=true;
+    var bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=0.7;
+    var g=ctx.createGain(); g.gain.value=0; s.connect(bp); bp.connect(g); g.connect(master);
+    bp.frequency.setValueAtTime(260,t); bp.frequency.exponentialRampToValueAtTime(1900,t+0.5); bp.frequency.exponentialRampToValueAtTime(380,t+1.1);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.11,t+0.3); g.gain.linearRampToValueAtTime(0,t+1.1);
+    s.start(t); s.stop(t+1.25); }
+  function blip(t,f){ var o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f;
+    var g=ctx.createGain(); g.gain.value=0; o.connect(g); g.connect(master);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.045,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.28);
+    o.start(t); o.stop(t+0.32); }
+  function buildBed(){
+    master=ctx.createGain(); master.gain.value=0.9; master.connect(ctx.destination);
+    var lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=680;
+    var pg=ctx.createGain(); pg.gain.value=0.085; lp.connect(pg); pg.connect(master);
+    [55,55.4,82.5].forEach(function(f){ var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f; o.connect(lp); o.start(); });
+    var lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=0.17;
+    var lg=ctx.createGain(); lg.gain.value=0.028; lfo.connect(lg); lg.connect(pg.gain); lfo.start();
+    pad2=ctx.createGain(); pad2.gain.value=0; var lp2=ctx.createBiquadFilter(); lp2.type='lowpass'; lp2.frequency.value=1500; lp2.connect(pad2); pad2.connect(master);
+    [220,277.2,329.6].forEach(function(f){ var o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f; o.connect(lp2); o.start(); });
+  }
+  function cycle(t0){
+    whoosh(t0+7); whoosh(t0+15); whoosh(t0+22); whoosh(t0+32);
+    blip(t0+8,700); blip(t0+21,560);
+    pad2.gain.cancelScheduledValues(t0+21);
+    pad2.gain.setValueAtTime(0,t0+22); pad2.gain.linearRampToValueAtTime(0.055,t0+34); pad2.gain.linearRampToValueAtTime(0,t0+39.5);
+  }
+  function restart(){ film.querySelectorAll('.scene,.cap,.namecard').forEach(function(e){ e.style.animation='none'; e.offsetHeight; e.style.animation=''; }); }
+  function start(){ if(started) return; started=true;
+    try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); nb=noise(); buildBed();
+      var t0=ctx.currentTime+0.05; cycle(t0); restart();
+      setInterval(function(){ cycle(ctx.currentTime+0.02); restart(); }, LOOP*1000);
+      btn.style.display='none';
+    }catch(e){ btn.textContent='sound unavailable'; }
+  }
+  if(btn) btn.addEventListener('click', start);
+})();
+</script>
 </body>
 </html>

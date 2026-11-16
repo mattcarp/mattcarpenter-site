@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>[NAME]</title>
+<title>Daryl</title>
 <meta name="robots" content="noindex,nofollow">
 <style>
   /* Tokens from the MC house system, canonical at /mc.css */
@@ -29,6 +29,9 @@
   .end{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;
        justify-content:center;gap:2.2vh;opacity:0;transition:opacity 1s ease .4s;text-align:center;padding:0 6vw}
   .end.on{opacity:1}
+  .end .plan{margin-top:3vh;padding:14px 22px;border:1px solid var(--ac-amber);color:var(--ac-amber);
+             font:600 clamp(11px,3vw,14px)/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;pointer-events:none}
+  .end.on .plan{pointer-events:auto}
   .end .nm{font:700 clamp(34px,11vw,84px)/1 var(--mono);letter-spacing:.12em;color:var(--ink)}
   .end .tag{font:600 clamp(10px,2.8vw,14px)/1.6 var(--mono);letter-spacing:.24em;color:var(--ac-amber)}
   .play{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;
@@ -135,7 +138,7 @@
   <div class="cap" data-i="2">Out past the walls, the airwaves are wide open.</div>
   <div class="cap" data-i="3">Bruce firmware. A Cardputer. A LilyGO T-board.</div>
   <div class="cap" data-i="4">Off-grid mesh. Meshtastic. MeshCore. No towers.</div>
-  <div class="end" id="end"><div class="nm">[NAME]</div><div class="tag">SECURITY · RADIO · MESH</div></div>
+  <div class="end" id="end"><div class="nm">Daryl</div><div class="tag">SECURITY · RADIO · MESH</div><a class="plan" href="/darryl/">See the plan &rarr;</a></div>
 
   <button class="play" id="play" aria-label="Play with sound"><span class="ring"></span><span class="lbl">tap to play · sound on</span></button>
   <audio id="bed" src="chinook.mp3" preload="auto" playsinline></audio>
